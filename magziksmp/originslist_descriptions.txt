@@ -1,0 +1,187 @@
+<p><i>(TO WSZYSTKO BĘDZIE ŁADNIE ZFORMATOWANE Z OPISAMI KAŻDEGO ORIGINSA)</i></p>
+	<p class="origins-list-header-1">Lista originsów (alfabetycznie)</p>
+	<p class="origins-list-header-2">Air Bender</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Arachnid</p>
+	<p class="origins-list-description">Możesz się wspinać po ścianach, nie tylko po drabinkach.</p>
+	<p class="origins-list-description">Doskonale poruszasz się w pajęczynach i możesz się w nich wspinać.</p>
+	<p class="origins-list-description">W walce wręcz po uderzeniu przeciwnika, utknie on na chwilę w pajęczynie.</p>
+	<p class="origins-list-description">Możesz craftować pajęczyny z nitek.</p>
+	<p class="origins-list-description">Możesz jeść tylko mięso.</p>
+	<p class="origins-list-description">Masz 3 serca mniej od osób z klasą Human.</p>
+
+	<p class="origins-list-header-2">Avian</p>
+	<p class="origins-list-description">Opadasz na ziemię jak piórko, no chyba że kucniesz.</p>
+	<p class="origins-list-description">Żeby spać, twoje łóżko musi być na wysokości minimum 86 kratek.</p>
+	<p class="origins-list-description">Modyfikatory prędkości chodzenia także działają podczas pobytu w powietrzu.</p>
+	<p class="origins-list-description">Jesteś szybszy od innych.</p>
+	<p class="origins-list-description">Złożysz jajko po obudzeniu się.</p>
+	<p class="origins-list-description">Nie możesz jeść mięsa</p>
+	
+	<p class="origins-list-header-2">Bee</p>
+	<p class="origins-list-description">Uderzając kogoś pięścią, dajesz efekt trucizny na chwilę.</p>
+	<p class="origins-list-description">Będąc w pobliżu wielu kwiatków regenerujesz się.</p>
+	<p class="origins-list-description">Pszczoły nie będą cię atakować jeżeli będziesz zbierał miód.</p>
+	<p class="origins-list-description">Masz 2 serca mniej od ludzi z klasą Human.</p>
+	<p class="origins-list-description">Możesz użyć swoich skrzydełek aby opadać wolniej.</p>
+	<p class="origins-list-description">Nie możesz jeść mięsa.</p>
+	
+	<p class="origins-list-header-2">Blazeborn</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Creeper</p>
+	<p class="origins-list-description">Możesz aktywować małą eksplozję, która nie niszczy bloków.</p>
+	<p class="origins-list-description">Creepery boją się ciebie, zaatakują jeżeli ty zaatakujesz.</p>
+	<p class="origins-list-description">Jesteś lekko zielony.</p>
+	<p class="origins-list-description">Będąc w pobliżu kota lub ocelota otrzymasz obrażenia.</p>
+	
+	<p class="origins-list-header-2">Demon</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Drowned</p>
+	<p class="origins-list-description">Zadajesz +2 obrażeń kiedy rzucisz trójzębem i +2 obrażeń wręcz.</p>
+	<p class="origins-list-description">Możesz używać enchantu Riptide bez deszczu/wody kosztem wytrzymałości.</p>
+	<p class="origins-list-description">Nie jesteś atakowany przez Guardiany.</p>
+	<p class="origins-list-description">Zadajesz więcej obrażeń pod wodą.</p>
+	<p class="origins-list-description">Palisz się w słońcu.</p>
+	<p class="origins-list-description">Otrzymujesz więcej obrażen od enchantu Smite.</p>
+	<p class="origins-list-description">Szybciej tracisz głód.</p>
+	<p class="origins-list-description">Możesz jeść tylko mięso.</p>
+	
+	<p class="origins-list-header-2">Dwarven</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Earth Bender</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Element Bender</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Elytrian</p>
+	<p class="origins-list-description">Posiadasz elytrę.</p>
+	<p class="origins-list-description">Co 30 sekund możesz się wybić 20 bloków w powietrze.</p>
+	<p class="origins-list-description">Zadajesz więcej obrażeń podczas lotu elytrą.</p>
+	<p class="origins-list-description">Nie możesz nosić ciężkiego armoru.</p>
+	<p class="origins-list-description">Przebywanie w miejscu z niskim sufitem sprawi, że staniesz się słabszy i wolniejszy.</p>
+	<p class="origins-list-description">Otrzymujesz więcej obrażeń od spadania w wlatywania w bloki.</p>
+	
+	<p class="origins-list-header-2">Enderian</p>
+	<p class="origins-list-description">Możesz się teleportować kiedy chcesz.</p>
+	<p class="origins-list-description">Otrzymasz obrażenia przebywając w wodzie.</p>
+	<p class="origins-list-description">Boisz się dyń.</p>
+	<p class="origins-list-description">Możesz dosięgnąć dalsze bloki.</p>
+	
+	<p class="origins-list-header-2">Evoker</p>
+	<p class="origins-list-description">Możesz przywoływać kły.</p>
+	<p class="origins-list-description">Totemy mają szansę 10% na nie zniszczenie się po użyciu.</p>
+	<p class="origins-list-description">Wieśniacy cię nie lubią, ale Pillagerzy już tak.</p>
+	
+	<p class="origins-list-header-2">Feline</p>
+	<p class="origins-list-description">Nigdy nie otrzymasz obrażeń od upadku.</p>
+	<p class="origins-list-description">Możesz skakać wyżej podczas sprintu.</p>
+	<p class="origins-list-description">Twoje kroki nie powodują wibracji.</p>
+	<p class="origins-list-description">Masz 1 serce mniej od ludzi z klasą Human.</p>
+	<p class="origins-list-description">Bez efektu strength możesz wykopać kamień tylko jeżeli obok są maksymalnie 2 inne bloki kamienia.</p>
+	<p class="origins-list-description">Creepery się ciebie boją.</p>
+	<p class="origins-list-description">Możesz lekko widzieć w ciemnościach.</p>
+	
+	<p class="origins-list-header-2">Fire Bender</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Floran</p>
+	<p class="origins-list-description">Kucając na bloku nadającym się do zasiania z pustą ręką, wyrosną rośliny kosztem punktów jedzenia.</p>
+	<p class="origins-list-description">Nasycasz się słońcem.</p>
+	<p class="origins-list-description">Zadajesz 2 więcej obrażeń będąc mokrym.</p>
+	<p class="origins-list-description">Otrzymujesz 2 razy więcej obrażeń od ognia.</p>
+	<p class="origins-list-description">Możesz tylko jeść miód.</p>
+	
+	<p class="origins-list-header-2">Fox</p>
+	<p class="origins-list-description">Twoja prędkość się zwiększa jeżeli jesteś w pobliży trzech lub więcej graczy.</p>
+	<p class="origins-list-description">Masz większy zasięg podnoszenia przedmiotów.</p>
+	<p class="origins-list-description">Jesteś szybszy.</p>
+	<p class="origins-list-description">Masz 2 serca mniej od osób z klasą Human.</p>
+	
+	<p class="origins-list-header-2">Guardian</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Human</p>
+	<p class="origins-list-description">Zwykły człowiek. Defaultowe doświadczenia Minecraftowe oczekują.</p>
+	
+	<p class="origins-list-header-2">Inchling</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Merling</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Monke</p>
+	<p class="origins-list-description">Możesz się chwycić każdego bloku w każdym momencie.</p>
+	<p class="origins-list-description">Nie możesz jeść mięsa.</p>
+	<p class="origins-list-description">Otrzymujesz obrażenia będąc w wodzie.</p>
+	<p class="origins-list-description">Musisz spać na liściach na wysokości minimum 75 kratek.</p>
+	
+	<p class="origins-list-header-2">Phantom</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Piglin</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Shulk</p>
+	<p class="origins-list-description">Masz 9 slotów więcej w ekwipunku, z których przedmioty nie znikną po śmierci.</p>
+	<p class="origins-list-description">Nawet bez armora masz ochronę.</p>
+	<p class="origins-list-description">Możesz niszczyć większość naturalnych kamieni bez użycia kilofa.</p>
+	<p class="origins-list-description">Nie możesz trzymać tarczy.</p>
+	<p class="origins-list-description">Głodniejesz szybciej od innych.</p>
+	
+	<p class="origins-list-header-2">Slime</p>
+	<p class="origins-list-description">Wszystkie bloki się zachowują jak slime blocki.</p>
+	<p class="origins-list-description">Możesz zamienić punkty jedzenia (hunger bar) w małe slime, które będą cię bronić.</p>
+	<p class="origins-list-description">Kiedy masz mniej niż 2 serca, nie zadajesz prawie żadnych obrażeń, ale twoje ataki mają mocniejszy odrzut.</p>
+	<p class="origins-list-description">Nigdy nie otrzymujesz obrażeń od upadku.</p>
+	<p class="origins-list-description">Możesz zmienić swój kolor za pomocą barwników.</p>
+	
+	<p class="origins-list-header-2">Snow Golem</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Snowman</p>
+	<p class="origins-list-description">Możesz pokrywać wodę z użyciem lodu.</p>
+	<p class="origins-list-description">Możesz uzyskać wyższą prędkość na lodzie.</p>
+	<p class="origins-list-description">Twoje śnieżki zadają więcej obrażeń.</p>
+	<p class="origins-list-description">Lawa i ogień zadają 2x więcej obrażeń.</p>
+	<p class="origins-list-description">Dłuższe przebywanie w netherze zadaje ci obrażenia.</p>
+	
+	<p class="origins-list-header-2">Strider</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Titan Shifter</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Truffle</p>
+	<p class="origins-list-description">Możesz wybrać między kilkoma zarodnikami:<br>Czerwony boostuje ofensywę.<br>Zielony boostuje obronę.<br>Niebieski boostuje poruszanie się.</p>
+	<p class="origins-list-description">Możesz zamienić blok gleby w mycelium kucając na nim kosztem punktów jedzenia.</p>
+	<p class="origins-list-description">Uzyskujesz buffy stojąc na mycelium zależnie od wybranego zarodnika:<br>Czerwony - zwiększona prędkość ataku<br>Zielony - odporność na odrzut<br>Niebieski - zwiększa wysokość skoku.</p>
+	<p class="origins-list-description">Jedzenie jest rozkładane przed zjedzeniem anulując wszystkie pozytywne efekty.</p>
+	
+	<p class="origins-list-header-2">Water Bender</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+
+	<p class="origins-list-header-2">Witch</p>
+	<p class="origins-list-description">Wypite potki będą trwały dłużej.</p>
+	<p class="origins-list-description">Dostajesz losowy efekt w zależności od sytuacji w której jesteś.</p>
+	<p class="origins-list-description">Wieśniacy cię nie lubią, ale Pillagerzy już tak.</p>
+	
+	<p class="origins-list-header-2">Wolf</p>
+	<p class="origins-list-description">Masz 2 serca mniej od osób z klasą Human.</p>
+	<p class="origins-list-description">W trakcie pełni księżyca stajesz się szybszy, mocniejszy i zdrowszy.</p>
+	<p class="origins-list-description">Wilki, które oswoisz są silniejsze.</p>
+	<p class="origins-list-description">Możesz zawyć, aby dać sobie i innym wilkom w pobliżu szybkość i siłę.</p>
+	<p class="origins-list-description">Możesz jeść tylko mięso.</p>
+	
+	<p class="origins-list-header-2">Wyvern</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Zombiefied</p>
+	<p class="origins-list-description">Tutaj będzie ładny, szczegółowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut orci sed lacus gravida lacinia vitae vel nisi. Nulla nec congue justo. Sed vitae sollicitudin massa, porttitor feugiat ex.</p>
+	
+	<p class="origins-list-header-2">Random</p>
+	<p class="origins-list-description">Zostanie wybrany losowy Origin z wyżej wymienionych.</p>

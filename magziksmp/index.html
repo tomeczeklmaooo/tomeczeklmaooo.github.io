@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Magzik SMP</title>
+	<link rel="shortcut icon" href="favicon.jpg" type="image/x-icon">
+	<link rel="stylesheet" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/4140c3b052.js" crossorigin="anonymous"></script>
+</head>
+<body onload="Clock()">
+	<div class="container">
+		<header class="website-header">
+			<span class="header-text-large">Magzik SMP</span>
+		</header>
+		<div id="datetime" class="datetime">Dzisiaj jest dd/mm/yyyy, godzina hh:mm:ss</div>
+		<main class="main-content" >
+			<!-- TOP ROW (3) -->
+			<div class="content-card" style="margin-right: 10px;" onclick="ShowModList()">
+				<i class="fa-solid fa-gear" style="font-size: 48px;"></i>
+				<p>Lista modów</p>
+			</div>
+			<div class="content-card" style="margin-right: 10px;" onclick="ShowOriginsList()">
+				<i class="fa-solid fa-broom-ball" style="font-size: 48px;"></i>
+				<p>Lista Originsów</p>
+			</div>
+			<div class="content-card" onclick="JoinDiscordServer()">
+				<i class="fa-brands fa-discord" style="font-size: 48px;"></i>
+				<p>Dołącz do naszego serwera Discord!</p>
+			</div>
+			<div style="clear: both;"></div>
+			<!-- CONTENT CONTAINER FOR MOD LIST / ORIGINS LIST -->
+			<div class="content-container-df0" id="content-container-df0">
+				<p>Wybierz opcję <b>Lista modów</b>, aby zobaczyć mody potrzebne do dołączenia na serwer, albo opcję <b>Lista Originsów</b>, żeby zobaczyć jakie Originsy są dostępne na serwerze.</p>
+				<p>Pro tip: kliknij IP serwera poniżej, aby skopiować do schowka.</p>
+			</div>
+			<!-- BOTTOM ROW (2) -->
+			<div class="content-card-2" style="margin-right: 10px;" onclick="CopyServerIP()" title="Kliknij, aby skopiować adres IP serwera.">
+				<i class="fa-solid fa-server" style="font-size: 16px;"></i>
+				&ensp;magziksmp.csrv.pl (1.19.3)
+			</div>
+			<div class="content-card-2" onclick="ShowPlayerList()">
+				<i class="fa-solid fa-users" style="font-size: 16px;"></i>
+				&ensp;Lista graczy
+			</div>
+			<div style="clear: both;"></div>
+		</main>
+		<footer class="website-footer">
+			<span>Copyright &copy; <script>document.write(new Date().getFullYear())</script> Magzik, tomeczeklmaooo, Kostek001</span>
+		</footer>
+	</div>
+
+	<script src="script.js"></script>
+</body>
+</html>
