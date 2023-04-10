@@ -11,7 +11,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
 </head>
-<body>
+<body onload="init()">
 	<div class="container">
 		<header class="website-header">
 			<span class="header-text-large">tomeczeklmaooo</span>
@@ -20,7 +20,7 @@
 			<p>2nd Grade IT Student, creator of useless things and wannabe CS:GO player.</p>
 			<p>Studying IT at <a href="https://zst-tp.pl/" target="_blank" rel="noopener noreferrer" class="link">&#128279; Zespół Szkół Technicznych Tarnowo Podgórne</a> (2021 &mdash; now).</p>
 			<p>
-				Skills:
+				<b>Skills:</b>
 				<ul style="margin-top: -15px;">
 					<li>CMD (Windows Commandline)</li>
 					<li>HTML</li>
@@ -30,14 +30,19 @@
 					<li>C/C++ (not much)</li>
 				</ul>
 			</p>
+			<p id="player-team">
+				<b>Current CS:GO team:</b> descent (joined dd/mm/yyyy, -- days ago)
+			</p>
 			<p>
-				Achievements:
+				<b>Achievements:</b>
 				<ul style="margin-top: -15px;">
 					<li>Top 72 ARRMY.PL CS:GO Open S6 Powered by MyBestPharm.com with Descent eSports</li>
+					<li>Top -- ARRMY.PL CS:GO Masters S7 Open Qualifier #4 with Descent eSports</li>
+					<li>Top -- ARRMY.PL CS:GO Rising S7 Open Qualifier #4 with Descent eSports</li>
 				</ul>
 			</p>
 			<p>
-				Hobby:
+				<b>Hobby:</b>
 				<ul style="margin-top: -15px;">
 					<li>Playing CS:GO</li>
 					<li>Speedrunning GTA V (sub 10 hour personal best)</li>
@@ -45,7 +50,7 @@
 				</ul>
 			</p>
 			<p>
-				PC Specification:
+				<b>PC Specification:</b>
 				<ul style="margin-top: -15px;">
 					<li>Intel&reg; Core&trade; i5-11600K</li>
 					<li>NVIDIA&reg; GeForce&trade; GTX 1660 Ti</li>
@@ -58,5 +63,18 @@
 			<span>Copyright &copy; 2021 &mdash; <script>document.write(new Date().getFullYear())</script> <a href="https://github.com/tomeczeklmaooo/" target="_blank" rel="noopener noreferrer" class="link">tomeczeklmaooo</a></span>
 		</footer>
 	</div>
+
+	<script>
+		function init()
+		{
+			var now = new Date();
+			var team_joined_date = new Date("February 27, 2023");
+			var day = 1000 * 60 * 60 * 24; // one day length in milliseconds
+			var difference_time = now.getTime() - team_joined_date.getTime();
+			var difference_days = Math.round(difference_time / day);
+			document.getElementById("player-team").innerHTML = `<b>Current CS:GO team:</b> descent (joined 27/02/2023, ${difference_days} days ago)`;
+			setTimeout("init()", 1000);
+		}
+	</script>
 </body>
 </html>

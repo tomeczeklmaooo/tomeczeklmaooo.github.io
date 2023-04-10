@@ -143,4 +143,12 @@ function CopyServerIP()
 function ShowPlayerList()
 {
 	window.location.href = "#PLAYER-LIST";
+	var core = "Asura";
+	var core_version = "2.0-preview";
+	var core_arch = "x86_64";
+	var core_os = "windows64";
+
+	document.getElementById("content-container-df0").innerHTML = `
+	<p>Player list will be shown here.</p>
+	<pre>Built on ${core} ${core_version} (${core_arch}; ${core_os})</pre>`;
 }
