@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Starlight Engine Design Preview</title>
+	<style>
+		body
+		{
+			font-family: monospace;
+			background: #11100f;
+			color: #faf9f8;
+		}
+		.response-success
+		{
+			color: #107c10;
+		}
+		.response-warning
+		{
+			color: #fff4ce;
+		}
+		.response-error
+		{
+			color: #a80000;
+		}
+		.response-normal
+		{
+			color: inherit;
+		}
+		.timestamp
+		{
+			font-style: italic;
+		}
+	</style>
+</head>
+<body onload="Initialize()">
+	<strong id="header">Starlight Engine /// Design Preview<br>Copyright &copy; 2023 tomeczeklmaooo</strong><br><br>
+	<span id="timestamp" class="timestamp">[DD/MM/YYYY HH:MM:SS TIMEZONE]</span>&nbsp;<span id="response" class="response-success">slx_response_success</span><br>
+	<span id="timestamp" class="timestamp">[DD/MM/YYYY HH:MM:SS TIMEZONE]</span>&nbsp;<span id="response" class="response-warning">slx_response_warning</span><br>
+	<span id="timestamp" class="timestamp">[DD/MM/YYYY HH:MM:SS TIMEZONE]</span>&nbsp;<span id="response" class="response-error">slx_response_error</span><br>
+	<span id="timestamp" class="timestamp">[DD/MM/YYYY HH:MM:SS TIMEZONE]</span>&nbsp;<span id="response" class="response-normal">slx_response_normal</span><br>
+	<!-- FOOTER -->
+	<span id="engine_footer"></span>
+	<script src="script.js"></script>
+</body>
+</html>
