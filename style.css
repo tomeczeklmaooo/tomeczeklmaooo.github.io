@@ -74,3 +74,30 @@ body
 		width: 70vw;
 	}
 }
+
+table.achievements-table {
+	width: 100%;
+	background-color: #1B1A19;
+	border-collapse: collapse;
+	border-width: 2px;
+	border-color: #0078D4;
+	border-style: solid;
+	color: #EEEDF0;
+}
+  
+table.achievements-table td, table.achievements-table th {
+	border-width: 2px;
+	border-color: #0078D4;
+	border-style: solid;
+	padding: 5px;
+}
+  
+table.achievements-table thead {
+	background-color: #0078d4;
+}
+
+table.achievements-table .tournament-played { color: #107c10; }
+table.achievements-table .tournament-notplayed { color: #a80000; }
+table.achievements-table .match-win { color: #107c10; }
+table.achievements-table .match-loss { color: #a80000; }
+.match-walkover-counting { color: #797673; font-style: italic; }
