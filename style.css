@@ -79,21 +79,24 @@ table.achievements-table {
 	width: 100%;
 	background-color: #1B1A19;
 	border-collapse: collapse;
-	border-width: 2px;
-	border-color: #0078D4;
-	border-style: solid;
+	border-width: 1px;
+	border-color: #797673;
+	border-style: dashed;
 	color: #EEEDF0;
 }
   
 table.achievements-table td, table.achievements-table th {
-	border-width: 2px;
-	border-color: #0078D4;
-	border-style: solid;
+	border-width: 1px;
+	border-color: #797673;
+	border-style: dashed;
 	padding: 5px;
 }
   
 table.achievements-table thead {
-	background-color: #0078d4;
+	background-color: #797673;
+	border-width: 1px;
+	border-color: #797673;
+	border-style: solid;
 }
 
 table.achievements-table .tournament-played { color: #107c10; }
