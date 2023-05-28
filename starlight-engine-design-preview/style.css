@@ -1,0 +1,62 @@
+body
+{
+	font-family: monospace;
+	background: #11100f;
+	color: #faf9f8;
+}
+.response-success
+{
+	color: #107c10;
+}
+.response-warning
+{
+	color: #fff4ce;
+}
+.response-error
+{
+	color: #a80000;
+}
+.response-normal
+{
+	color: inherit;
+}
+.timestamp
+{
+	font-style: italic;
+}
+
+.site_bottom
+{
+	bottom: 0;
+	position: fixed;
+	display: flex;
+	margin-bottom: 5px;
+	width: 100%;
+}
+
+.site_bottom #engine_footer
+{
+	flex: 50%;
+	margin-right: 0.55vw;
+	margin-bottom: -2vh;
+	text-align: right;
+}
+
+.site_bottom #commandinput
+{
+	flex: 50%;
+	background-color: #11100f;
+	border: none;
+	border-bottom: solid 1px #faf9f8;
+	color: #faf9f8;
+	font-family: monospace;
+	transition: 0.15s ease-in-out;
+}
+.site_bottom #commandinput:focus
+{
+	flex: 50%;
+	background-color: #11100f;
+	border: none;
+	outline: none;
+	border-bottom: dotted 1px #0078d4;
+}
