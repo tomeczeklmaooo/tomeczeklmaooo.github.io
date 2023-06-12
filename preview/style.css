@@ -118,23 +118,6 @@ body
 	justify-content: center;
 }
 
-.education-subcontainer .education-footer
-{
-	bottom: 0;
-	position: absolute;
-	text-align: center;
-	margin-bottom: 0.5vh;
-	width: 100%;
-	font-size: 16px;
-	transition: 0.15s ease-in-out;
-}
-
-.education-subcontainer .education-footer:hover
-{
-	cursor: pointer;
-	letter-spacing: 1px;
-}
-
 .education-subcontainer table td
 {
 	text-align: justify;
@@ -179,23 +162,6 @@ body
 	width: 100%;
 	display: flex;
 	justify-content: center;
-}
-
-.projects-subcontainer .projects-footer
-{
-	bottom: 0;
-	position: absolute;
-	text-align: center;
-	margin-bottom: 0.5vh;
-	width: 100%;
-	font-size: 16px;
-	transition: 0.15s ease-in-out;
-}
-
-.projects-subcontainer .projects-footer:hover
-{
-	cursor: pointer;
-	letter-spacing: 1px;
 }
 
 .projects-subcontainer table td
@@ -244,23 +210,6 @@ body
 	justify-content: center;
 }
 
-.skills-subcontainer .skills-footer
-{
-	bottom: 0;
-	position: absolute;
-	text-align: center;
-	margin-bottom: 0.5vh;
-	width: 100%;
-	font-size: 16px;
-	transition: 0.15s ease-in-out;
-}
-
-.skills-subcontainer .skills-footer:hover
-{
-	cursor: pointer;
-	letter-spacing: 1px;
-}
-
 .skills-subcontainer table td
 {
 	text-align: justify;
@@ -304,23 +253,6 @@ body
 	width: 100%;
 	display: flex;
 	justify-content: center;
-}
-
-.esports-subcontainer .esports-footer
-{
-	bottom: 0;
-	position: absolute;
-	text-align: center;
-	margin-bottom: 0.5vh;
-	width: 100%;
-	font-size: 16px;
-	transition: 0.15s ease-in-out;
-}
-
-.esports-subcontainer .esports-footer:hover
-{
-	cursor: pointer;
-	letter-spacing: 1px;
 }
 
 .esports-subcontainer table td
@@ -368,24 +300,6 @@ body
 	display: flex;
 	justify-content: center;
 }
-
-.socialmedia-subcontainer .socialmedia-footer
-{
-	bottom: 0;
-	position: absolute;
-	text-align: center;
-	margin-bottom: 0.5vh;
-	width: 100%;
-	font-size: 16px;
-	transition: 0.15s ease-in-out;
-}
-
-.socialmedia-subcontainer .socialmedia-footer:hover
-{
-	cursor: pointer;
-	letter-spacing: 1px;
-}
-
 .socialmedia-subcontainer table td
 {
 	text-align: justify;
@@ -396,6 +310,23 @@ body
 {
 	text-align: justify;
 	padding: 0 25px;
+}
+
+.subpage-footer
+{
+	bottom: 0;
+	position: absolute;
+	text-align: center;
+	margin-bottom: 0.5vh;
+	width: 100%;
+	font-size: 16px;
+	transition: 0.15s ease-in-out;
+}
+
+.subpage-footer:hover
+{
+	cursor: pointer;
+	letter-spacing: 1px;
 }
 
 .footer
