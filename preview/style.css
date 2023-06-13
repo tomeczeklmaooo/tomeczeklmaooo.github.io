@@ -118,18 +118,6 @@ body
 	justify-content: center;
 }
 
-.education-subcontainer table td
-{
-	text-align: justify;
-	padding: 0 25px;
-}
-
-.education-subcontainer table th
-{
-	text-align: justify;
-	padding: 0 25px;
-}
-
 /* PROJECTS */
 .projects-subcontainer
 {
@@ -162,18 +150,6 @@ body
 	width: 100%;
 	display: flex;
 	justify-content: center;
-}
-
-.projects-subcontainer table td
-{
-	text-align: justify;
-	padding: 0 25px;
-}
-
-.projects-subcontainer table th
-{
-	text-align: justify;
-	padding: 0 25px;
 }
 
 /* SKILLS */
@@ -210,18 +186,6 @@ body
 	justify-content: center;
 }
 
-.skills-subcontainer table td
-{
-	text-align: justify;
-	padding: 0 25px;
-}
-
-.skills-subcontainer table th
-{
-	text-align: justify;
-	padding: 0 25px;
-}
-
 /* E-SPORTS */
 .esports-subcontainer
 {
@@ -253,18 +217,6 @@ body
 	width: 100%;
 	display: flex;
 	justify-content: center;
-}
-
-.esports-subcontainer table td
-{
-	text-align: justify;
-	padding: 0 25px;
-}
-
-.esports-subcontainer table th
-{
-	text-align: justify;
-	padding: 0 25px;
 }
 
 /* SOCIAL MEDIA */
@@ -300,17 +252,6 @@ body
 	display: flex;
 	justify-content: center;
 }
-.socialmedia-subcontainer table td
-{
-	text-align: justify;
-	padding: 0 25px;
-}
-
-.socialmedia-subcontainer table th
-{
-	text-align: justify;
-	padding: 0 25px;
-}
 
 .subpage-footer
 {
@@ -327,6 +268,18 @@ body
 {
 	cursor: pointer;
 	letter-spacing: 1px;
+}
+
+table td
+{
+	text-align: justify;
+	padding: 0 25px;
+}
+
+table th
+{
+	text-align: justify;
+	padding: 0 25px;
 }
 
 .footer
