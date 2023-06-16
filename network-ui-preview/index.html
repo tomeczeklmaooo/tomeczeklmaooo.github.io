@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Network UI (Design Preview)</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/4140c3b052.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<!--
+		MAIN CONTAINER
+	-->
+	<div class="container">
+		<div class="preview-notification">
+			<p>The design shown below is not the final product and is subject to change. The final version might look different.</p>
+		</div>
+		<div class="window-container">
+			<div class="window-title-bar">
+				<span class="window-title-text" title="Window title">Network UI 1.0 (Design Preview)</span>
+				<span class="window-title-btn">
+					<i title="Window minimize button" class="fa-sharp fa-solid fa-window-minimize"></i>
+					<i title="Window close button" class="fa-sharp fa-solid fa-xmark"></i>
+				</span>
+			</div>
+			<div class="network-information-container">
+				<div class="netw-inf-header">
+					<span>Your computer's local network information</span>
+				</div>
+				<div class="netw-inf-ethernet-adapter">
+					<div class="netw-inf-ethernet-adapter-labels">
+						<!-- DEFAULT VALUES -->
+						<p>Host name</p>
+						<p>Primary DNS Suffix</p>
+						<p>Node Type</p>
+						<p>IP Routing State</p>
+						<p>WINS Proxy State</p>
+						<p>DNS Suffix Search List</p>
+						<p>&nbsp;</p> <!-- empty space -->
+						
+						<!-- ADAPTER 1 -->
+						<p><i>Ethernet Adapter 1</i></p>
+						<p>Connection-specific DNS Suffix</p>
+						<p>Description</p>
+						<p>Physical Address (MAC)</p>
+						<p>DHCP Status</p>
+						<p>Autoconfiguration Status</p>
+						<p>IPv6 Address</p>
+						<p>IPv6 Temporary Address</p>
+						<p>IPv6 Link-local Address</p>
+						<p>IPv4 Address/Subnet Mask</p>
+						<p>Lease Obtained/Expires</p>
+						<p>Default Gateway</p>
+						<p>DHCP Server/IAID/Client DUID</p>
+						<p>DNS Servers</p>
+						<p>NetBIOS over TCP/IP</p>
+						<p>Connection-specific DNS Suffix Search List</p>
+						<p>&nbsp;</p> <!-- empty space -->
+						
+						<!-- ADAPTER 2 -->
+						<p><i>Ethernet Adapter 2</i></p>
+						<p>Connection-specific DNS Suffix</p>
+						<p>Description</p>
+						<p>Physical Address (MAC)</p>
+						<p>DHCP Status</p>
+						<p>Autoconfiguration Status</p>
+						<p>IPv6 Address</p>
+						<p>IPv6 Temporary Address</p>
+						<p>IPv6 Link-local Address</p>
+						<p>IPv4 Address/Subnet Mask</p>
+						<p>Lease Obtained/Expires</p>
+						<p>Default Gateway</p>
+						<p>DHCP Server/IAID/Client DUID</p>
+						<p>DNS Servers</p>
+						<p>NetBIOS over TCP/IP</p>
+						<p>Connection-specific DNS Suffix Search List</p>
+					</div>
+					<div class="netw-inf-ethernet-adapter-values">
+						<!-- DEFAULT VALUES -->
+						<p>HOSTNAME</p> <!-- hostname -->
+						<p>PRIMARY_DNS_SUFFIX</p> <!-- primary dns suffix -->
+						<p>NODE_TYPE</p> <!-- node type: Broadcast/Peer-to-peer/Mixed/Hybrid -->
+						<p>Enabled/Disabled</p> <!-- ip routing state -->
+						<p>Enabled/Disabled</p> <!-- wins proxy state -->
+						<p>DNS_SUFFIX_SEARCHLIST</p> <!-- dns suffix search list -->
+						<p>&nbsp;</p> <!-- empty space -->
+						
+						<!-- ADAPTER 1 -->
+						<p>&nbsp;</p> <!-- ethernet adapter ... (dont change it) -->
+						<p>CONNECTION_SPECIFIC_DNS_SUFFIX</p> <!-- connection-specific dns suffix -->
+						<p>ADAPTER_DESCRIPTION</p> <!-- description -->
+						<p>MAC_ADDRESS</p> <!-- mac address -->
+						<p>Enabled/Disabled</p> <!-- dhcp status -->
+						<p>Enabled/Disabled</p> <!-- autoconf status -->
+						<p>IPV6_ADDR</p> <!-- ipv6 addr -->
+						<p>IPV6_TEMP</p> <!-- ipv6 temp -->
+						<p>IPV6_LINKLOCAL</p> <!-- ipv6 link-local -->
+						<p>IPV4_ADDR/SUBNET_MASK [CIDR_NOTATION]</p> <!-- ipv4 addr/subnet -->
+						<p>DD/MM/YYYY_HH:mm:SS / DD/MM/YYYY_HH:mm:SS</p> <!-- lease obtained/expires -->
+						<p>DEFAULT_GATEWAY</p> <!-- default gateway -->
+						<p>DHCP_ADDR/DHCPV6_IAID/DHCPV6_DUID</p> <!-- dhcp/iaid/duid -->
+						<p>DNS_SERVERS</p> <!-- dns servers -->
+						<p>Enabled/Disabled</p> <!-- netbios over tcpip -->
+						<p>CONNECTION_SPECIFIC_DNS_SUFFIX_SEARCHLIST_A</p>
+						<p>&nbsp;</p> <!-- empty space -->
+						
+						<!-- ADAPTER 2 -->
+						<p>&nbsp;</p> <!-- ethernet adapter ... (dont change it) -->
+						<p>CONNECTION_SPECIFIC_DNS_SUFFIX</p> <!-- connection-specific dns suffix -->
+						<p>ADAPTER_DESCRIPTION</p> <!-- description -->
+						<p>MAC_ADDRESS</p> <!-- mac address -->
+						<p>Enabled/Disabled</p> <!-- dhcp status -->
+						<p>Enabled/Disabled</p> <!-- autoconf status -->
+						<p>IPV6_ADDR</p> <!-- ipv6 addr -->
+						<p>IPV6_TEMP</p> <!-- ipv6 temp -->
+						<p>IPV6_LINKLOCAL</p> <!-- ipv6 link-local -->
+						<p>IPV4_ADDR/SUBNET_MASK [CIDR_NOTATION]</p> <!-- ipv4 addr/subnet -->
+						<p>DD/MM/YYYY_HH:mm:SS / DD/MM/YYYY_HH:mm:SS</p> <!-- lease obtained/expires -->
+						<p>DEFAULT_GATEWAY</p> <!-- default gateway -->
+						<p>DHCP_ADDR/DHCPV6_IAID/DHCPV6_DUID</p> <!-- dhcp/iaid/duid -->
+						<p>DNS_SERVERS</p> <!-- dns servers -->
+						<p>Enabled/Disabled</p> <!-- netbios over tcpip -->
+						<p>CONNECTION_SPECIFIC_DNS_SUFFIX_SEARCHLIST_A</p>
+					</div>
+				</div>
+				<p style="opacity: 0.5;">* All adapters are going to be split into separate tabs. Preview coming soon.</p>
+			</div>
+		</div>
+	</div>
+
+	<!--
+		SCREEN SIZE NOT BIG ENOUGH NOTIFICATION
+		display when viewport < 1200x800
+	-->
+	<div class="screen-size-notification">
+		<div class="text-container">
+			<p>Viewport size too small.</p>
+			<p>Make sure your viewport is at&nbsp;least 1200px&nbsp;x&nbsp;800px.</p>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+html
+{
+	width: 100%;
+	height: 100%;
+}
+
+body
+{
+	font-family: 'DM Mono', monospace;
+	background: url('background.jpg');
+	color: #eeedf0;
+	font-size: 14px;
+	min-height: 100%;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	font-weight: 300;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.container
+{
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.window-container
+{
+	display: block;
+	width: 1024px;
+	height: 768px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	background-color: #201f1e;
+}
+
+.window-container .window-title-bar
+{
+	width: inherit;
+	box-sizing: border-box;
+	background-color: #161514;
+	padding: 2px 10px;
+}
+
+.window-container .window-title-bar .window-title-text
+{
+	text-align: left;
+}
+
+.window-container .window-title-bar .window-title-btn
+{
+	right: 0;
+	float: right;
+}
+
+.window-container .network-information-container
+{
+	height: inherit;
+	width: inherit;
+	box-sizing: border-box;
+	padding: 5px 10px;
+}
+
+.window-container .network-information-container .netw-inf-header
+{
+	font-size: 16px;
+}
+
+.window-container .network-information-container .netw-inf-ethernet-adapter
+{
+	line-height: 2px;
+	display: flex;
+}
+
+.window-container .network-information-container .netw-inf-ethernet-adapter-labels
+{
+	flex: 40%;
+}
+
+.window-container .network-information-container .netw-inf-ethernet-adapter-values
+{
+	flex: 60%;
+}
+
+/* PREVIEW NOTIFICATION */
+.preview-notification
+{
+	display: relative;
+	background-color: #a80000;
+	width: inherit;
+	padding: 0;
+	margin: 0;
+	top: 0;
+	box-sizing: border-box;
+	padding: 1px 20px;
+	text-align: center;
+	opacity: 1;
+}
+
+/* SCREEN SIZE NOTIFICATION */
+.screen-size-notification
+{
+	display: none;
+	background-color: #a80000;
+	width: inherit;
+	height: inherit;
+	padding: 0;
+	margin: 0;
+	opacity: 1;
+}
+
+.screen-size-notification .text-container
+{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+
+@media only screen and (max-width: 1200px) {
+	.container { display: none; }
+	.screen-size-notification { display: block; }
+}
+@media only screen and (max-height: 800px) {
+	.container { display: none; }
+	.screen-size-notification { display: block; }
+}
