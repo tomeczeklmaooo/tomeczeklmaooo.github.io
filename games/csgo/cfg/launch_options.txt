@@ -1,0 +1,1 @@
++exec autoexec.cfg -noaafonts -novid -nojoy +mat_disable_fancy_blending 1 -no-browser -forcenovsync -high -tickrate 128
