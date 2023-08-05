@@ -1,1 +1,2 @@
-+exec autoexec.cfg -noaafonts -novid -nojoy -no-browser -forcenovsync -high -tickrate 128
+CSGO launch options: +exec autoexec.cfg -noaafonts -novid -nojoy -no-browser -forcenovsync -high -tickrate 128
+CS2 launch options: +exec autoexec_cs2.cfg -noaafonts -novid -nojoy -no-browser -forcenovsync -high
