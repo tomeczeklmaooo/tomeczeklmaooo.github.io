@@ -1,106 +1,303 @@
+html
+{
+	width: 100%;
+	height: 100%;
+}
+
 body
 {
-	font-family: 'Poppins', sans-serif;
+	font-family: 'DM Mono', monospace;
 	background: #11100f;
 	color: #eeedf0;
 	font-size: 14px;
+	min-height: 100%;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	font-weight: 300;
+	-webkit-user-select: none;
+	user-select: none;
 }
 
 .container
 {
-	width: 50vw;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.website-header
-{
 	width: 100%;
-	background: #1b1a19;
-	border-radius: 15px;
-	padding: 10px 15px;
+	height: 100%;
+}
+
+/* MAIN */
+.subcontainer
+{
+	display: block;
+	width: 75vw;
+	height: 75vh;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.subcontainer .header
+{
+	top: 0;
+	position: absolute;
 	text-align: center;
+	margin-top: 10vh;
+	font-size: 72px;
+	padding: 20px 0;
+	width: 100%;
 }
 
-.header-text-large
+.subcontainer .navigation
 {
-	font-size: 28px;
+	top: 0;
+	position: absolute;
+	text-align: center;
+	margin-top: 30vh;
+	font-size: 24px;
+	padding: 20px 0;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
-.link
+.nav-item
 {
-	color: #eeedf0;
-	text-decoration: none;
-	border-bottom: 1px dotted #eeedf0;
+	float: left;
+	text-align: center;
+	flex: 25%;
+	margin-left: 5vw;
+	letter-spacing: 1px;
 	transition: 0.15s ease-in-out;
 }
-.link:hover
+
+.nav-item:hover
 {
-	color: #0078d4;
-	text-decoration: none;
-	border-bottom: 0px dotted #0078d4;
+	flex: 25%;
+	letter-spacing: 3px;
+	cursor: pointer;
 }
 
-.main-content
+.nav-item:first-child
 {
-	width: 100%;
-	background: #1b1a19;
-	border-radius: 15px;
-	padding: 10px 15px;
-	text-align: justify;
-	margin-top: 10px;
+	margin-left: 0px;
 }
 
-.website-footer
+/* EDUCATION */
+.education-subcontainer
 {
-	width: 100%;
-	background: #1b1a19;
-	border-radius: 15px;
-	padding: 10px 15px;
+	display: none;
+	width: 75vw;
+	height: 75vh;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.education-subcontainer .education-header
+{
+	top: 0;
 	text-align: center;
-	margin-top: 10px;
-}
-
-@media (max-width: 1080px) {
-	.container
-	{
-		width: 90vw;
-		font-size: 2vw;
-	}
-}
-@media (max-width: 600px) {
-	.container
-	{
-		width: 70vw;
-	}
-}
-
-table.achievements-table {
+	margin-top: 10vh;
+	font-size: 48px;
+	padding: 20px 0;
 	width: 100%;
-	background-color: #1B1A19;
-	border-collapse: collapse;
-	border-width: 1px;
-	border-color: #797673;
-	border-style: dashed;
-	color: #EEEDF0;
-}
-  
-table.achievements-table td, table.achievements-table th {
-	border-width: 1px;
-	border-color: #797673;
-	border-style: dashed;
-	padding: 5px;
-}
-  
-table.achievements-table thead {
-	background-color: #797673;
-	border-width: 1px;
-	border-color: #797673;
-	border-style: solid;
 }
 
-table.achievements-table .tournament-played { color: #107c10; }
-table.achievements-table .tournament-notplayed { color: #a80000; }
-table.achievements-table .match-win { color: #107c10; }
-table.achievements-table .match-loss { color: #a80000; }
-.match-walkover-counting { color: #797673; font-style: italic; }
+.education-subcontainer .education-content
+{
+	top: 0;
+	text-align: center;
+	font-size: 16px;
+	padding: 10px 0;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+/* PROJECTS */
+.projects-subcontainer
+{
+	display: none;
+	width: 75vw;
+	height: 75vh;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.projects-subcontainer .projects-header
+{
+	top: 0;
+	text-align: center;
+	margin-top: 10vh;
+	font-size: 48px;
+	padding: 20px 0;
+	width: 100%;
+}
+
+.projects-subcontainer .projects-content
+{
+	top: 0;
+	text-align: center;
+	font-size: 16px;
+	padding: 10px 0;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+/* SKILLS */
+.skills-subcontainer
+{
+	display: none;
+	width: 75vw;
+	height: 75vh;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.skills-subcontainer .skills-header
+{
+	top: 0;
+	text-align: center;
+	margin-top: 10vh;
+	font-size: 48px;
+	padding: 20px 0;
+	width: 100%;
+}
+
+.skills-subcontainer .skills-content
+{
+	top: 0;
+	text-align: center;
+	font-size: 16px;
+	padding: 10px 0;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+/* E-SPORTS */
+.esports-subcontainer
+{
+	display: none;
+	width: 75vw;
+	height: 75vh;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.esports-subcontainer .esports-header
+{
+	top: 0;
+	text-align: center;
+	font-size: 48px;
+	padding: 20px 0;
+	width: 100%;
+}
+
+.esports-subcontainer .esports-content
+{
+	top: 0;
+	text-align: center;
+	font-size: 16px;
+	padding: 10px 0;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+/* SOCIAL MEDIA */
+.socialmedia-subcontainer
+{
+	display: none;
+	width: 75vw;
+	height: 75vh;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.socialmedia-subcontainer .socialmedia-header
+{
+	top: 0;
+	text-align: center;
+	margin-top: 10vh;
+	font-size: 48px;
+	padding: 20px 0;
+	width: 100%;
+}
+
+.socialmedia-subcontainer .socialmedia-content
+{
+	top: 0;
+	text-align: center;
+	font-size: 16px;
+	padding: 10px 0;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.subpage-footer
+{
+	bottom: 0;
+	position: absolute;
+	text-align: center;
+	margin-bottom: 0.5vh;
+	width: 100%;
+	font-size: 16px;
+	transition: 0.15s ease-in-out;
+}
+
+.subpage-footer:hover
+{
+	cursor: pointer;
+	letter-spacing: 1px;
+}
+
+table
+{
+	border-collapse: collapse;
+}
+
+table td, table th
+{
+	text-align: justify;
+	padding: 0 25px;
+}
+
+.footer
+{
+	bottom: 0;
+	position: absolute;
+	text-align: center;
+	margin-bottom: 0.5vh;
+	width: 100%;
+}
+
+.notification
+{
+	background-color: #c1e1c11f;
+	width: inherit;
+	padding: 0;
+	text-align: center;
+	opacity: 1;
+	top: 0;
+	position: absolute;
+	margin-top: 0.5vh;
+}

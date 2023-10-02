@@ -19,7 +19,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js" integrity="sha512-3RlxD1bW34eFKPwj9gUXEWtdSMC59QqIqHnD8O/NoTwSJhgxRizdcFVQhUMFyTp5RwLTDL0Lbcqtl8b7bFAzog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.topology.min.js"></script>
 </head>
-<body>
+<body onload="player_team()">
 	<div class="container" id="container">
 		<!-- MAIN -->
 		<div class="subcontainer" id="subcontainer">
@@ -84,7 +84,8 @@
 				<span>Projects</span>
 			</header>
 			<main class="projects-content">
-				<table>
+				<span>I'm not currently working on any projects due to school and exams.</span>
+				<!--<table>
 					<tr>
 						<th>Project name</th>
 						<th>Date started</th>
@@ -103,7 +104,7 @@
 						<td><p>No</p></td>
 						<td><p>Gathering ideas</p></td>
 					</tr>
-				</table>
+				</table>-->
 			</main>
 			<span class="subpage-footer" onclick="hide_projects()">Go back...</span>
 		</div>
@@ -122,6 +123,10 @@
 					<tr>
 						<td><p>CMD</p></td>
 						<td><p>Intermediate</p></td>
+					</tr>
+					<tr>
+						<td><p>Bash</p></td>
+						<td><p>Beginner</p></td>
 					</tr>
 					<tr>
 						<td><p>HTML</p></td>
@@ -143,7 +148,8 @@
 		<!-- E-SPORTS -->
 		<div class="esports-subcontainer" id="esports-subcontainer">
 			<header class="esports-header">
-				<span>E-Sports</span>
+				<span>E-Sports</span><br>
+				<span id="player-team" style="font-size: 12pt;"><b>Current CS:GO team:</b> Descent E-Sports (joined 27/02/2023, ${difference_days} days ago)</span>
 			</header>
 			<main class="esports-content">
 				<table>
@@ -185,10 +191,17 @@
 					<tr>
 						<td><p>CS:GO</p></td>
 						<td><p>Falcon League 3</p></td>
+						<td><p>Top 1 (Champions)</p></td>
+						<td><p>2W 2D 0L</p></td>
+						<td><p><i class="fa-solid fa-check"></i></p></td>
+					</tr>
+					<!--<tr>
+						<td><p>CS:GO</p></td>
+						<td><p>Falcon League 3</p></td>
 						<td><p>Top ??</p></td>
 						<td><p>1W 2D 0L</p></td>
 						<td><p><i class="fa-solid fa-xmark"></i></p></td>
-					</tr>
+					</tr>-->
 				</table>
 			</main>
 			<span class="subpage-footer" onclick="hide_esports()">Go back...</span>
@@ -214,6 +227,10 @@
 						<td><p>toaster000</p></td>
 					</tr>
 					<tr>
+						<td><p><i class="fa-solid fa-gears"></i>&nbsp;CS2 Settings</p></td>
+						<td><p>settings.gg/toaster000</p></td>
+					</tr>
+					<tr>
 						<td><p><i class="fa-brands fa-github"></i>&nbsp;GitHub</p></td>
 						<td><p>tomeczeklmaooo</p></td>
 					</tr>
@@ -225,7 +242,7 @@
 		<!-- not even scaling lol -->
 		<!-- nothing is scaling to begin with -->
 		<div class="notification">
-			<p>This version of my personal website is not ready just yet. It will undergo multiple iterations before it is ready.</p>
+			<p>This version of my website will be receiving updates that I don't think are ready to be pushed to the main website.</p>
 		</div>
 
 		<footer class="footer">
@@ -249,6 +266,7 @@
 			backgroundColor: 0x11100f
 		});
 
+		// the code down here can be changed to not be this retarded
 		// education
 		function show_education()
 		{
@@ -307,6 +325,17 @@
 		{
 			document.getElementById("subcontainer").style.display = 'block';
 			document.getElementById("socialmedia-subcontainer").style.display = 'none';
+		}
+
+		function player_team()
+		{
+			var now = new Date();
+			var team_joined_date = new Date("February 27, 2023");
+			var day = 1000 * 60 * 60 * 24; // one day length in milliseconds
+			var difference_time = now.getTime() - team_joined_date.getTime();
+			var difference_days = Math.round(difference_time / day);
+			document.getElementById("player-team").innerHTML = `<b>Current CS:GO team:</b> Descent E-Sports (joined 27/02/2023, ${difference_days} days ago)`;
+			setTimeout("player_team()", 1000);
 		}
 	</script>
 </body>

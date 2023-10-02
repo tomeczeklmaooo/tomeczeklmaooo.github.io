@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>tomeczeklmaooo</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/4140c3b052.js" crossorigin="anonymous"></script>
+</head>
+<body onload="init()">
+	<div class="container">
+		<header class="website-header">
+			<span class="header-text-large">tomeczeklmaooo</span>
+		</header>
+		<main class="main-content">
+			<p>2nd Grade IT Student, creator of useless things and wannabe CS:GO player.</p>
+			<p>Studying IT at <a href="https://zst-tp.pl/" target="_blank" rel="noopener noreferrer" class="link">&#128279; Zespół Szkół Technicznych Tarnowo Podgórne</a> (2021 &mdash; now).</p>
+			<p>
+				<b>Skills:</b>
+				<ul style="margin-top: -15px;">
+					<li>CMD (Windows Commandline)</li>
+					<li>HTML</li>
+					<li>CSS</li>
+					<li>JavaScript (not much)</li>
+				</ul>
+			</p>
+			<p id="player-team">
+				<b>Current CS:GO team:</b> Descent eSports (joined dd/mm/yyyy, -- days ago)
+			</p>
+			<p>
+				<b>Achievements:</b>
+				<table class="achievements-table">
+					<thead>
+						<tr>
+							<th style="text-align: center;">Game</th>
+							<th style="text-align: center;">Tournament / League</th>
+							<th style="text-align: center;">Placement</th>
+							<th style="text-align: center;">Win, Loss / Round Win, Round Loss</th>
+							<th style="text-align: center;">Played</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>CS:GO</td>
+							<td>ARRMY.PL Open S6 Powered by MyBestPharm.com</td>
+							<td>Top 72</td>
+							<td><span class="match-win">7W</span> <span class="match-loss">3L</span>&emsp;/&emsp;139RW 75RL</td>
+							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
+						</tr>
+						<tr>
+							<td>CS:GO</td>
+							<td>ARRMY.PL Masters S7 Open Qualifier #1</td>
+							<td>Top 17-32</td>
+							<td><span class="match-win">0W</span> <span class="match-loss">1L</span>&emsp;/&emsp;1RW 16RL</td>
+							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
+						</tr>
+						<tr>
+							<td>CS:GO</td>
+							<td>ARRMY.PL Masters S7 Open Qualifier #2</td>
+							<td>Top 9-16</td>
+							<td><span class="match-win">0W</span> <span class="match-loss">1L</span>&emsp;/&emsp;3RW 16RL</td>
+							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
+						</tr>
+						<tr>
+							<td>CS:GO</td>
+							<td>ARRMY.PL Masters S7 Open Qualifier #3</td>
+							<td>Top 9-16</td>
+							<td><span class="match-win">0W</span> <span class="match-loss">1L</span>&emsp;/&emsp;4RW 16RL</td>
+							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
+						</tr>
+						<tr>
+							<td>CS:GO</td>
+							<td>ARRMY.PL Rising S7 Open Qualifier #2</td>
+							<td>Top 9-16</td>
+							<td><span class="match-win">0W</span> <span class="match-loss">1L</span>&emsp;/&emsp;1RW 16RL</td>
+							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
+						</tr>
+						<tr>
+							<td>CS:GO</td>
+							<td>ARRMY.PL Rising S7 Open Qualifier #4</td>
+							<td>Top 5-8</td>
+							<td><span class="match-win">0W</span> <span class="match-loss">1L</span>&emsp;/&emsp;5RW 16RL</td>
+							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
+						</tr>
+						<tr>
+							<td>CS:GO</td>
+							<td>PGE Dywizja Mistrzowska Split 2 Open Qualifier</td>
+							<td>Top 17-32</td>
+							<td><span class="match-win">1W</span> <span class="match-loss">1L</span>&emsp;/&emsp;19RW 16RL</td>
+							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
+						</tr>
+						<tr>
+							<td>CS:GO</td>
+							<td>ESL Challenger Katowice 2023 Europe Open Qualifier</td>
+							<td>Top 129-256</td>
+							<td><span class="match-win">1W</span> <span class="match-loss">1L</span>&emsp;/&emsp;16RW 20RL</td>
+							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
+						</tr>
+						<tr>
+							<td>CS:GO</td>
+							<td>ARRMY.PL Open S7</td>
+							<td>Top 85</td>
+							<td><span class="match-win">6W</span> <span class="match-loss">4L</span>&emsp;/&emsp;144RW 77RL</td>
+							<td style="text-align: center;"><span class="tournament-notplayed"><i class="fa-solid fa-xmark"></i></span></td>
+						</tr>
+					</tbody>
+				</table>
+				<span class="match-walkover-counting">Walkovers counted as 16-0 in BO1, 32-0 in BO3, 48-0 in BO5</span>
+				<!--
+				<ul style="margin-top: -15px;">
+					<li>Top 72 ARRMY.PL CS:GO Open S6 Powered by MyBestPharm.com with Descent eSports</li>
+					<ul style="margin-bottom: 15px;">
+						<li>Descent eSports [9] - [16] SE7ENS</li>
+						<li>Descent eSports [16] - [4] Dzban Team</li>
+						<li>Descent eSports [16] - [7] UnLegalTeam</li>
+						<li>Descent eSports [16] - [7] GCNR</li>
+						<li>Descent eSports [1] - [0] KONGO TO MY</li>
+						<li>Descent eSports [9] - [16] Marpol S.A</li>
+						<li>Descent eSports [9] - [16] WBM</li>
+						<li>Descent eSports [16] - [9] POTGEJ</li>
+						<li>Descent eSports [1] - [0] Reynars</li>
+						<li>Descent eSports [1] - [0] Hakuren-Esport</li>
+					</ul>
+					<li>Top 17-32 ARRMY.PL CS:GO Masters S7 Open Qualifier #1 with Descent eSports</li>
+					<ul style="margin-bottom: 15px;">
+						<li>Descent eSports [1] - [16] Constant Esport</li>
+					</ul>
+					<li>Top 9-16 ARRMY.PL CS:GO Masters S7 Open Qualifier #2 with Descent eSports</li>
+					<ul style="margin-bottom: 15px;">
+						<li>Descent eSports [3] - [16] Blazing Parrots</li>
+					</ul>
+					<li>Top 9-16 ARRMY.PL CS:GO Masters S7 Open Qualifier #3 with Descent eSports</li>
+					<ul style="margin-bottom: 15px;">
+						<li>Descent eSports [4] - [16] Constant Esport</li>
+					</ul>
+					<li>Top 9-16 ARRMY.PL CS:GO Rising S7 Open Qualifier #2 with Descent eSports</li>
+					<ul style="margin-bottom: 15px;">
+						<li>Descent eSports [1] - [16] TEAM AQUA</li>
+					</ul>
+					<li>Top -- ARRMY.PL CS:GO Rising S7 Open Qualifier #4 with Descent eSports</li>
+					<li>Top 33-64 ESL Mistrzostwa Polski Wiosna 2023 Open Qualifier with Descent eSports</li>
+					<ul style="margin-bottom: 15px;">
+						<li>Descent eSports [2] - [16] Team MCE</li>
+					</ul>
+					<li>Top 129-256 ESL Challenger Katowice 2023 Europe Open Qualifier with Descent eSports</li>
+					<ul style="margin-bottom: 15px;">
+						<li>Descent eSports [16] - [4] Zhytomyr Socks</li>
+						<li>Descent eSports [0] - [16] Aurora 1xbet</li>
+					</ul>
+				</ul>
+				-->
+			</p>
+			<p>
+				<b>Hobby:</b>
+				<ul style="margin-top: -15px;">
+					<li>Playing CS:GO</li>
+					<li>Speedrunning GTA V (sub 10 hour personal best)</li>
+					<li>Listening to music</li>
+				</ul>
+			</p>
+			<p>
+				<b>PC Specification:</b>
+				<ul style="margin-top: -15px;">
+					<li>Intel&reg; Core&trade; i5-11600K</li>
+					<li>NVIDIA&reg; GeForce&trade; GTX 1660 Ti</li>
+					<li>16GB DDR4 RAM</li>
+					<li>Microsoft&reg; Windows&trade; 11</li>
+				</ul>
+			</p>
+		</main>
+		<footer class="website-footer">
+			<span>Copyright &copy; 2021 &mdash; <script>document.write(new Date().getFullYear())</script> <a href="https://github.com/tomeczeklmaooo/" target="_blank" rel="noopener noreferrer" class="link">tomeczeklmaooo</a></span>
+		</footer>
+	</div>
+
+	<script>
+		function init()
+		{
+			var now = new Date();
+			var team_joined_date = new Date("February 27, 2023");
+			var day = 1000 * 60 * 60 * 24; // one day length in milliseconds
+			var difference_time = now.getTime() - team_joined_date.getTime();
+			var difference_days = Math.round(difference_time / day);
+			document.getElementById("player-team").innerHTML = `<b>Current CS:GO team:</b> Descent eSports (joined 27/02/2023, ${difference_days} days ago)`;
+			setTimeout("init()", 1000);
+		}
+	</script>
+</body>
+</html>

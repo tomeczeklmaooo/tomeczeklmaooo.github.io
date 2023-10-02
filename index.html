@@ -1,3 +1,7 @@
+<!--
+	all of this does not scale to screen size so i have to probably rework all of that to make sure it all works as it should.
+	this might take a few weeks at most (knowing me)
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,184 +14,328 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
 	<script src="https://kit.fontawesome.com/4140c3b052.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js" integrity="sha512-3RlxD1bW34eFKPwj9gUXEWtdSMC59QqIqHnD8O/NoTwSJhgxRizdcFVQhUMFyTp5RwLTDL0Lbcqtl8b7bFAzog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.topology.min.js"></script>
 </head>
-<body onload="init()">
-	<div class="container">
-		<header class="website-header">
-			<span class="header-text-large">tomeczeklmaooo</span>
-		</header>
-		<main class="main-content">
-			<p>2nd Grade IT Student, creator of useless things and wannabe CS:GO player.</p>
-			<p>Studying IT at <a href="https://zst-tp.pl/" target="_blank" rel="noopener noreferrer" class="link">&#128279; Zespół Szkół Technicznych Tarnowo Podgórne</a> (2021 &mdash; now).</p>
-			<p>
-				<b>Skills:</b>
-				<ul style="margin-top: -15px;">
-					<li>CMD (Windows Commandline)</li>
-					<li>HTML</li>
-					<li>CSS</li>
-					<li>JavaScript (not much)</li>
-				</ul>
-			</p>
-			<p id="player-team">
-				<b>Current CS:GO team:</b> Descent eSports (joined dd/mm/yyyy, -- days ago)
-			</p>
-			<p>
-				<b>Achievements:</b>
-				<table class="achievements-table">
-					<thead>
-						<tr>
-							<th style="text-align: center;">Game</th>
-							<th style="text-align: center;">Tournament / League</th>
-							<th style="text-align: center;">Placement</th>
-							<th style="text-align: center;">Win, Loss / Round Win, Round Loss</th>
-							<th style="text-align: center;">Played</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>CS:GO</td>
-							<td>ARRMY.PL Open S6 Powered by MyBestPharm.com</td>
-							<td>Top 72</td>
-							<td><span class="match-win">7W</span> <span class="match-loss">3L</span>&emsp;/&emsp;139RW 75RL</td>
-							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
-						</tr>
-						<tr>
-							<td>CS:GO</td>
-							<td>ARRMY.PL Masters S7 Open Qualifier #1</td>
-							<td>Top 17-32</td>
-							<td><span class="match-win">0W</span> <span class="match-loss">1L</span>&emsp;/&emsp;1RW 16RL</td>
-							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
-						</tr>
-						<tr>
-							<td>CS:GO</td>
-							<td>ARRMY.PL Masters S7 Open Qualifier #2</td>
-							<td>Top 9-16</td>
-							<td><span class="match-win">0W</span> <span class="match-loss">1L</span>&emsp;/&emsp;3RW 16RL</td>
-							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
-						</tr>
-						<tr>
-							<td>CS:GO</td>
-							<td>ARRMY.PL Masters S7 Open Qualifier #3</td>
-							<td>Top 9-16</td>
-							<td><span class="match-win">0W</span> <span class="match-loss">1L</span>&emsp;/&emsp;4RW 16RL</td>
-							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
-						</tr>
-						<tr>
-							<td>CS:GO</td>
-							<td>ARRMY.PL Rising S7 Open Qualifier #2</td>
-							<td>Top 9-16</td>
-							<td><span class="match-win">0W</span> <span class="match-loss">1L</span>&emsp;/&emsp;1RW 16RL</td>
-							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
-						</tr>
-						<tr>
-							<td>CS:GO</td>
-							<td>ARRMY.PL Rising S7 Open Qualifier #4</td>
-							<td>Top 5-8</td>
-							<td><span class="match-win">0W</span> <span class="match-loss">1L</span>&emsp;/&emsp;5RW 16RL</td>
-							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
-						</tr>
-						<tr>
-							<td>CS:GO</td>
-							<td>PGE Dywizja Mistrzowska Split 2 Open Qualifier</td>
-							<td>Top 17-32</td>
-							<td><span class="match-win">1W</span> <span class="match-loss">1L</span>&emsp;/&emsp;19RW 16RL</td>
-							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
-						</tr>
-						<tr>
-							<td>CS:GO</td>
-							<td>ESL Challenger Katowice 2023 Europe Open Qualifier</td>
-							<td>Top 129-256</td>
-							<td><span class="match-win">1W</span> <span class="match-loss">1L</span>&emsp;/&emsp;16RW 20RL</td>
-							<td style="text-align: center;"><span class="tournament-played"><i class="fa-solid fa-check"></i></span></td>
-						</tr>
-						<tr>
-							<td>CS:GO</td>
-							<td>ARRMY.PL Open S7</td>
-							<td>Top 85</td>
-							<td><span class="match-win">6W</span> <span class="match-loss">4L</span>&emsp;/&emsp;144RW 77RL</td>
-							<td style="text-align: center;"><span class="tournament-notplayed"><i class="fa-solid fa-xmark"></i></span></td>
-						</tr>
-					</tbody>
+<body onload="player_team()">
+	<div class="container" id="container">
+		<!-- MAIN -->
+		<div class="subcontainer" id="subcontainer">
+			<header class="header">
+				<span>tomeczeklmaooo</span>
+			</header>
+			<main class="main-content">
+				<nav class="navigation">
+					<div class="nav-item" onclick="show_education()">Education</div>
+					<div class="nav-item" onclick="show_projects()">Projects</div>
+					<div class="nav-item" onclick="show_skills()">Skills</div>
+					<div class="nav-item" onclick="show_esports()">E-Sports</div>
+					<div class="nav-item" onclick="show_socialmedia()">Social Media</div>
+					<div style="clear: both;"></div>
+				</nav>
+			</main>
+		</div>
+
+		<!-- EDUCATION -->
+		<div class="education-subcontainer" id="education-subcontainer">
+			<header class="education-header">
+				<span>Education</span>
+			</header>
+			<main class="education-content">
+				<table>
+					<tr>
+						<th>Schools</th>
+						<th>Certificates</th>
+						<th>Qualifications</th>
+						<th>Internship</th>
+						<th>Languages</th>
+					</tr>
+					<tr>
+						<td><p>ZST Tarnowo Podgórne:&emsp;2021 &mdash; now</p></td> <!-- schools -->
+						<td><p>AI - Mój Pierwszy Krok</p></td> <!-- certificates -->
+						<td><p>&nbsp;</p></td> <!-- qualifications -->
+						<td><p>&nbsp;</p></td> <!-- internship -->
+						<td><p>Polish [native]</p></td> <!-- language -->
+					</tr>
+					<tr>
+						<td><p>&nbsp;</p></td> <!-- schools -->
+						<td><p>&nbsp;</p></td> <!-- certificates -->
+						<td><p>&nbsp;</p></td> <!-- qualifications -->
+						<td><p>&nbsp;</p></td> <!-- internship -->
+						<td><p>English [B2+]</p></td> <!-- language -->
+					</tr>
+					<tr>
+						<td><p>&nbsp;</p></td> <!-- schools -->
+						<td><p>&nbsp;</p></td> <!-- certificates -->
+						<td><p>&nbsp;</p></td> <!-- qualifications -->
+						<td><p>&nbsp;</p></td> <!-- internship -->
+						<td><p>German [A2]</p></td> <!-- language -->
+					</tr>
 				</table>
-				<span class="match-walkover-counting">Walkovers counted as 16-0 in BO1, 32-0 in BO3, 48-0 in BO5</span>
-				<!--
-				<ul style="margin-top: -15px;">
-					<li>Top 72 ARRMY.PL CS:GO Open S6 Powered by MyBestPharm.com with Descent eSports</li>
-					<ul style="margin-bottom: 15px;">
-						<li>Descent eSports [9] - [16] SE7ENS</li>
-						<li>Descent eSports [16] - [4] Dzban Team</li>
-						<li>Descent eSports [16] - [7] UnLegalTeam</li>
-						<li>Descent eSports [16] - [7] GCNR</li>
-						<li>Descent eSports [1] - [0] KONGO TO MY</li>
-						<li>Descent eSports [9] - [16] Marpol S.A</li>
-						<li>Descent eSports [9] - [16] WBM</li>
-						<li>Descent eSports [16] - [9] POTGEJ</li>
-						<li>Descent eSports [1] - [0] Reynars</li>
-						<li>Descent eSports [1] - [0] Hakuren-Esport</li>
-					</ul>
-					<li>Top 17-32 ARRMY.PL CS:GO Masters S7 Open Qualifier #1 with Descent eSports</li>
-					<ul style="margin-bottom: 15px;">
-						<li>Descent eSports [1] - [16] Constant Esport</li>
-					</ul>
-					<li>Top 9-16 ARRMY.PL CS:GO Masters S7 Open Qualifier #2 with Descent eSports</li>
-					<ul style="margin-bottom: 15px;">
-						<li>Descent eSports [3] - [16] Blazing Parrots</li>
-					</ul>
-					<li>Top 9-16 ARRMY.PL CS:GO Masters S7 Open Qualifier #3 with Descent eSports</li>
-					<ul style="margin-bottom: 15px;">
-						<li>Descent eSports [4] - [16] Constant Esport</li>
-					</ul>
-					<li>Top 9-16 ARRMY.PL CS:GO Rising S7 Open Qualifier #2 with Descent eSports</li>
-					<ul style="margin-bottom: 15px;">
-						<li>Descent eSports [1] - [16] TEAM AQUA</li>
-					</ul>
-					<li>Top -- ARRMY.PL CS:GO Rising S7 Open Qualifier #4 with Descent eSports</li>
-					<li>Top 33-64 ESL Mistrzostwa Polski Wiosna 2023 Open Qualifier with Descent eSports</li>
-					<ul style="margin-bottom: 15px;">
-						<li>Descent eSports [2] - [16] Team MCE</li>
-					</ul>
-					<li>Top 129-256 ESL Challenger Katowice 2023 Europe Open Qualifier with Descent eSports</li>
-					<ul style="margin-bottom: 15px;">
-						<li>Descent eSports [16] - [4] Zhytomyr Socks</li>
-						<li>Descent eSports [0] - [16] Aurora 1xbet</li>
-					</ul>
-				</ul>
-				-->
-			</p>
-			<p>
-				<b>Hobby:</b>
-				<ul style="margin-top: -15px;">
-					<li>Playing CS:GO</li>
-					<li>Speedrunning GTA V (sub 10 hour personal best)</li>
-					<li>Listening to music</li>
-				</ul>
-			</p>
-			<p>
-				<b>PC Specification:</b>
-				<ul style="margin-top: -15px;">
-					<li>Intel&reg; Core&trade; i5-11600K</li>
-					<li>NVIDIA&reg; GeForce&trade; GTX 1660 Ti</li>
-					<li>16GB DDR4 RAM</li>
-					<li>Microsoft&reg; Windows&trade; 11</li>
-				</ul>
-			</p>
-		</main>
-		<footer class="website-footer">
-			<span>Copyright &copy; 2021 &mdash; <script>document.write(new Date().getFullYear())</script> <a href="https://github.com/tomeczeklmaooo/" target="_blank" rel="noopener noreferrer" class="link">tomeczeklmaooo</a></span>
+			</main>
+			<span class="subpage-footer" onclick="hide_education()">Go back...</span>
+		</div>
+
+		<!-- PROJECTS -->
+		<div class="projects-subcontainer" id="projects-subcontainer">
+			<header class="projects-header">
+				<span>Projects</span>
+			</header>
+			<main class="projects-content">
+				<span>I'm not currently working on any projects due to school and exams.</span>
+				<!--<table>
+					<tr>
+						<th>Project name</th>
+						<th>Date started</th>
+						<th>Finished</th>
+						<th>Stage</th>
+					</tr>
+					<tr>
+						<td><p>toaster-cdn</p></td>
+						<td><p>May 1, 2023</p></td>
+						<td><p>No</p></td>
+						<td><p>???</p></td>
+					</tr>
+					<tr>
+						<td><p>Network UI</p></td>
+						<td><p>June 11, 2023</p></td>
+						<td><p>No</p></td>
+						<td><p>Gathering ideas</p></td>
+					</tr>
+				</table>-->
+			</main>
+			<span class="subpage-footer" onclick="hide_projects()">Go back...</span>
+		</div>
+
+		<!-- SKILLS -->
+		<div class="skills-subcontainer" id="skills-subcontainer">
+			<header class="skills-header">
+				<span>Skills</span>
+			</header>
+			<main class="skills-content">
+				<table>
+					<tr>
+						<th>Skill</th>
+						<th>Fluency</th>
+					</tr>
+					<tr>
+						<td><p>CMD</p></td>
+						<td><p>Intermediate</p></td>
+					</tr>
+					<tr>
+						<td><p>Bash</p></td>
+						<td><p>Beginner</p></td>
+					</tr>
+					<tr>
+						<td><p>HTML</p></td>
+						<td><p>Intermediate</p></td>
+					</tr>
+					<tr>
+						<td><p>CSS</p></td>
+						<td><p>Intermediate</p></td>
+					</tr>
+					<tr>
+						<td><p>JavaScript</p></td>
+						<td><p>Intermediate</p></td>
+					</tr>
+				</table>
+			</main>
+			<span class="subpage-footer" onclick="hide_skills()">Go back...</span>
+		</div>
+
+		<!-- E-SPORTS -->
+		<div class="esports-subcontainer" id="esports-subcontainer">
+			<header class="esports-header">
+				<span>E-Sports</span><br>
+				<span id="player-team" style="font-size: 12pt;"><b>Current CS:GO team:</b> Descent E-Sports (joined 27/02/2023, ${difference_days} days ago)</span>
+			</header>
+			<main class="esports-content">
+				<table>
+					<tr>
+						<th>Game</th>
+						<th>Tournament / League</th>
+						<th>Placement</th>
+						<th>Win / Draw / Loss Ratio</th>
+						<th>Played</th>
+					</tr>
+					<tr>
+						<td><p>CS:GO</p></td>
+						<td><p>ARRMY.PL Open S6 Powered by MyBestPharm.com</p></td>
+						<td><p>Top 72</p></td>
+						<td><p>7W 0D 3L</p></td>
+						<td><p><i class="fa-solid fa-check"></i></p></td>
+					</tr>
+					<tr>
+						<td><p>CS:GO</p></td>
+						<td><p>PGE Dywizja Mistrzowska Split 2 Open Qualifier</p></td>
+						<td><p>Top 17-32</p></td>
+						<td><p>1W 0D 1L</p></td>
+						<td><p><i class="fa-solid fa-check"></i></p></td>
+					</tr>
+					<tr>
+						<td><p>CS:GO</p></td>
+						<td><p>ESL Challenger Katowice 2023 Europe Open Qualifier</p></td>
+						<td><p>Top 129-256</p></td>
+						<td><p>1W 0D 1L</p></td>
+						<td><p><i class="fa-solid fa-check"></i></p></td>
+					</tr>
+					<tr>
+						<td><p>CS:GO</p></td>
+						<td><p>ARRMY.PL Open S7</p></td>
+						<td><p>Top 85</p></td>
+						<td><p>6W 0D 4L</p></td>
+						<td><p><i class="fa-solid fa-check"></i></p></td>
+					</tr>
+					<tr>
+						<td><p>CS:GO</p></td>
+						<td><p>Falcon League 3</p></td>
+						<td><p>Top 1 (Champions)</p></td>
+						<td><p>2W 2D 0L</p></td>
+						<td><p><i class="fa-solid fa-check"></i></p></td>
+					</tr>
+					<!--<tr>
+						<td><p>CS:GO</p></td>
+						<td><p>Falcon League 3</p></td>
+						<td><p>Top ??</p></td>
+						<td><p>1W 2D 0L</p></td>
+						<td><p><i class="fa-solid fa-xmark"></i></p></td>
+					</tr>-->
+				</table>
+			</main>
+			<span class="subpage-footer" onclick="hide_esports()">Go back...</span>
+		</div>
+
+		<!-- SOCIAL MEDIA -->
+		<div class="socialmedia-subcontainer" id="socialmedia-subcontainer">
+			<header class="socialmedia-header">
+				<span>Social Media</span>
+			</header>
+			<main class="socialmedia-content">
+				<table>
+					<tr>
+						<td><p><i class="fa-brands fa-instagram"></i>&nbsp;Instagram</p></td>
+						<td><p>tomeczeklmao</p></td>
+					</tr>
+					<tr>
+						<td><p><i class="fa-brands fa-discord"></i>&nbsp;Discord</p></td>
+						<td><p>toaster000_</p></td>
+					</tr>
+					<tr>
+						<td><p><i class="fa-brands fa-steam"></i>&nbsp;Steam</p></td>
+						<td><p>toaster000</p></td>
+					</tr>
+					<tr>
+						<td><p><i class="fa-solid fa-gears"></i>&nbsp;CS2 Settings</p></td>
+						<td><p>settings.gg/toaster000</p></td>
+					</tr>
+					<tr>
+						<td><p><i class="fa-brands fa-github"></i>&nbsp;GitHub</p></td>
+						<td><p>tomeczeklmaooo</p></td>
+					</tr>
+				</table>
+			</main>
+			<span class="subpage-footer" onclick="hide_socialmedia()">Go back...</span>
+		</div>
+
+		<!-- not even scaling lol -->
+		<!-- nothing is scaling to begin with -->
+		<div class="notification">
+			<p>I decided to push this version as the main website (even though the scaling does not work), mainly due to restructuring of repositories and the old website looks outdated.</p>
+		</div>
+
+		<footer class="footer">
+			<span>Copyright &copy; 2021 &mdash; <script>document.write(new Date().getFullYear())</script> tomeczeklmaooo</span><br><span>Built using HTML, CSS, JavaScript, VANTA and FontAwesome.</span>
 		</footer>
 	</div>
 
+	<script src="script.js"></script>
 	<script>
-		function init()
+		// website background
+		VANTA.TOPOLOGY({
+			el: "#container",
+			mouseControls: false,
+			touchControls: false,
+			gyroControls: false,
+			minHeight: 200.00,
+			minWidth: 200.00,
+			scale: 1.00,
+			scaleMobile: 1.00,
+			color: 0x0078d4,
+			backgroundColor: 0x11100f
+		});
+
+		// the code down here can be changed to not be this retarded
+		// education
+		function show_education()
+		{
+			document.getElementById("subcontainer").style.display = 'none';
+			document.getElementById("education-subcontainer").style.display = 'block';
+		}
+		function hide_education()
+		{
+			document.getElementById("subcontainer").style.display = 'block';
+			document.getElementById("education-subcontainer").style.display = 'none';
+		}
+
+		// projects
+		function show_projects()
+		{
+			document.getElementById("subcontainer").style.display = 'none';
+			document.getElementById("projects-subcontainer").style.display = 'block';
+		}
+		function hide_projects()
+		{
+			document.getElementById("subcontainer").style.display = 'block';
+			document.getElementById("projects-subcontainer").style.display = 'none';
+		}
+
+		// skills
+		function show_skills()
+		{
+			document.getElementById("subcontainer").style.display = 'none';
+			document.getElementById("skills-subcontainer").style.display = 'block';
+		}
+		function hide_skills()
+		{
+			document.getElementById("subcontainer").style.display = 'block';
+			document.getElementById("skills-subcontainer").style.display = 'none';
+		}
+
+		// e-sports
+		function show_esports()
+		{
+			document.getElementById("subcontainer").style.display = 'none';
+			document.getElementById("esports-subcontainer").style.display = 'block';
+		}
+		function hide_esports()
+		{
+			document.getElementById("subcontainer").style.display = 'block';
+			document.getElementById("esports-subcontainer").style.display = 'none';
+		}
+
+		// social media
+		function show_socialmedia()
+		{
+			document.getElementById("subcontainer").style.display = 'none';
+			document.getElementById("socialmedia-subcontainer").style.display = 'block';
+		}
+		function hide_socialmedia()
+		{
+			document.getElementById("subcontainer").style.display = 'block';
+			document.getElementById("socialmedia-subcontainer").style.display = 'none';
+		}
+
+		function player_team()
 		{
 			var now = new Date();
 			var team_joined_date = new Date("February 27, 2023");
 			var day = 1000 * 60 * 60 * 24; // one day length in milliseconds
 			var difference_time = now.getTime() - team_joined_date.getTime();
 			var difference_days = Math.round(difference_time / day);
-			document.getElementById("player-team").innerHTML = `<b>Current CS:GO team:</b> Descent eSports (joined 27/02/2023, ${difference_days} days ago)`;
-			setTimeout("init()", 1000);
+			document.getElementById("player-team").innerHTML = `<b>Current CS:GO team:</b> Descent E-Sports (joined 27/02/2023, ${difference_days} days ago)`;
+			setTimeout("player_team()", 1000);
 		}
 	</script>
 </body>
