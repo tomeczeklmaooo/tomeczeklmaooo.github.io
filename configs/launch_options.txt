@@ -1,0 +1,1 @@
++exec autoexec_cs2.cfg -no-browser -forcenovsync -high
