@@ -8,7 +8,10 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="My personal website, built using HTML5, CSS, JS, VANTA and FontAwesome.">
+	<meta name="keywords" content="cs2, tomeczeklmao tomeczeklmaooo, descent, descentesports, descent-esports, toaster, toaster000, toaster000_, toastercs">
 	<title>tomeczeklmaooo</title>
+	<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="style.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,8 +34,8 @@
 					<div class="nav-item" onclick="show_education()">Education</div>
 					<div class="nav-item" onclick="show_projects()">Projects</div>
 					<div class="nav-item" onclick="show_skills()">Skills</div>
-					<div class="nav-item" onclick="show_esports()">E-Sports</div>
-					<div class="nav-item" onclick="show_socialmedia()">Social Media</div>
+					<div class="nav-item" onclick="show_esports()">eSports</div>
+					<div class="nav-item" onclick="show_links()">Links</div>
 					<div style="clear: both;"></div>
 				</nav>
 			</main>
@@ -84,7 +87,7 @@
 				<span>Projects</span>
 			</header>
 			<main class="projects-content">
-				<span>I'm not currently working on any projects due to school and exams.</span>
+				<span class="no-projects">I'm not currently working on any projects due to school and exams.</span>
 				<!--<table>
 					<tr>
 						<th>Project name</th>
@@ -93,16 +96,16 @@
 						<th>Stage</th>
 					</tr>
 					<tr>
-						<td><p>toaster-cdn</p></td>
-						<td><p>May 1, 2023</p></td>
-						<td><p>No</p></td>
-						<td><p>???</p></td>
+						<td><p>PROJECT_NAME_1</p></td>
+						<td><p>MMMM DD, YYYY</p></td>
+						<td><p>PROJECT_FINISHED</p></td>
+						<td><p>PROJECT_STAGE</p></td>
 					</tr>
 					<tr>
-						<td><p>Network UI</p></td>
-						<td><p>June 11, 2023</p></td>
-						<td><p>No</p></td>
-						<td><p>Gathering ideas</p></td>
+						<td><p>PROJECT_NAME_2</p></td>
+						<td><p>MMMM DD, YYYY</p></td>
+						<td><p>PROJECT_FINISHED</p></td>
+						<td><p>PROJECT_STAGE</p></td>
 					</tr>
 				</table>-->
 			</main>
@@ -155,14 +158,14 @@
 				<table>
 					<tr>
 						<th>Game</th>
-						<th>Tournament / League</th>
+						<th>Tournament</th>
 						<th>Placement</th>
-						<th>Win / Draw / Loss Ratio</th>
+						<th>Win / Draw / Loss</th>
 						<th>Played</th>
 					</tr>
 					<tr>
 						<td><p>CS:GO</p></td>
-						<td><p>ARRMY.PL Open S6 Powered by MyBestPharm.com</p></td>
+						<td><p>ARRMY.PL Open S6</p></td>
 						<td><p>Top 72</p></td>
 						<td><p>7W 0D 3L</p></td>
 						<td><p><i class="fa-solid fa-check"></i></p></td>
@@ -191,12 +194,12 @@
 					<tr>
 						<td><p>CS:GO</p></td>
 						<td><p>Falcon League 3</p></td>
-						<td><p>Top 1 (Champions)</p></td>
+						<td><p style="color: gold;"><i class="fa-solid fa-crown"></i> Champions</p></td>
 						<td><p>2W 2D 0L</p></td>
 						<td><p><i class="fa-solid fa-check"></i></p></td>
 					</tr>
 					<!--<tr>
-						<td><p>CS:GO</p></td>
+						<td><p>CS2</p></td>
 						<td><p>Falcon League 3</p></td>
 						<td><p>Top ??</p></td>
 						<td><p>1W 2D 0L</p></td>
@@ -207,36 +210,36 @@
 			<span class="subpage-footer" onclick="hide_esports()">Go back...</span>
 		</div>
 
-		<!-- SOCIAL MEDIA -->
-		<div class="socialmedia-subcontainer" id="socialmedia-subcontainer">
-			<header class="socialmedia-header">
-				<span>Social Media</span>
+		<!-- LINKS -->
+		<div class="links-subcontainer" id="links-subcontainer">
+			<header class="links-header">
+				<span>Links</span>
 			</header>
-			<main class="socialmedia-content">
+			<main class="links-content">
 				<table>
 					<tr>
 						<td><p><i class="fa-brands fa-instagram"></i>&nbsp;Instagram</p></td>
-						<td><p>tomeczeklmao</p></td>
+						<td><span class="link" onclick="window.location.href = 'https:\/\/instagram.com\/tomeczeklmao'">tomeczeklmao</span></td>
 					</tr>
 					<tr>
 						<td><p><i class="fa-brands fa-discord"></i>&nbsp;Discord</p></td>
-						<td><p>toaster000_</p></td>
+						<td><span title="There is no link here :)">toaster000_</span></td>
 					</tr>
 					<tr>
 						<td><p><i class="fa-brands fa-steam"></i>&nbsp;Steam</p></td>
-						<td><p>toaster000</p></td>
+						<td><span class="link" onclick="window.location.href = 'https:\/\/steamcommunity.com\/id\/toaster000'">toaster000</span></td>
 					</tr>
 					<tr>
 						<td><p><i class="fa-solid fa-gears"></i>&nbsp;CS2 Settings</p></td>
-						<td><p>settings.gg/toaster000</p></td>
+						<td><span class="link" onclick="window.location.href = 'https:\/\/settings.gg\/toaster000'">toaster000</span></td>
 					</tr>
 					<tr>
 						<td><p><i class="fa-brands fa-github"></i>&nbsp;GitHub</p></td>
-						<td><p>tomeczeklmaooo</p></td>
+						<td><span class="link" onclick="window.location.href = 'https:\/\/github.com\/tomeczeklmaooo'">tomeczeklmaooo</span></td>
 					</tr>
 				</table>
 			</main>
-			<span class="subpage-footer" onclick="hide_socialmedia()">Go back...</span>
+			<span class="subpage-footer" onclick="hide_links()">Go back...</span>
 		</div>
 
 		<!-- not even scaling lol -->
@@ -316,15 +319,15 @@
 		}
 
 		// social media
-		function show_socialmedia()
+		function show_links()
 		{
 			document.getElementById("subcontainer").style.display = 'none';
-			document.getElementById("socialmedia-subcontainer").style.display = 'block';
+			document.getElementById("links-subcontainer").style.display = 'block';
 		}
-		function hide_socialmedia()
+		function hide_links()
 		{
 			document.getElementById("subcontainer").style.display = 'block';
-			document.getElementById("socialmedia-subcontainer").style.display = 'none';
+			document.getElementById("links-subcontainer").style.display = 'none';
 		}
 
 		function player_team()

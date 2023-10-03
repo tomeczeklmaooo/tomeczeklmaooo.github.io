@@ -219,8 +219,8 @@ body
 	justify-content: center;
 }
 
-/* SOCIAL MEDIA */
-.socialmedia-subcontainer
+/* LINKS */
+.links-subcontainer
 {
 	display: none;
 	width: 75vw;
@@ -232,7 +232,7 @@ body
 	transform: translate(-50%, -50%);
 }
 
-.socialmedia-subcontainer .socialmedia-header
+.links-subcontainer .links-header
 {
 	top: 0;
 	text-align: center;
@@ -242,7 +242,7 @@ body
 	width: 100%;
 }
 
-.socialmedia-subcontainer .socialmedia-content
+.links-subcontainer .links-content
 {
 	top: 0;
 	text-align: center;
@@ -270,6 +270,19 @@ body
 	letter-spacing: 1px;
 }
 
+.link
+{
+	width: 100%;
+	font-size: 16px;
+	transition: 0.15s ease-in-out;
+}
+
+.link:hover
+{
+	cursor: pointer;
+	letter-spacing: 1px;
+}
+
 table
 {
 	border-collapse: collapse;
@@ -292,7 +305,7 @@ table td, table th
 
 .notification
 {
-	background-color: #c1e1c11f;
+	background-color: #c1e1c1a0;
 	width: inherit;
 	padding: 0;
 	text-align: center;
@@ -300,4 +313,63 @@ table td, table th
 	top: 0;
 	position: absolute;
 	margin-top: 0.5vh;
+}
+
+@media (max-width: 1000px)
+{
+	.header
+	{
+		font-size: 36pt !important;
+	}
+	.education-header, .projects-header, .skills-header, .esports-header, .socialmedia-header
+	{
+		font-size: 24pt !important;
+	}
+	.navigation
+	{
+		font-size: 12pt !important;
+	}
+	.notification
+	{
+		font-size: 8pt !important;
+	}
+	.education-content table, .skills-content table, .esports-content table, .links-content table
+	{
+		font-size: 10pt !important;
+	}
+	.subpage-footer
+	{
+		font-size: 10pt !important;
+	}
+}
+@media (max-width: 500px)
+{
+	.header
+	{
+		font-size: 24pt !important;
+	}
+	.education-header, .projects-header, .skills-header, .esports-header, .socialmedia-header
+	{
+		font-size: 14pt !important;
+	}
+	.navigation
+	{
+		font-size: 8pt !important;
+	}
+	.notification
+	{
+		font-size: 7pt !important;
+	}
+	.footer
+	{
+		font-size: 6pt !important;
+	}
+	.no-projects
+	{
+		font-size: 8pt !important;
+	}
+	.education-content table, .skills-content table, .esports-content table, .links-content table
+	{
+		font-size: 8pt !important;
+	}
 }
