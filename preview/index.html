@@ -1,7 +1,3 @@
-<!--
-	all of this does not scale to screen size so i have to probably rework all of that to make sure it all works as it should.
-	this might take a few weeks at most (knowing me)
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +18,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js" integrity="sha512-3RlxD1bW34eFKPwj9gUXEWtdSMC59QqIqHnD8O/NoTwSJhgxRizdcFVQhUMFyTp5RwLTDL0Lbcqtl8b7bFAzog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.topology.min.js"></script>
 </head>
-<body onload="player_team()">
+<body onload="initialize_functions()">
 	<div class="container" id="container">
 		<!-- MAIN -->
 		<div class="subcontainer" id="subcontainer">
@@ -31,11 +27,11 @@
 			</header>
 			<main class="main-content">
 				<nav class="navigation">
-					<div class="nav-item" onclick="show_education()">Education</div>
-					<div class="nav-item" onclick="show_projects()">Projects</div>
-					<div class="nav-item" onclick="show_skills()">Skills</div>
-					<div class="nav-item" onclick="show_esports()">eSports</div>
-					<div class="nav-item" onclick="show_links()">Links</div>
+					<div class="nav-item" onclick="show_container('education-subcontainer')">Education</div>
+					<div class="nav-item" onclick="show_container('projects-subcontainer')">Projects</div>
+					<div class="nav-item" onclick="show_container('skills-subcontainer')">Skills</div>
+					<div class="nav-item" onclick="show_container('esports-subcontainer')">eSports</div>
+					<div class="nav-item" onclick="show_container('links-subcontainer')">Links</div>
 					<div style="clear: both;"></div>
 				</nav>
 			</main>
@@ -78,7 +74,7 @@
 					</tr>
 				</table>
 			</main>
-			<span class="subpage-footer" onclick="hide_education()">Go back...</span>
+			<span class="subpage-footer" onclick="hide_container('education-subcontainer')">Go back...</span>
 		</div>
 
 		<!-- PROJECTS -->
@@ -87,7 +83,7 @@
 				<span>Projects</span>
 			</header>
 			<main class="projects-content">
-				<span class="no-projects">I'm not currently working on any projects due to school and exams.</span>
+				<span class="no-projects">I'm not currently working on any projects due to school and exams, and even if I am working on something, it will appear here when it's ready :)</span>
 				<!--<table>
 					<tr>
 						<th>Project name</th>
@@ -109,7 +105,7 @@
 					</tr>
 				</table>-->
 			</main>
-			<span class="subpage-footer" onclick="hide_projects()">Go back...</span>
+			<span class="subpage-footer" onclick="hide_container('projects-subcontainer')">Go back...</span>
 		</div>
 
 		<!-- SKILLS -->
@@ -145,14 +141,14 @@
 					</tr>
 				</table>
 			</main>
-			<span class="subpage-footer" onclick="hide_skills()">Go back...</span>
+			<span class="subpage-footer" onclick="hide_container('skills-subcontainer')">Go back...</span>
 		</div>
 
 		<!-- E-SPORTS -->
 		<div class="esports-subcontainer" id="esports-subcontainer">
 			<header class="esports-header">
 				<span>E-Sports</span><br>
-				<span id="player-team" style="font-size: 12pt;"><b>Current CS:GO team:</b> Descent E-Sports (joined 27/02/2023, ${difference_days} days ago)</span>
+				<span id="player-team" style="font-size: 12pt;"><b>Current CS2 team:</b> [team_name] (joined dd/MM/yyyy, ${difference_days} days ago)</span>
 			</header>
 			<main class="esports-content">
 				<table>
@@ -207,7 +203,7 @@
 					</tr>-->
 				</table>
 			</main>
-			<span class="subpage-footer" onclick="hide_esports()">Go back...</span>
+			<span class="subpage-footer" onclick="hide_container('esports-subcontainer')">Go back...</span>
 		</div>
 
 		<!-- LINKS -->
@@ -239,11 +235,10 @@
 					</tr>
 				</table>
 			</main>
-			<span class="subpage-footer" onclick="hide_links()">Go back...</span>
+			<span class="subpage-footer" onclick="hide_container('links-subcontainer')">Go back...</span>
 		</div>
 
-		<!-- not even scaling lol -->
-		<!-- nothing is scaling to begin with -->
+		<!-- notification on the top of the website -->
 		<div class="notification">
 			<p>This version of my website will be receiving updates that I don't think are ready to be pushed to the main website.</p>
 		</div>
@@ -269,76 +264,35 @@
 			backgroundColor: 0x11100f
 		});
 
-		// the code down here can be changed to not be this retarded
-		// education
-		function show_education()
+		// 2 functions to show and hide sub-containers
+		// each sub-container had hardcoded functions
+		function show_container(container_id)
 		{
-			document.getElementById("subcontainer").style.display = 'none';
-			document.getElementById("education-subcontainer").style.display = 'block';
-		}
-		function hide_education()
-		{
-			document.getElementById("subcontainer").style.display = 'block';
-			document.getElementById("education-subcontainer").style.display = 'none';
+			document.getElementById('subcontainer').style.display = 'none';
+			document.getElementById(container_id).style.display = 'block';
 		}
 
-		// projects
-		function show_projects()
+		function hide_container(container_id)
 		{
-			document.getElementById("subcontainer").style.display = 'none';
-			document.getElementById("projects-subcontainer").style.display = 'block';
-		}
-		function hide_projects()
-		{
-			document.getElementById("subcontainer").style.display = 'block';
-			document.getElementById("projects-subcontainer").style.display = 'none';
-		}
-
-		// skills
-		function show_skills()
-		{
-			document.getElementById("subcontainer").style.display = 'none';
-			document.getElementById("skills-subcontainer").style.display = 'block';
-		}
-		function hide_skills()
-		{
-			document.getElementById("subcontainer").style.display = 'block';
-			document.getElementById("skills-subcontainer").style.display = 'none';
-		}
-
-		// e-sports
-		function show_esports()
-		{
-			document.getElementById("subcontainer").style.display = 'none';
-			document.getElementById("esports-subcontainer").style.display = 'block';
-		}
-		function hide_esports()
-		{
-			document.getElementById("subcontainer").style.display = 'block';
-			document.getElementById("esports-subcontainer").style.display = 'none';
-		}
-
-		// social media
-		function show_links()
-		{
-			document.getElementById("subcontainer").style.display = 'none';
-			document.getElementById("links-subcontainer").style.display = 'block';
-		}
-		function hide_links()
-		{
-			document.getElementById("subcontainer").style.display = 'block';
-			document.getElementById("links-subcontainer").style.display = 'none';
+			document.getElementById('subcontainer').style.display = 'block';
+			document.getElementById(container_id).style.display = 'none';
 		}
 
 		function player_team()
 		{
 			var now = new Date();
-			var team_joined_date = new Date("February 27, 2023");
+			var team_joined_date = new Date("2023-02-27T20:12:00");
 			var day = 1000 * 60 * 60 * 24; // one day length in milliseconds
 			var difference_time = now.getTime() - team_joined_date.getTime();
 			var difference_days = Math.round(difference_time / day);
-			document.getElementById("player-team").innerHTML = `<b>Current CS:GO team:</b> Descent E-Sports (joined 27/02/2023, ${difference_days} days ago)`;
+			document.getElementById("player-team").innerHTML = `<b>Current CS2 team:</b> Descent E-Sports (joined 27/02/2023, ${difference_days} days ago)`;
 			setTimeout("player_team()", 1000);
+		}
+
+		// every function called in here will be executed on page load
+		function initialize_functions()
+		{
+			player_team(); // player team info
 		}
 	</script>
 </body>
