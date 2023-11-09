@@ -17,6 +17,7 @@
 	<script src="https://kit.fontawesome.com/4140c3b052.js" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js" integrity="sha512-3RlxD1bW34eFKPwj9gUXEWtdSMC59QqIqHnD8O/NoTwSJhgxRizdcFVQhUMFyTp5RwLTDL0Lbcqtl8b7bFAzog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.topology.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body onload="initialize_functions()">
 	<div class="container" id="container">
@@ -152,43 +153,36 @@
 						<th>Game</th>
 						<th>Tournament</th>
 						<th>Placement</th>
-						<th>W/D/L</th>
 					</tr>
 					<tr>
 						<td><p>CS:GO</p></td>
 						<td><p>ARRMY.PL Open S6</p></td>
 						<td><p>72</p></td>
-						<td><p>7W 0D 3L</p></td>
 					</tr>
 					<tr>
 						<td><p>CS:GO</p></td>
 						<td><p>PGE Dywizja Mistrzowska Split 2 Open Qualifier</p></td>
 						<td><p>17-32</p></td>
-						<td><p>1W 0D 1L</p></td>
 					</tr>
 					<tr>
 						<td><p>CS:GO</p></td>
 						<td><p>ESL Challenger Katowice 2023 Europe Open Qualifier</p></td>
 						<td><p>129-256</p></td>
-						<td><p>1W 0D 1L</p></td>
 					</tr>
 					<tr>
 						<td><p>CS:GO</p></td>
 						<td><p>ARRMY.PL Open S7</p></td>
 						<td><p>85</p></td>
-						<td><p>6W 0D 4L</p></td>
 					</tr>
 					<tr>
 						<td><p>CS:GO</p></td>
 						<td><p>Falcon League 3</p></td>
-						<td><p style="color: gold;"><i class="fa-solid fa-crown"></i> Champions</p></td>
-						<td><p>2W 2D 0L</p></td>
+						<td><p style="color: gold;"><i class="fa-solid fa-crown"></i>&nbsp;Champions</p></td>
 					</tr>
 					<!--<tr>
 						<td><p>CS2</p></td>
 						<td><p>Falcon League 3</p></td>
 						<td><p>Top ??</p></td>
-						<td><p>1W 2D 0L</p></td>
 						<td><p><i class="fa-solid fa-check"></i></p></td>
 						<td><p><i class="fa-solid fa-xmark"></i></p></td>
 					</tr>-->
@@ -238,7 +232,7 @@
 		</div> -->
 
 		<footer class="footer">
-			<span>Copyright &copy; 2021 &mdash; <script>document.write(new Date().getFullYear())</script> tomeczeklmaooo</span><br><span>Built using HTML, CSS, JavaScript, VANTA and FontAwesome.</span>
+			<span>Copyright &copy; 2021 &mdash; <script>document.write(new Date().getFullYear())</script> tomeczeklmaooo</span>&emsp;//&emsp;<span>Built using HTML, CSS, JavaScript, VANTA and FontAwesome.</span>
 		</footer>
 	</div>
 
@@ -258,20 +252,24 @@
 			backgroundColor: 0x11100f
 		});
 
-		// 2 functions to show and hide sub-containers
-		// each sub-container had hardcoded functions
+		// functions to show and hide sub-containers
 		function show_container(container_id)
 		{
+			$('#subcontainer').fadeOut();
 			document.getElementById('subcontainer').style.display = 'none';
+			$('#' + container_id).fadeIn();
 			document.getElementById(container_id).style.display = 'block';
 		}
 
 		function hide_container(container_id)
 		{
-			document.getElementById('subcontainer').style.display = 'block';
+			$('#' + container_id).fadeOut();
 			document.getElementById(container_id).style.display = 'none';
+			$('#subcontainer').fadeIn();
+			document.getElementById('subcontainer').style.display = 'block';
 		}
 
+		// displaying for how long I have been in a team
 		function player_team()
 		{
 			var now = new Date();
