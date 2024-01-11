@@ -1,19 +1,43 @@
 <!--
 	rce-data: głównie służy do odświeżania danych o rynkowej cenie energii elektrycznej
 	źródło: https://www.pse.pl/dane-systemowe/funkcjonowanie-rb/raporty-dobowe-z-funkcjonowania-rb/podstawowe-wskazniki-cenowe-i-kosztowe/rynkowa-cena-energii-elektrycznej-rce
-	cykl odświeżania: co 24 godziny
+	cykl odświeżania: co 5 minut (najlepsza opcja, żeby wiedzieć w miarę na bieżąco jaki jest obecnie dzień)
 -->
----
-permalink: /rce-data/daily/
----
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>rce-data/daily</title>
+	<style>
+		body
+		{
+			font-family: monospace;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
-<body>
-	Niedostępne jeszcze :)
+<body onload="getCurrentCSVData()">
+	<pre id="csv-data">jeżeli to widzisz to znaczy, że albo coś się musiało zepsuć albo skrypt się nie załadował</pre>
+
+	<script>
+		var baseURL = 'https://www.pse.pl/getcsv/-/export/csv/PL_CENY_RYN_EN/data/';
+		function getCurrentCSVData()
+		{
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1
+			var day = date.getDate();
+			var hour = date.getHours();
+			if (month < 10) month = '0' + month;
+			if (day < 10) day = '0' + day;
+			var fulldate = year + month + day; // no spaces
+			fetch('data.csv').then((res) => res.text()).then((text) => {
+				var text_modified = text.replace(/[\r\n\x0B\x0C\u0085\u2028\u2029]+/g, '\n');
+				document.getElementById('csv-data').innerHTML = text_modified;
+			}).catch((e) => console.error(e));
+			setInterval('getCurrentCSVData', 300000); // 5 minute interval for refresh
+		}
+	</script>
 </body>
 </html>
