@@ -1,0 +1,8 @@
+body
+{
+	font-family: monospace;
+}
+div#csv-data
+{
+	white-space: pre;
+}

@@ -46,6 +46,24 @@ permalink: /sites/rce-data/daily/
 			}).catch((e) => console.error(e));
 			setInterval('getCurrentCSVData', 300000); // 5 minute interval for refresh
 		}
+
+		// $.get(csvURL_with_CORS_proxy).then(function (html) {
+		// 	// Success response
+		// 	var date = new Date();
+		// 	var year = date.getFullYear();
+		// 	var month = date.getMonth() + 1
+		// 	var day = date.getDate();
+		// 	var hour = date.getHours();
+		// 	if (month < 10) month = '0' + month;
+		// 	if (day < 10) day = '0' + day;
+		// 	var fulldate = year + month + day; // no spaces
+		// 	var csvURL_with_CORS_proxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + fulldate);
+		// 	var $prices = $(html).find('#csv-data');
+		// 	document.write($prices.html());
+		// }, function () {
+		// 	// Error response
+		// 	document.write('Access denied');
+		// });
 	</script>
 </body>
 </html>
