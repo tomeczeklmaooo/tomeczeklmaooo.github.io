@@ -7,10 +7,49 @@
 	<meta name="description" content="My personal website">
 	<meta name="keywords" content="cs2, tomeczeklmao tomeczeklmaooo, descent, descentesports, descent-esports, toaster, toaster000, toaster000_, toastercs">
 	<title>tomeczeklmaooo</title>
-	<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Nothing+You+Could+Do" rel="stylesheet">
 </head>
 <body onload="initialize_functions()">
+	<div class="container" id="container">
+		<header class="header" onclick="changecontainer(0)">
+			tomeczeklmaooo<br>
+			<span class="header-subtitle">@toastercs_</span>
+		</header>
+		<div class="content">
+			<aside class="aside">
+				<div class="aside-link" onclick="changecontainer(1)">Education</div>
+				<div class="aside-link" onclick="changecontainer(2)">Projects</div>
+				<div class="aside-link" onclick="changecontainer(3)">Skills</div>
+				<div class="aside-link" onclick="changecontainer(4)">Esports</div>
+				<div class="aside-link" onclick="changecontainer(5)">Links</div>
+			</aside>
+			<main class="main" id="main">
+				Nothing to see here just yet. Try clicking on one of the links on the left to see more.
+			</main>
+			<div class="main-subcontainer" id="education-subcontainer">
+				This subpage will be filled with my education information, including schools, qualifications, language levels, certificates, and possibly more.
+			</div>
+			<div class="main-subcontainer" id="projects-subcontainer">
+				This subpage will be filled with my projects.
+			</div>
+			<div class="main-subcontainer" id="skills-subcontainer">
+				This subpage will be filled with my skillset.
+			</div>
+			<div class="main-subcontainer" id="esports-subcontainer">
+				This subpage will be filled with esports achievements, but in a different, more scalable way compared to the current implementation which is present on the main website.
+			</div>
+			<div class="main-subcontainer" id="links-subcontainer">
+				This subpage will be filled with links, just like the currently main website does.
+			</div>
+		</div>
+		<footer class="footer">
+			<span>Copyright &copy; 2021 &mdash; <script>document.write(new Date().getFullYear());</script> tomeczeklmaooo</span>&emsp;&bull;&bull;&bull;&emsp;<span>Built using HTML, CSS and JavaScript.</span>&emsp;&bull;&bull;&bull;&emsp;<span class="footer-link" onclick="window.location.href='https:\/\/github.com\/tomeczeklmaooo\/tomeczeklmaooo.github.io'">GitHub Repository</span>
+		</footer>
+	</div>
 	<script src="script.js"></script>
 </body>
 </html>
