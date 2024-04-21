@@ -61,6 +61,14 @@ function changecontainer(container_id)
 	}
 }
 
+var broadcast_seasons = {
+	winter_2023: 'TP Major 2023',
+	summer_2024: 'Falcon League 4',
+	winter_2024: 'TBD',
+	summer_2025: 'TBD',
+	winter_2025: 'TBD'
+};
+
 // displaying for how long I have been in a team
 function player_team()
 {

@@ -124,14 +124,29 @@ footer.footer
 	text-shadow: 0px 0px 5px rgba(66, 68, 90, 1);
 	/* background-color: #f0ff0f; */
 }
-.footer-link
+.link
 {
 	transition: 0.15s ease-in-out;
 }
-.footer-link:hover
+.link:hover
 {
 	cursor: pointer;
 	font-weight: 700;
 	text-shadow: 0px 0px 15px rgba(66, 68, 90, 1);
 	letter-spacing: 1px;
+}
+
+
+
+/* table
+{
+	border-collapse: collapse;
+} */
+
+table td, table th
+{
+	text-align: justify;
+	padding: 0 15px;
+	/* background-color: #0353a4; */
+	width: 200px;
 }
