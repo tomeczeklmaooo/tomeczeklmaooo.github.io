@@ -42,17 +42,16 @@ permalink: /sites/rce-data/daily/
 				// to odkomentuj jeżeli chcesz zobaczyć jak całość wygląda bez wyciągania danych
 				// var text_readable = JSON.stringify(text, undefined, 4);
 				// document.body.appendChild(document.createElement('pre')).innerHTML = text_readable;
-    document.getElementById("data").innerHTML += text["value"][0]["doba"] + "\n";
+    document.getElementById("data").innerHTML += text["value"][0]["doba"] + "\n\n";
 				for (var i = 0; i < text["value"].length; i++)
 				{
 					if (text["value"][i]["udtczas"].substring(14) == '15') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 					{
-						document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11) + "\n"; // zacznie wycinać od znaku jedenastego do końca
-						document.getElementById("data").innerHTML += text["value"][i]["rce_pln"] + "\n\n";
+						document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11) + " - " + text["value"][i]["rce_pln"] +"\n"; // zacznie wycinać od znaku jedenastego do końca
 					}
 				}
 			}).catch((e) => console.error(e));
-			setInterval('apiGetPriceData', 300000); // 5 minute interval for refresh
+			setInterval('apiGetPriceData', 3600000); // 5 minute interval for refresh
 		}
 	</script>
 </body>
