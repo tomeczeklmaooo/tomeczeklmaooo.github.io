@@ -45,7 +45,7 @@ permalink: /sites/rce-data/daily/
 
 				for (var i = 0; i < text["value"].length; i++)
 				{
-					if (text["value"][i]["udtczas"].substring(14) == '00') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+					if (text["value"][i]["udtczas"].substring(11,13) == '00') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 					{
 						document.getElementById("data").innerHTML += text["value"][i]["doba"] + "\n";
 						document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11) + "\n"; // zacznie wycinać od znaku jedenastego do końca
