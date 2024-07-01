@@ -46,9 +46,9 @@ permalink: /sites/rce-data/daily/
 				document.getElementById("data").innerHTML += text["value"][0]["doba"] + "\n\n";
 				for (var i = 0; i < text["value"].length; i++)
 				{
-					if (text["value"][i]["udtczas"].substring(14) == '15') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+					if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 					{
-						document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11) + " - " + text["value"][i]["rce_pln"] +"\n";
+						document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"] +"\n";
 					}
 				}
 			}).catch((e) => console.error(e));
