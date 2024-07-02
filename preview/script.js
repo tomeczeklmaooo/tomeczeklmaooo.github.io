@@ -2,6 +2,10 @@ function webInitializeFunctionsOnload()
 {
 	console.log("script.js loaded");
 	window.addEventListener("resize", webCheckViewport);
+	if (window.innerWidth <= 1100)
+	{
+		document.getElementById("no-content-text").innerHTML = `&lt; select an option on top to display here &gt;`;
+	}
 }
 
 // I think this way of changing content on a simple website like this one is the best of the ones I've tried so far
@@ -129,9 +133,7 @@ function webChangeContainerContent(idx)
 // and changes the #no-content-text accordingly to reflect the menu position
 function webCheckViewport()
 {
-	var viewportWidth = window.innerWidth;
-	var viewportHeight = window.innerHeight;
-	if (viewportWidth <= 1100)
+	if (window.innerWidth <= 1100)
 	{
 		document.getElementById("no-content-text").innerHTML = `&lt; select an option on top to display here &gt;`;
 	}
@@ -139,5 +141,4 @@ function webCheckViewport()
 	{
 		document.getElementById("no-content-text").innerHTML = `&lt; select an option on the left to display here &gt;`;
 	}
-	console.log("webCheckViewport");
 }
