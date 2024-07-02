@@ -292,7 +292,8 @@
 			var day = 1000 * 60 * 60 * 24; // one day length in milliseconds
 			var difference_time = now.getTime() - team_joined_date.getTime();
 			var difference_days = Math.round(difference_time / day);
-			document.getElementById("player-team").innerHTML = `<b>Current CS2 team:</b> Descent E-Sports (joined 27/02/2023, ${difference_days} days ago)`;
+			// document.getElementById("player-team").innerHTML = `<b>Current CS2 team:</b> Descent E-Sports (joined 27/02/2023, ${difference_days} days ago)`;
+			document.getElementById("player-team").innerHTML = `<b>Current CS2 team:</b> none (last team: Descent E-Sports, 27/02/2023 - 20/04/2024)`;
 			setTimeout("player_team()", 1000);
 		}
 
