@@ -1,6 +1,7 @@
 function webInitializeFunctionsOnload()
 {
-	console.log("script.js loaded")
+	console.log("script.js loaded");
+	window.addEventListener("resize", webCheckViewport);
 }
 
 // I think this way of changing content on a simple website like this one is the best of the ones I've tried so far
@@ -72,7 +73,7 @@ function webChangeContainerContent(idx)
 				</tr>
 			</table>
 			<span class="section-content-text-sub prevent-select">
-				Not much to show here anyway.
+				I don't have much to show off here just yet, however I'll be expanding this list in the future (probably).
 			</span>
 		`;
 	}
@@ -118,8 +119,25 @@ function webChangeContainerContent(idx)
 				</tr>
 			</table>
 			<span class="section-content-text-sub prevent-select">
-				All of them redirect to my personal accounts.
+				My Instagram is private though, so I don't think you'll be able to message me there (but you can try!).
 			</span>
 		`;
 	}
+}
+
+// what this function does is it checks for viewportWidth and viewportHeight
+// and changes the #no-content-text accordingly to reflect the menu position
+function webCheckViewport()
+{
+	var viewportWidth = window.innerWidth;
+	var viewportHeight = window.innerHeight;
+	if (viewportWidth <= 1100)
+	{
+		document.getElementById("no-content-text").innerHTML = `&lt; select an option on top to display here &gt;`;
+	}
+	else
+	{
+		document.getElementById("no-content-text").innerHTML = `&lt; select an option on the left to display here &gt;`;
+	}
+	console.log("webCheckViewport");
 }
