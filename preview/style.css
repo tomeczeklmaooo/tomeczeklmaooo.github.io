@@ -17,7 +17,8 @@ body
 	align-items: center;
 	background-image: url('bg.png');
 	font-family: 'IBM Plex Mono', monospace;
-	color: #1e2023
+	background-color: #1e2023;
+	color: #1e2023;
 }
 
 .global-container
