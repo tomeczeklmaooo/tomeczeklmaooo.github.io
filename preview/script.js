@@ -68,7 +68,7 @@ function webChangeContainerContent(idx)
 				</tr>
 				<tr>
 					<td>Project Copiec</td>
-					<td><div class="button-inactive prevent-select" onclick="">Project site</div></td>
+					<td><div class="button-inactive prevent-select" onclick="" title="confidential stuff if I say so myself">Project site</div></td>
 				</tr>
 			</table>
 			<span class="section-content-text-sub prevent-select">

@@ -33,6 +33,7 @@ body
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	transition: 0.15s ease all;
 }
 
 .left
@@ -46,6 +47,7 @@ body
 	justify-content: center;
 	align-items: center;
 	gap: 10px;
+	transition: 0.15s ease all;
 }
 
 .right
@@ -58,6 +60,7 @@ body
 	justify-content: center;
 	align-items: center;
 	padding: 0 50px;
+	transition: 0.15s ease all;
 }
 
 .header
@@ -80,6 +83,7 @@ body
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+	transition: 0.15s ease all;
 }
 
 .main
@@ -112,7 +116,6 @@ body
 	border-radius: 2px;
 	text-align: center;
 	padding: 10px 50px;
-	transition: 0.15s ease-in-out;
 	opacity: 0.3;
 }
 .button-not-clickable
@@ -121,7 +124,6 @@ body
 	border-radius: 2px;
 	text-align: center;
 	padding: 10px 50px;
-	transition: 0.15s ease-in-out;
 }
 
 .section-content-text
@@ -171,6 +173,152 @@ th
 	color: #eeedf0;
 	justify-content: center;
 	align-items: center;
+	text-align: center;
 	margin-top: 5px;
 	font-size: 10pt;
+}
+
+/* SCALING AND STUFF */
+@media (max-width: 1500px)
+{
+	.container
+	{
+		width: 1280px;
+		height: 720px;
+	}
+}
+@media (max-width: 1300px)
+{
+	.container
+	{
+		width: 1080px;
+		height: 720px;
+	}
+}
+@media (max-width: 1100px)
+{
+	.container
+	{
+		width: 896px;
+		height: 720px;
+		flex-direction: column;
+	}
+	.left
+	{
+		border-radius: 7px 7px 0 0;
+		margin-right: 0px;
+		margin-bottom: 1px;
+	}
+	.right
+	{
+		border-radius: 0 0 7px 7px;
+		margin-left: 0px;
+		margin-top: 0px;
+	}
+	.nav
+	{
+		flex-direction: row;
+		font-size: 10pt;
+	}
+}
+@media (max-width: 900px)
+{
+	.container
+	{
+		width: 100%;
+	}
+	.left
+	{
+		border-radius: 0;
+	}
+	.right
+	{
+		border-radius: 0;
+	}
+	.button
+	{
+		padding: 10px 40px;
+	}
+	.button-inactive
+	{
+		padding: 10px 40px;
+	}
+	.button-not-clickable
+	{
+		padding: 10px 40px;
+	}
+	.section-content-text
+	{
+		font-size: 10pt;
+		line-height: 16pt;
+	}
+	.section-content-text-sub
+	{
+		font-size: 8pt;
+	}
+	table
+	{
+		font-size: 10pt;
+	}
+}
+@media (max-width: 845px)
+{
+	.nav
+	{
+		font-size: 8pt;
+	}
+	.button
+	{
+		padding: 10px 30px;
+	}
+	.button-inactive
+	{
+		padding: 10px 30px;
+	}
+	.button-not-clickable
+	{
+		padding: 10px 30px;
+	}
+	.footer
+	{
+		font-size: 7pt;
+	}
+}
+@media (max-width: 620px)
+{
+	.button
+	{
+		padding: 10px 10px;
+	}
+	.button-inactive
+	{
+		padding: 10px 10px;
+	}
+	.button-not-clickable
+	{
+		padding: 10px 10px;
+	}
+	table
+	{
+		font-size: 8pt;
+	}
+}
+@media (max-width: 400px)
+{
+	.button
+	{
+		padding: 10px 5px;
+	}
+	.button-inactive
+	{
+		padding: 10px 5px;
+	}
+	.button-not-clickable
+	{
+		padding: 10px 5px;
+	}
+	table
+	{
+		font-size: 7pt;
+	}
 }
