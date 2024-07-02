@@ -13,24 +13,25 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/4140c3b052.js" crossorigin="anonymous"></script>
 </head>
 <body onload="webInitializeFunctionsOnload()">
 	<div class="global-container">
 		<div class="container" id="container">
-			<div class="l-con">
-				<header class="con-header">
+			<div class="left">
+				<header class="header">
 					<span>tomeczeklmaooo</span>
 				</header>
-				<nav class="con-nav">
-					<div class="nav-item prevent-select">About</div>
-					<div class="nav-item prevent-select">Education</div>
-					<div class="nav-item prevent-select">Projects</div>
-					<div class="nav-item prevent-select">CS2 Settings</div>
-					<div class="nav-item prevent-select">Contact</div>
+				<nav class="nav">
+					<div class="button prevent-select" onclick="webChangeContainerContent(0)">About</div>
+					<div class="button prevent-select" onclick="webChangeContainerContent(1)">Education</div>
+					<div class="button prevent-select" onclick="webChangeContainerContent(2)">Projects</div>
+					<div class="button prevent-select" onclick="webChangeContainerContent(3)">CS2 Settings</div>
+					<div class="button prevent-select" onclick="webChangeContainerContent(4)">Contact</div>
 				</nav>
 			</div>
-			<div class="r-con">
-				<main class="con-main">
+			<div class="right">
+				<main class="main" id="main">
 					<span class="no-content-text prevent-select">&lt; select an option on the left to display here &gt;</span>
 				</main>
 			</div>
