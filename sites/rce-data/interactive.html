@@ -1,0 +1,92 @@
+---
+permalink: /sites/rce-data/interactive/
+---
+<!--
+	rce-data: głównie służy do odświeżania danych o rynkowej cenie energii elektrycznej
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>rce-data/daily</title>
+	<style>
+		body
+		{
+			font-family: monospace;
+		}
+		div#data
+		{
+			white-space: pre;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<script src= "https://cdn.zingchart.com/zingchart.min.js"></script>
+	<script>
+		zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+		ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9","ee6b7db5b51705a13dc2339db3edaf6d"];
+	</script>
+</head>
+<body onload="apiGetPriceData()">
+	<form>
+		<select id="data-view-type">
+			<option value="0">bez przetwarzania</option>
+			<option value="1">godzina + cena</option>
+			<option value="2">wykres</option>
+		</select>
+	</form>
+	<div id="data"></div>
+	<pre id="raw-data"></pre>
+	<div id="chart" style="display: none;"></div>
+	<script>
+		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba%20eq%20';
+		var dataViewType = document.getElementById("data-view-type");
+		function apiGetPriceData()
+		{
+			var optionValue = dataViewType.value;
+			var optionText = dataViewType[dataViewType.selectedIndex].text;
+			// date stuff
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1
+			var day = date.getDate();
+			var hour = date.getHours();
+			if (month < 10) month = '0' + month;
+			if (day < 10) day = '0' + day;
+			var fulldate = year + '-' + month + '-' + day;
+			var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '%27' + fulldate + '%27');
+
+			if (optionValue == 0)
+			{
+				document.getElementById("data").innerHTML = "";
+				document.getElementById("raw-data").innerHTML = "";
+				document.getElementById("chart").style.display = "none";
+				fetch(urlProxy).then((res) => res.text()).then((text) => {
+					text = JSON.parse(text);
+					var text_readable = JSON.stringify(text, undefined, 4);
+					document.getElementById("raw-data").innerHTML = text_readable;
+				}).catch((e) => console.error(e));
+			}
+			else if (optionValue == 1)
+			{
+				document.getElementById("data").innerHTML = "";
+				document.getElementById("raw-data").innerHTML = "";
+				document.getElementById("chart").style.display = "none";
+				fetch(urlProxy).then((res) => res.text()).then((text) => {
+					text = JSON.parse(text);
+					document.getElementById("data").innerHTML += text["value"][0]["doba"] + "\n\n";
+					for (var i = 0; i < text["value"].length; i++)
+					{
+						if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+						{
+							document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"\n";
+						}
+					}
+				}).catch((e) => console.error(e));
+			}
+			setInterval('apiGetPriceData', 300000); // 5 minute interval for refresh
+		}
+		dataViewType.onchange = apiGetPriceData;
+	</script>
+</body>
+</html>
