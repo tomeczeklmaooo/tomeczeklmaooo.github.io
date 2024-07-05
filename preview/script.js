@@ -92,7 +92,7 @@ function webChangeContainerContent(idx)
 				</tr>
 				<tr>
 					<td>CS2 autoexec.cfg</td>
-					<td><div class="button prevent-select" onclick="window.location.href='https://github.com/tomeczeklmaooo/tomeczeklmaooo.github.io/blob/main/configs/autoexec.cfg'">View on GitHub</div></td>
+					<td><div class="button prevent-select" onclick="window.location.href='https://tomeczeklmaooo.github.io/configs/autoexec.cfg'">Download</div></td>
 				</tr>
 			</table>
 			<span class="section-content-text-sub prevent-select">
