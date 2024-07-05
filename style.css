@@ -1,4 +1,10 @@
-html
+*
+{
+	margin: 0;
+	padding: 0;
+}
+
+html, body
 {
 	width: 100%;
 	height: 100%;
@@ -6,281 +12,138 @@ html
 
 body
 {
-	font-family: 'DM Mono', monospace;
-	background: #11100f;
-	color: #eeedf0;
-	font-size: 14px;
-	min-height: 100%;
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	font-weight: 300;
-	-webkit-user-select: none;
-	user-select: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-image: url('bg.png');
+	font-family: 'IBM Plex Mono', monospace;
+	background-color: #1e2023;
+	color: #1e2023;
+}
+
+.global-container
+{
+	display: flex;
+	flex-direction: column;
 }
 
 .container
 {
-	width: 100%;
-	height: 100%;
-}
-
-/* MAIN */
-.subcontainer
-{
-	display: block;
-	width: 75vw;
-	height: 75vh;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
-}
-
-.subcontainer .header
-{
-	top: 0;
-	position: absolute;
-	text-align: center;
-	margin-top: 10vh;
-	font-size: 72px;
-	padding: 20px 0;
-	width: 100%;
-}
-
-.subcontainer .navigation
-{
-	top: 0;
-	position: absolute;
-	text-align: center;
-	margin-top: 30vh;
-	font-size: 24px;
-	padding: 20px 0;
-	width: 100%;
+	width: 1440px;
+	height: 720px;
 	display: flex;
+	flex-direction: row;
 	justify-content: center;
+	transition: 0.15s ease all;
 }
 
-.nav-item
+.left
 {
-	float: left;
-	text-align: center;
+	display: flex;
 	flex: 25%;
-	margin-left: 5vw;
-	letter-spacing: 1px;
-	transition: 0.15s ease-in-out;
+	background: #eeedf0;
+	border-radius: 7px 0 0 7px;
+	margin-right: 1px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	transition: 0.15s ease all;
 }
 
-.nav-item:hover
+.right
 {
-	flex: 25%;
-	letter-spacing: 3px;
-	cursor: pointer;
-}
-
-.nav-item:first-child
-{
+	display: flex;
+	flex: 75%;
+	background: #eeedf0;
+	border-radius: 0 7px 7px 0;
 	margin-left: 0px;
+	justify-content: center;
+	align-items: center;
+	padding: 0 50px;
+	transition: 0.15s ease all;
 }
 
-/* EDUCATION */
-.education-subcontainer
+.header
 {
-	display: none;
-	width: 75vw;
-	height: 75vh;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
+	font-size: 18pt;
+	font-weight: 600;
+	margin-bottom: 20px;
 }
 
-.education-subcontainer .education-header
+.section-header
 {
-	top: 0;
+	font-size: 16pt;
+	font-weight: 500;
+	margin-bottom: 20px;
 	text-align: center;
-	margin-top: 10vh;
-	font-size: 48px;
-	padding: 20px 0;
-	width: 100%;
 }
 
-.education-subcontainer .education-content
+.nav
 {
-	top: 0;
-	text-align: center;
-	font-size: 16px;
-	padding: 10px 0;
-	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	transition: 0.15s ease all;
+}
+
+.main
+{
 	display: flex;
 	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 10px;
 }
 
-/* PROJECTS */
-.projects-subcontainer
+.button
 {
-	display: none;
-	width: 75vw;
-	height: 75vh;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
-}
-
-.projects-subcontainer .projects-header
-{
-	top: 0;
+	border: 1px dashed #d1d1d3;
+	border-radius: 2px;
 	text-align: center;
-	margin-top: 10vh;
-	font-size: 48px;
-	padding: 20px 0;
-	width: 100%;
-}
-
-.projects-subcontainer .projects-content
-{
-	top: 0;
-	text-align: center;
-	font-size: 16px;
-	padding: 10px 0;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-}
-
-/* SKILLS */
-.skills-subcontainer
-{
-	display: none;
-	width: 75vw;
-	height: 75vh;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
-}
-
-.skills-subcontainer .skills-header
-{
-	top: 0;
-	text-align: center;
-	margin-top: 10vh;
-	font-size: 48px;
-	padding: 20px 0;
-	width: 100%;
-}
-
-.skills-subcontainer .skills-content
-{
-	top: 0;
-	text-align: center;
-	font-size: 16px;
-	padding: 10px 0;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-}
-
-/* E-SPORTS */
-.esports-subcontainer
-{
-	display: none;
-	width: 75vw;
-	height: 75vh;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
-}
-
-.esports-subcontainer .esports-header
-{
-	top: 0;
-	text-align: center;
-	font-size: 48px;
-	padding: 20px 0;
-	width: 100%;
-}
-
-.esports-subcontainer .esports-content
-{
-	top: 0;
-	text-align: center;
-	font-size: 16px;
-	padding: 10px 0;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-}
-
-/* LINKS */
-.links-subcontainer
-{
-	display: none;
-	width: 75vw;
-	height: 75vh;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
-}
-
-.links-subcontainer .links-header
-{
-	top: 0;
-	text-align: center;
-	margin-top: 10vh;
-	font-size: 48px;
-	padding: 20px 0;
-	width: 100%;
-}
-
-.links-subcontainer .links-content
-{
-	top: 0;
-	text-align: center;
-	font-size: 16px;
-	padding: 10px 0;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-}
-
-.subpage-footer
-{
-	bottom: 0;
-	position: absolute;
-	text-align: center;
-	margin-bottom: 0.5vh;
-	width: 100%;
-	font-size: 16px;
+	padding: 10px 50px;
 	transition: 0.15s ease-in-out;
 }
-
-.subpage-footer:hover
+.button:hover
 {
+	border: 1px dashed #1e2023;
+	border-radius: 5px;
+	background: #d1d1d383;
 	cursor: pointer;
-	letter-spacing: 1px;
+}
+.button-inactive
+{
+	border: 1px dashed #d1d1d3;
+	border-radius: 2px;
+	text-align: center;
+	padding: 10px 50px;
+	opacity: 0.3;
+}
+.button-not-clickable
+{
+	border: 1px dashed #d1d1d3;
+	border-radius: 2px;
+	text-align: center;
+	padding: 10px 50px;
 }
 
-.link
+.section-content-text
 {
-	width: 100%;
-	font-size: 16px;
-	transition: 0.15s ease-in-out;
+	text-align: justify;
+	font-size: 12pt;
+	line-height: 18pt;
+}
+.section-content-text-sub
+{
+	text-align: center;
+	font-size: 10pt;
+	opacity: 0.3;
+	font-style: italic;
 }
 
-.link:hover
+.no-content-text
 {
-	cursor: pointer;
-	letter-spacing: 1px;
+	opacity: 0.3;
 }
 
 table
@@ -288,92 +151,175 @@ table
 	border-collapse: collapse;
 }
 
-table td, table th
+td, th
 {
-	text-align: justify;
-	padding: 0 15px;
+	text-align: center;
+	padding: 5px 25px;
+}
+th
+{
+	font-weight: 500;
+}
+
+.prevent-select
+{
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .footer
 {
-	bottom: 0;
-	position: absolute;
+	display: flex;
+	color: #eeedf0;
+	justify-content: center;
+	align-items: center;
 	text-align: center;
-	margin-bottom: 0.5vh;
-	width: 100%;
+	margin-top: 5px;
+	font-size: 10pt;
 }
 
-.notification
+/* SCALING AND STUFF */
+@media (max-width: 1500px)
 {
-	background-color: #c1e1c1a0;
-	width: inherit;
-	padding: 0;
-	text-align: center;
-	opacity: 1;
-	top: 0;
-	position: absolute;
-	margin-top: 0.5vh;
-}
-
-@media (max-width: 1000px)
-{
-	.header
+	.container
 	{
-		font-size: 36pt !important;
-	}
-	.education-header, .projects-header, .skills-header, .esports-header, .socialmedia-header
-	{
-		font-size: 24pt !important;
-	}
-	.navigation
-	{
-		font-size: 12pt !important;
-	}
-	.notification
-	{
-		font-size: 8pt !important;
-	}
-	.education-content table, .skills-content table, .esports-content table, .links-content table
-	{
-		font-size: 10pt !important;
-	}
-	.subpage-footer
-	{
-		font-size: 10pt !important;
+		width: 1280px;
+		height: 720px;
 	}
 }
-@media (max-width: 500px)
+@media (max-width: 1300px)
 {
-	.header
+	.container
 	{
-		font-size: 24pt !important;
+		width: 1080px;
+		height: 720px;
 	}
-	.education-header, .projects-header, .skills-header, .esports-header, .socialmedia-header
+}
+@media (max-width: 1100px)
+{
+	.container
 	{
-		font-size: 14pt !important;
+		width: 896px;
+		height: 720px;
+		flex-direction: column;
 	}
-	.navigation
+	.left
 	{
-		font-size: 8pt !important;
+		border-radius: 7px 7px 0 0;
+		margin-right: 0px;
+		margin-bottom: 1px;
 	}
-	.notification
+	.right
 	{
-		font-size: 7pt !important;
+		border-radius: 0 0 7px 7px;
+		margin-left: 0px;
+		margin-top: 0px;
+	}
+	.nav
+	{
+		flex-direction: row;
+		font-size: 10pt;
+	}
+}
+@media (max-width: 900px)
+{
+	.container
+	{
+		width: 100%;
+	}
+	.left
+	{
+		border-radius: 0;
+	}
+	.right
+	{
+		border-radius: 0;
+	}
+	.button
+	{
+		padding: 10px 40px;
+	}
+	.button-inactive
+	{
+		padding: 10px 40px;
+	}
+	.button-not-clickable
+	{
+		padding: 10px 40px;
+	}
+	.section-content-text
+	{
+		font-size: 10pt;
+		line-height: 16pt;
+	}
+	.section-content-text-sub
+	{
+		font-size: 8pt;
+	}
+	table
+	{
+		font-size: 10pt;
+	}
+}
+@media (max-width: 845px)
+{
+	.nav
+	{
+		font-size: 8pt;
+	}
+	.button
+	{
+		padding: 10px 30px;
+	}
+	.button-inactive
+	{
+		padding: 10px 30px;
+	}
+	.button-not-clickable
+	{
+		padding: 10px 30px;
 	}
 	.footer
 	{
-		font-size: 6pt !important;
+		font-size: 7pt;
 	}
-	.no-projects
+}
+@media (max-width: 620px)
+{
+	.button
 	{
-		font-size: 8pt !important;
+		padding: 10px 10px;
 	}
-	.education-content table, .skills-content table, .esports-content table, .links-content table
+	.button-inactive
 	{
-		font-size: 8pt !important;
+		padding: 10px 10px;
 	}
-	.link
+	.button-not-clickable
+	{
+		padding: 10px 10px;
+	}
+	table
 	{
 		font-size: 8pt;
+	}
+}
+@media (max-width: 400px)
+{
+	.button
+	{
+		padding: 10px 5px;
+	}
+	.button-inactive
+	{
+		padding: 10px 5px;
+	}
+	.button-not-clickable
+	{
+		padding: 10px 5px;
+	}
+	table
+	{
+		font-size: 7pt;
 	}
 }
