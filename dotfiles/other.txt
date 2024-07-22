@@ -1,0 +1,11 @@
+kernel: linux
+desktop environment: xfce4
+locale: en_US.UTF-8
+keymap: pl
+bootloader: grub
+icons: kora
+cursor: vimix
+font(s): Iosevka
+aur helper: yay
+other:
+	* enable multilib

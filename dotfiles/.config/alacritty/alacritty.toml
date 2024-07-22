@@ -1,0 +1,13 @@
+[window]
+dimensions = { columns = 140, lines = 35 }
+opacity = 0.95
+blur = true
+
+[shell]
+program = "/bin/zsh"
+
+[font]
+normal = { family = "Iosevka Extended", style = "Regular" }
+
+[cursor]
+style = { shape = "Block", blinking = "On" }
