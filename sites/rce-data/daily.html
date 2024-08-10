@@ -22,13 +22,19 @@ permalink: /sites/rce-data/daily/
 		.link
 		{
 			text-decoration: none;
-			border: 1px black solid;
+			border: 1px black dashed;
 			border-radius: 5px;
 			padding: 0 5px;
+			font-size: 14pt;
 		}
 		.link:hover
 		{
 			cursor: pointer;
+		}
+		div.bottom
+		{
+			position: fixed;
+			bottom: 10px;
 		}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -53,19 +59,27 @@ permalink: /sites/rce-data/daily/
 					text = JSON.parse(text);
 
 					document.getElementById("data").innerHTML = "";
-					document.getElementById("data").innerHTML += text["value"][0]["doba"] + " // <a class=\"link\" onclick=\"apiGetPriceData(1)\">JUTRO &gt;</a>" + "\n\n";
+					document.getElementById("data").innerHTML += text["value"][0]["doba"] + "\n\n";
 					for (var i = 0; i < text["value"].length; i++)
 					{
 						if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 						{
-							document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"\n";
+							if (text["value"][i]["rce_pln"].toFixed(2) < 0)
+							{
+								document.getElementById("data").innerHTML += "<span style=\"color: red;\">" + text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"</span>\n";
+							}
+							else
+							{
+								document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"\n";
+							}
 						}
 					}
+					document.getElementById("data").innerHTML += "<div class=\"bottom\"><a class=\"link\" onclick=\"apiGetPriceData(1)\">JUTRO &gt;</a></div>";
 				}).catch((e) => console.error(e));
 			}
 			else if (days_ahead == 1)
 			{
-				day += 1;
+				day += days_ahead;
 				if (month < 10) month = '0' + month;
 				if (day < 10) day = '0' + day;
 				var fulldate = year + '-' + month + '-' + day;
@@ -73,14 +87,29 @@ permalink: /sites/rce-data/daily/
 				fetch(urlProxy).then((res) => res.text()).then((text) => {
 					text = JSON.parse(text);
 
-					document.getElementById("data").innerHTML = "";
-					document.getElementById("data").innerHTML += text["value"][0]["doba"] + " // <a class=\"link\" onclick=\"apiGetPriceData(0)\">&lt; DZISIAJ</a>" + "\n\n";
-					for (var i = 0; i < text["value"].length; i++)
+					if (JSON.stringify(text) == "{\"value\":[]}")
 					{
-						if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+						alert("Cena na jutro nie została jeszcze opublikowana!");
+					}
+					else
+					{
+						document.getElementById("data").innerHTML = "";
+						document.getElementById("data").innerHTML += text["value"][0]["doba"] + "\n\n";
+						for (var i = 0; i < text["value"].length; i++)
 						{
-							document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"\n";
+							if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+							{
+								if (text["value"][i]["rce_pln"].toFixed(2) < 0)
+								{
+									document.getElementById("data").innerHTML += "<span style=\"color: red;\">" + text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"</span>\n";
+								}
+								else
+								{
+									document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"\n";
+								}
+							}
 						}
+						document.getElementById("data").innerHTML += "<div class=\"bottom\"><a class=\"link\" onclick=\"apiGetPriceData(0)\">&lt; DZISIAJ</a></div>";
 					}
 				}).catch((e) => console.error(e));
 			}
