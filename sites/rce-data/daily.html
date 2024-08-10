@@ -39,10 +39,10 @@ permalink: /sites/rce-data/daily/
 		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba eq '; // %20 = spacja, %27 = '
 		function apiGetPriceData(days_ahead)
 		{
-var date = new Date();
-				var year = date.getFullYear();
-				var month = date.getMonth() + 1;
-				var day = date.getDate();
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
 			if (days_ahead == 0)
 			{
 				if (month < 10) month = '0' + month;
