@@ -19,39 +19,74 @@ permalink: /sites/rce-data/daily/
 		{
 			white-space: pre;
 		}
+		.link
+		{
+			text-decoration: none;
+			border: 1px black solid;
+			border-radius: 5px;
+			padding: 0 5px;
+		}
+		.link:hover
+		{
+			cursor: pointer;
+		}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
-<body onload="apiGetPriceData()">
+<body onload="apiGetPriceData(0)">
 	<div id="data"></div>
 	<script>
 		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba%20eq%20'; // %20 = spacja, %27 = '
-		function apiGetPriceData()
+		function apiGetPriceData(days_ahead)
 		{
-			var date = new Date();
-			var year = date.getFullYear();
-			var month = date.getMonth() + 1
-			var day = date.getDate();
-			var hour = date.getHours();
-			if (month < 10) month = '0' + month;
-			if (day < 10) day = '0' + day;
-			var fulldate = year + '-' + month + '-' + day;
-			var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '%27' + fulldate + '%27');
-			fetch(urlProxy).then((res) => res.text()).then((text) => {
-				text = JSON.parse(text);
-				// to odkomentuj jeżeli chcesz zobaczyć jak całość wygląda bez wyciągania danych
-				// var text_readable = JSON.stringify(text, undefined, 4);
-				// document.body.appendChild(document.createElement('pre')).innerHTML = text_readable;
+			if (days_ahead == 0)
+			{
+				var date = new Date();
+				var year = date.getFullYear();
+				var month = date.getMonth() + 1;
+				var day = date.getDate();
+				if (month < 10) month = '0' + month;
+				if (day < 10) day = '0' + day;
+				var fulldate = year + '-' + month + '-' + day;
+				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '%27' + fulldate + '%27');
+				fetch(urlProxy).then((res) => res.text()).then((text) => {
+					text = JSON.parse(text);
 
-				document.getElementById("data").innerHTML += text["value"][0]["doba"] + "\n\n";
-				for (var i = 0; i < text["value"].length; i++)
-				{
-					if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+					document.getElementById("data").innerHTML = "";
+					document.getElementById("data").innerHTML += text["value"][0]["doba"] + " // <a class=\"link\" onclick=\"apiGetPriceData(1)\">JUTRO &gt;</a>" + "\n\n";
+					for (var i = 0; i < text["value"].length; i++)
 					{
-						document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"\n";
+						if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+						{
+							document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"\n";
+						}
 					}
-				}
-			}).catch((e) => console.error(e));
+				}).catch((e) => console.error(e));
+			}
+			else if (days_ahead == 1)
+			{
+				var date = new Date();
+				var year = date.getFullYear();
+				var month = date.getMonth() + 1;
+				var day = date.getDate() + days_ahead;
+				if (month < 10) month = '0' + month;
+				if (day < 10) day = '0' + day;
+				var fulldate = year + '-' + month + '-' + day;
+				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '%27' + fulldate + '%27');
+				fetch(urlProxy).then((res) => res.text()).then((text) => {
+					text = JSON.parse(text);
+
+					document.getElementById("data").innerHTML = "";
+					document.getElementById("data").innerHTML += text["value"][0]["doba"] + " // <a class=\"link\" onclick=\"apiGetPriceData(0)\">&lt; DZISIAJ</a>" + "\n\n";
+					for (var i = 0; i < text["value"].length; i++)
+					{
+						if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+						{
+							document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"\n";
+						}
+					}
+				}).catch((e) => console.error(e));
+			}
 			setInterval('apiGetPriceData', 300000); // 5 minute interval for refresh
 		}
 	</script>
