@@ -36,19 +36,19 @@ permalink: /sites/rce-data/daily/
 <body onload="apiGetPriceData(0)">
 	<div id="data"></div>
 	<script>
-		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba%20eq%20'; // %20 = spacja, %27 = '
+		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba eq '; // %20 = spacja, %27 = '
 		function apiGetPriceData(days_ahead)
 		{
-			if (days_ahead == 0)
-			{
-				var date = new Date();
+var date = new Date();
 				var year = date.getFullYear();
 				var month = date.getMonth() + 1;
-				var day = date.getDate();
+				var day = date.getDate() + 1;
+			if (days_ahead == 0)
+			{
 				if (month < 10) month = '0' + month;
 				if (day < 10) day = '0' + day;
 				var fulldate = year + '-' + month + '-' + day;
-				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '%27' + fulldate + '%27');
+				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '\'' + fulldate + '\'');
 				fetch(urlProxy).then((res) => res.text()).then((text) => {
 					text = JSON.parse(text);
 
@@ -65,14 +65,11 @@ permalink: /sites/rce-data/daily/
 			}
 			else if (days_ahead == 1)
 			{
-				var date = new Date();
-				var year = date.getFullYear();
-				var month = date.getMonth() + 1;
-				var day = date.getDate() + 1;
+				day += 1;
 				if (month < 10) month = '0' + month;
 				if (day < 10) day = '0' + day;
 				var fulldate = year + '-' + month + '-' + day;
-				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '%27' + fulldate + '%27');
+				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '\'' + fulldate + '\'');
 				fetch(urlProxy).then((res) => res.text()).then((text) => {
 					text = JSON.parse(text);
 
