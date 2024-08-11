@@ -54,10 +54,10 @@ permalink: /sites/rce-data/daily/
 				if (month < 10) month = '0' + month;
 				if (day < 10) day = '0' + day;
 				var fulldate = year + '-' + month + '-' + day;
-				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '\'' + fulldate + '\'');
+				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '%27' + fulldate) + '%27'; // dlaczego TO działa????
 				fetch(urlProxy).then((res) => res.text()).then((text) => {
 					text = JSON.parse(text);
-
+					
 					document.getElementById("data").innerHTML = "";
 					document.getElementById("data").innerHTML += text["value"][0]["doba"] + "\n\n";
 					for (var i = 0; i < text["value"].length; i++)
@@ -86,18 +86,18 @@ permalink: /sites/rce-data/daily/
 					day = 0;
 					month += 1;
 				}
-
-				day += days_ahead; // days_ahead = 1
+				
+				day += 1; // days_ahead = 1
 				if (month < 10) month = '0' + month;
 				if (day < 10) day = '0' + day;
 				var fulldate = year + '-' + month + '-' + day;
-				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '\'' + fulldate + '\'');
+				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '%27' + fulldate) + '%27'; // dlaczego TO działa????
 				fetch(urlProxy).then((res) => res.text()).then((text) => {
 					text = JSON.parse(text);
 
 					// sprawdzenie czy jest już cena na jutro
 					// mniej więcej koło godziny 13-14 już jest
-					if (JSON.stringify(text) == "{\"value\":[]}")
+					if (JSON.stringify(text) === "{\"value\":[]}")
 					{
 						alert("Cena na jutro nie została jeszcze opublikowana!");
 					}
