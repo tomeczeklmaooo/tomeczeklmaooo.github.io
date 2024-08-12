@@ -54,7 +54,9 @@ permalink: /sites/rce-data/daily/
 				if (month < 10) month = '0' + month;
 				if (day < 10) day = '0' + day;
 				var fulldate = year + '-' + month + '-' + day;
-				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '%27' + fulldate) + '%27'; // dlaczego TO działa????
+				// podwójne enkodowanie %27 do postaci %2527 i co najlepsze to czasami będzie działać a czasami nie, nie rozumiem tego
+				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '%27' + fulldate + '%27'); // dlaczego TO działa????
+				// console.log(urlProxy);
 				fetch(urlProxy).then((res) => res.text()).then((text) => {
 					text = JSON.parse(text);
 					
@@ -91,7 +93,9 @@ permalink: /sites/rce-data/daily/
 				if (month < 10) month = '0' + month;
 				if (day < 10) day = '0' + day;
 				var fulldate = year + '-' + month + '-' + day;
-				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '%27' + fulldate) + '%27'; // dlaczego TO działa????
+				// podwójne enkodowanie %27 do postaci %2527 i co najlepsze to czasami będzie działać a czasami nie, nie rozumiem tego
+				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + '%27' + fulldate + '%27'); // dlaczego TO działa????
+				// console.log(urlProxy);
 				fetch(urlProxy).then((res) => res.text()).then((text) => {
 					text = JSON.parse(text);
 
