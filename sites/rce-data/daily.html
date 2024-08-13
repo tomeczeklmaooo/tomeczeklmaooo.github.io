@@ -60,7 +60,7 @@ permalink: /sites/rce-data/daily/
 				var fulldate = '\'' + year + '-' + month + '-' + day + '\'';
 				console.log(`[days_ahead: ${days_ahead}] fulldate: ${fulldate}`);
 				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + fulldate);
-				console.log(`[days_ahead: ${days_ahead}] urlProxy = ${urlProxy}`);
+				console.log(`[days_ahead: ${days_ahead}] urlProxy: ${urlProxy}`);
 				fetch(urlProxy).then((res) => res.text()).then((text) => {
 					text = JSON.parse(text);
 					
@@ -99,7 +99,7 @@ permalink: /sites/rce-data/daily/
 				var fulldate = '\'' + year + '-' + month + '-' + day + '\'';
 				console.log(`[days_ahead: ${days_ahead}] fulldate: ${fulldate}`);
 				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + fulldate);
-				console.log(`[days_ahead: ${days_ahead}] urlProxy = ${urlProxy}`);
+				console.log(`[days_ahead: ${days_ahead}] urlProxy: ${urlProxy}`);
 				fetch(urlProxy).then((res) => res.text()).then((text) => {
 					text = JSON.parse(text);
 
