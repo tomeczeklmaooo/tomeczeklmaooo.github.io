@@ -57,7 +57,7 @@ permalink: /sites/rce-data/daily/
 			{
 				if (month < 10) month = '0' + month;
 				if (day < 10) day = '0' + day;
-				var fulldate = '-' + year + '-' + month + '-' + day + '-'; console.log(fulldate);
+				var fulldate = '\'' + year + '-' + month + '-' + day + '\''; console.log(fulldate);
 				// podwójne enkodowanie %27 do postaci %2527 i co najlepsze to czasami będzie działać a czasami nie, nie rozumiem tego
 				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + fulldate); // dlaczego TO działa????
 				console.log(urlProxy);
@@ -96,7 +96,7 @@ permalink: /sites/rce-data/daily/
 				day += 1; // days_ahead = 1
 				if (month < 10) month = '0' + month;
 				if (day < 10) day = '0' + day;
-				var fulldate = '-' + year + '-' + month + '-' + day '-'; console.log(fulldate);
+				var fulldate = '\'' + year + '-' + month + '-' + day '\''; console.log(fulldate);
 				// podwójne enkodowanie %27 do postaci %2527 i co najlepsze to czasami będzie działać a czasami nie, nie rozumiem tego
 				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + fulldate); // dlaczego TO działa????
 				console.log(urlProxy);
@@ -131,7 +131,6 @@ permalink: /sites/rce-data/daily/
 					}
 				}).catch((e) => console.error(e));
 			}
-			setInterval('apiGetPriceData', 300000); // 5 minute interval for refresh
 		}
 	</script>
 </body>
