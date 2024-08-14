@@ -46,7 +46,7 @@ permalink: /sites/rce-data/daily/
 <body onload="apiGetPriceData(0)">
 	<div id="data"></div>
 	<script>
-		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba eq '; // %20 = spacja, %27 = '
+		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba ge '; // %20 = spacja, %27 = '
 		function apiGetPriceData(days_ahead)
 		{
 			var date = new Date();
