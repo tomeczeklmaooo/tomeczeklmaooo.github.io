@@ -53,17 +53,11 @@ permalink: /sites/rce-data/daily/
 <body onload="apiGetPriceData()">
 	<div id="data"></div> <!-- CENY NA DZISIAJ -->
 	<div id="data_b"></div> <!-- CENY NA JUTRO -->
+	<script src="../../scripts/logging.js"></script>
 	<script>
 		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba ge '; // %20 = spacja, %27 = '
 		function apiGetPriceData()
 		{
-			// zmienne do kolorowania tekstu w konsoli
-			var color_red = "color: #ff0000;";
-			var color_green = "color: #00ff00;";
-			var color_blue = "color: #0000ff;";
-			var color_yellow = "color: #ffff00;";
-			var color_white = "color: #ffffff;";
-
 			// dzisiejsza data
 			var date = new Date();
 			var year = date.getFullYear();
@@ -72,11 +66,11 @@ permalink: /sites/rce-data/daily/
 			// doklejanie '0' z przodu jeżeli dzień lub miesiąc są mniejsze od 10
 			if (month < 10) month = '0' + month;
 			if (day < 10) day = '0' + day;
-			var fulldate =  '\'' + year + '-' + month + '-' + day  + '\'';
-			console.log(`%c[LOG] %cfulldate: ${fulldate}`, color_yellow, color_white);
+			var fulldate = '%27' + year + '-' + month + '-' + day + '%27';
+			llog(`fulldate: ${fulldate}`);
 			var urlProxy = 'https://corsproxy.io/?' + encodeURIComponent(baseURL + fulldate);
-			console.log(`%c[LOG] %curlProxy: ${urlProxy}`, color_yellow, color_white);
-
+			llog(`urlProxy: ${urlProxy}`);
+			
 			fetch(urlProxy).then((res) => res.text()).then((text) => {
 				text = JSON.parse(text);
 				// var text_readable = JSON.stringify(text, undefined, 4);
@@ -86,9 +80,9 @@ permalink: /sites/rce-data/daily/
 				// sprawdzenie czy jest cena na jutro poprzez próbę sklejenia linku do dalszej części danych, przycisk jest dodawany póżniej
 				try {
 					var nextUrlProxy = 'https://corsproxy.io/?' + encodeURIComponent(baseURL) + text["nextLink"].substring(66);
-					console.log(`%c[LOG] %cnextUrlProxy: ${nextUrlProxy}`, color_yellow, color_white);
+					llog(`nextUrlProxy: ${nextUrlProxy}`);
 				} catch (error) {
-					console.log("%c[WARN] %cCena na jutro nie została jeszcze opublikowana!", color_red, color_white);
+					lwarning("Cena na jutro nie została jeszcze opublikowana!");
 				}
 
 				document.getElementById("data").innerHTML = "";
@@ -108,11 +102,15 @@ permalink: /sites/rce-data/daily/
 						}
 						// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 						loopLimiter += 1;
-						if (loopLimiter == 24) break;
+						if (loopLimiter == 24)
+						{
+							lsuccess("Price data for today fetched successfully.");
+							break;
+						}
 					}
 				}
 
-				console.log(`%c[LOG] %cjson_len: ${text["value"].length}`, color_yellow, color_white);
+				llog(`data_json_len: ${text["value"].length}`);
 
 				// jeżeli w zwróconym JSON będzie więcej niż 96 elementów to wtedy pokaże przycisk i pobierze kolejne dane
 				if (text["value"].length > 96)
@@ -151,12 +149,16 @@ permalink: /sites/rce-data/daily/
 								}
 								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 								loopLimiter += 1;
-								if (loopLimiter == 23) break; // tutaj 23 bo się podwójnie będzie północ pokazywać
+								if (loopLimiter == 23)
+								{
+									lsuccess("Price data for tomorrow fetched successfully.");
+									break;
+								} // tutaj 23 bo się podwójnie będzie północ pokazywać
 							}
 						}
 						document.getElementById("data_b").innerHTML += "<div class=\"bottom\"><a class=\"link\" onclick=\"apiChangeContainer(0)\">&lt; DZISIAJ</a></div>";
 
-						console.log(`%c[LOG] %cjson_len: ${text2["value"].length}`, color_yellow, color_white);
+						llog(`data_b_json_len: ${text2["value"].length}`);
 					}).catch((e) => console.error(e));
 				}
 			}).catch((e) => console.error(e));
