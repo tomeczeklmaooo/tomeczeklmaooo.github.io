@@ -66,7 +66,8 @@ permalink: /sites/rce-data/daily/
 					text = JSON.parse(text);
 					// var text_readable = JSON.stringify(text, undefined, 4);
 					// document.body.appendChild(document.createElement('pre')).innerHTML = text_readable;
-					
+					var loopLimiter = 0;
+
 					document.getElementById("data").innerHTML = "";
 					document.getElementById("data").innerHTML += text["value"][0]["doba"] + "\n\n";
 					for (var i = 0; i < text["value"].length; i++)
@@ -81,6 +82,9 @@ permalink: /sites/rce-data/daily/
 							{
 								document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"\n";
 							}
+							// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
+							loopLimiter += 1;
+							if (loopLimiter == 24) break;
 						}
 					}
 
