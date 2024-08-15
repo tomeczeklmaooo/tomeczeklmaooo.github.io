@@ -27,6 +27,7 @@ permalink: /sites/rce-data/daily/
 			border-radius: 5px;
 			padding: 0 5px;
 			font-size: 14pt;
+			background-color: white;
 			user-select: none;
 			-moz-user-select: none;
 			-webkit-user-select: none;
@@ -46,7 +47,7 @@ permalink: /sites/rce-data/daily/
 <body onload="apiGetPriceData(0)">
 	<div id="data"></div>
 	<script>
-		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba eq '; // %20 = spacja, %27 = '
+		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba ge '; // %20 = spacja, %27 = '
 		function apiGetPriceData(days_ahead)
 		{
 			var date = new Date();
@@ -57,12 +58,14 @@ permalink: /sites/rce-data/daily/
 			{
 				if (month < 10) month = '0' + month;
 				if (day < 10) day = '0' + day;
-				var fulldate = '\'' + year + '-' + month + '-' + day + '\'';
-				console.log(`[days_ahead: ${days_ahead}] fulldate: ${fulldate}`);
-				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + fulldate);
-				console.log(`[days_ahead: ${days_ahead}] urlProxy: ${urlProxy}`);
+				var fulldate =  '\'' + year + '-' + month + '-' + day  + '\'';
+				console.log(`fulldate: ${fulldate}`);
+				var urlProxy = 'https://corsproxy.io/?' + encodeURIComponent(baseURL + fulldate);
+				console.log(`urlProxy: ${urlProxy}`);
 				fetch(urlProxy).then((res) => res.text()).then((text) => {
 					text = JSON.parse(text);
+					// var text_readable = JSON.stringify(text, undefined, 4);
+					// document.body.appendChild(document.createElement('pre')).innerHTML = text_readable;
 					
 					document.getElementById("data").innerHTML = "";
 					document.getElementById("data").innerHTML += text["value"][0]["doba"] + "\n\n";
@@ -80,7 +83,13 @@ permalink: /sites/rce-data/daily/
 							}
 						}
 					}
-					document.getElementById("data").innerHTML += "<div class=\"bottom\"><a class=\"link\" onclick=\"apiGetPriceData(1)\">JUTRO &gt;</a></div>";
+
+					console.log(`json_len: ${text["value"].length}`);
+					// jeżeli w zwróconym JSON będzie więcej niż 96 elementów to wtedy pokaże przycisk
+					if (text["value"].length > 96)
+					{
+						document.getElementById("data").innerHTML += "<div class=\"bottom\"><a class=\"link\" onclick=\"apiGetPriceData(1)\">JUTRO &gt;</a></div>";
+					}
 				}).catch((e) => console.error(e));
 			}
 			else if (days_ahead == 1) // ceny na jutro
@@ -98,37 +107,28 @@ permalink: /sites/rce-data/daily/
 				if (day < 10) day = '0' + day;
 				var fulldate = '\'' + year + '-' + month + '-' + day + '\'';
 				console.log(`[days_ahead: ${days_ahead}] fulldate: ${fulldate}`);
-				var urlProxy =  'https://corsproxy.io/?' + encodeURIComponent(baseURL + fulldate);
+				var urlProxy = 'https://corsproxy.io/?' + encodeURIComponent(baseURL + fulldate);
 				console.log(`[days_ahead: ${days_ahead}] urlProxy: ${urlProxy}`);
 				fetch(urlProxy).then((res) => res.text()).then((text) => {
 					text = JSON.parse(text);
 
-					// sprawdzenie czy jest już cena na jutro
-					// mniej więcej koło godziny 13-14 już jest
-					if (JSON.stringify(text) === "{\"value\":[]}")
+					document.getElementById("data").innerHTML = "";
+					document.getElementById("data").innerHTML += text["value"][0]["doba"] + "\n\n";
+					for (var i = 0; i < text["value"].length; i++)
 					{
-						alert("Cena na jutro nie została jeszcze opublikowana!");
-					}
-					else
-					{
-						document.getElementById("data").innerHTML = "";
-						document.getElementById("data").innerHTML += text["value"][0]["doba"] + "\n\n";
-						for (var i = 0; i < text["value"].length; i++)
+						if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 						{
-							if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+							if (text["value"][i]["rce_pln"].toFixed(2) < 0)
 							{
-								if (text["value"][i]["rce_pln"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML += "<span style=\"color: red;\">" + text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"</span>\n";
-								}
-								else
-								{
-									document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"\n";
-								}
+								document.getElementById("data").innerHTML += "<span style=\"color: red;\">" + text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"</span>\n";
+							}
+							else
+							{
+								document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"\n";
 							}
 						}
-						document.getElementById("data").innerHTML += "<div class=\"bottom\"><a class=\"link\" onclick=\"apiGetPriceData(0)\">&lt; DZISIAJ</a></div>";
 					}
+					document.getElementById("data").innerHTML += "<div class=\"bottom\"><a class=\"link\" onclick=\"apiGetPriceData(0)\">&lt; DZISIAJ</a></div>";
 				}).catch((e) => console.error(e));
 			}
 		}
