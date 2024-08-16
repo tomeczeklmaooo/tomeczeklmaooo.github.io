@@ -59,8 +59,10 @@ permalink: /sites/rce-data/daily/
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body onload="apiGetPriceData()">
-	<div id="data"></div> <!-- CENY NA DZISIAJ -->
-	<div id="data_b"></div> <!-- CENY NA JUTRO -->
+	<!-- CENY NA DZISIAJ -->
+	<div id="data"></div>
+	<!-- CENY NA JUTRO -->
+	<div id="data_b"></div>
 	<script src="https://cdn.jsdelivr.net/gh/tomeczeklmaooo/tomeczeklmaooo.github.io@master/scripts/logging.js"></script>
 	<script>
 		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba ge '; // %20 = spacja, %27 = '
@@ -74,7 +76,8 @@ permalink: /sites/rce-data/daily/
 			// doklejanie '0' z przodu jeżeli dzień lub miesiąc są mniejsze od 10
 			if (month < 10) month = '0' + month;
 			if (day < 10) day = '0' + day;
-			var fulldate = '%27' + year + '-' + month + '-' + day + '%27';
+			// w dni parzyste działa jedno a w nieparzyste działa drugie XD dlatego takie coś
+			var fulldate = ((day % 2) == 0) ? '\'' + year + '-' + month + '-' + day + '\'' : '%27' + year + '-' + month + '-' + day + '%27';
 			llog(`fulldate: ${fulldate}`);
 			var urlProxy = 'https://corsproxy.io/?' + encodeURIComponent(baseURL + fulldate);
 			llog(`urlProxy: ${urlProxy}`);
@@ -84,14 +87,6 @@ permalink: /sites/rce-data/daily/
 				// var text_readable = JSON.stringify(text, undefined, 4);
 				// document.body.appendChild(document.createElement('pre')).innerHTML = text_readable;
 				var loopLimiter = 0;
-
-				// sprawdzenie czy jest cena na jutro poprzez próbę sklejenia linku do dalszej części danych, przycisk jest dodawany póżniej
-				try {
-					var nextUrlProxy = 'https://corsproxy.io/?' + encodeURIComponent(baseURL) + text["nextLink"].substring(66);
-					llog(`nextUrlProxy: ${nextUrlProxy}`);
-				} catch (error) {
-					lwarning("Cena na jutro nie została jeszcze opublikowana!");
-				}
 
 				document.getElementById("data").innerHTML = "";
 				document.getElementById("data").innerHTML += text["value"][0]["doba"] + "\n\n";
@@ -110,11 +105,7 @@ permalink: /sites/rce-data/daily/
 						}
 						// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 						loopLimiter += 1;
-						if (loopLimiter == 24)
-						{
-							lsuccess("Price data for today fetched successfully.");
-							break;
-						}
+						if (loopLimiter == 24) { lsuccess("Price data for today fetched successfully."); break; }
 					}
 				}
 
@@ -124,6 +115,9 @@ permalink: /sites/rce-data/daily/
 				if (text["value"].length > 96)
 				{
 					document.getElementById("data").innerHTML += "<div class=\"bottom\"><a class=\"link\" onclick=\"apiChangeContainer(1)\">JUTRO &gt;</a></div>";
+
+					var nextUrlProxy = 'https://corsproxy.io/?' + encodeURIComponent(baseURL + fulldate) + text["nextLink"].substring(82);
+					llog(`nextUrlProxy: ${nextUrlProxy}`);
 
 					fetch(nextUrlProxy).then((res) => res.text()).then((text2) => {
 						text2 = JSON.parse(text2);
@@ -157,18 +151,14 @@ permalink: /sites/rce-data/daily/
 								}
 								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 								loopLimiter += 1;
-								if (loopLimiter == 23)
-								{
-									lsuccess("Price data for tomorrow fetched successfully.");
-									break;
-								} // tutaj 23 bo się podwójnie będzie północ pokazywać
+								if (loopLimiter == 23) { lsuccess("Price data for tomorrow fetched successfully."); break; } // tutaj 23 bo się podwójnie będzie północ pokazywać
 							}
 						}
 						document.getElementById("data_b").innerHTML += "<div class=\"bottom\"><a class=\"link\" onclick=\"apiChangeContainer(0)\">&lt; DZISIAJ</a></div>";
 
 						llog(`data_b_json_len: ${text2["value"].length}`);
 					}).catch((e) => console.error(e));
-				}
+				} else { lwarning("Cena na jutro nie została jeszcze opublikowana!"); } // to jeżeli nie będzie ceny jeszcze
 			}).catch((e) => console.error(e));
 		}
 
