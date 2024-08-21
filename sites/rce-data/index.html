@@ -1,0 +1,180 @@
+---
+permalink: /sites/rce-data/
+---
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>rce-data</title>
+	<style>
+		body
+		{
+			font-family: monospace;
+		}
+		div#data
+		{
+			white-space: pre;
+			font-size: 12pt;
+		}
+		div#data_b
+		{
+			display: none;
+			white-space: pre;
+			font-size: 12pt;
+		}
+		.link
+		{
+			text-decoration: none;
+			border: 1px black dashed;
+			border-radius: 5px;
+			padding: 0 5px;
+			font-size: 14pt;
+			background-color: white;
+			user-select: none;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+		}
+		.link:hover
+		{
+			cursor: pointer;
+		}
+		div.bottom
+		{
+			position: fixed;
+			right: 10px;
+			bottom: 10px;
+		}
+
+		@media (min-width: 700px) {
+			div.bottom
+			{
+				left: 10px;
+			}
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body onload="apiGetPriceData()">
+	<!-- CENY NA DZISIAJ -->
+	<div id="data"></div>
+	<!-- CENY NA JUTRO -->
+	<div id="data_b"></div>
+	<script src="https://cdn.jsdelivr.net/gh/tomeczeklmaooo/tomeczeklmaooo.github.io@master/scripts/logging.js"></script>
+	<script>
+		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba ge '; // %20 = spacja, %27 = '
+		function apiGetPriceData()
+		{
+			// dzisiejsza data
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			// doklejanie '0' z przodu jeżeli dzień lub miesiąc są mniejsze od 10
+			if (month < 10) month = '0' + month;
+			if (day < 10) day = '0' + day;
+
+			var fulldate = '\'' + year + '-' + month + '-' + day + '\'';
+			llog(`fulldate: ${fulldate}`);
+			var fetchURL = baseURL + fulldate;
+			llog(`fetchURL: ${fetchURL}`);
+			
+			fetch(fetchURL).then((res) => res.text()).then((text) => {
+				text = JSON.parse(text);
+				// var text_readable = JSON.stringify(text, undefined, 4);
+				// document.body.appendChild(document.createElement('pre')).innerHTML = text_readable;
+				var loopLimiter = 0;
+
+				document.getElementById("data").innerHTML = "";
+				document.getElementById("data").innerHTML += text["value"][0]["doba"] + "\n\n";
+
+				for (var i = 0; i < text["value"].length; i++)
+				{
+					if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+					{
+						if (text["value"][i]["rce_pln"].toFixed(2) < 0)
+						{
+							document.getElementById("data").innerHTML += "<span style=\"color: red;\">" + text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"</span>\n";
+						}
+						else
+						{
+							document.getElementById("data").innerHTML += text["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][i]["rce_pln"].toFixed(2) +"\n";
+						}
+						// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
+						loopLimiter += 1;
+						if (loopLimiter == 24) { lsuccess(`Price data for today fetched successfully.`); break; }
+					}
+				}
+
+				llog(`Received JSON objects equal to ${text["value"].length}`);
+
+				// jeżeli w zwróconym JSON będzie więcej niż 96 elementów to wtedy pokaże przycisk i pobierze kolejne dane
+				if (text["value"].length > 96)
+				{
+					document.getElementById("data").innerHTML += "<div class=\"bottom\"><a class=\"link\" onclick=\"apiChangeContainer(1)\">JUTRO &gt;</a></div>";
+
+					llog(`domain: ${baseURL.substring(0, 26)}`);
+					llog(`nextLink (stripped): ${text["nextLink"].substring(33)}`);
+					var nextURL = baseURL.substring(0, 26) + text["nextLink"].substring(33)
+					llog(`nextURL: ${nextURL}`);
+
+					fetch(nextURL).then((res) => res.text()).then((text2) => {
+						text2 = JSON.parse(text2);
+						// var text_readable = JSON.stringify(text, undefined, 4);
+						// document.body.appendChild(document.createElement('pre')).innerHTML = text_readable;
+						var loopLimiter = 0;
+
+						document.getElementById("data_b").innerHTML = "";
+						document.getElementById("data_b").innerHTML += text2["value"][0]["doba"] + "\n\n";
+						// zrobiłem to tak bo nie mam pojęcia jak inaczej można by to zrobić
+						if (text["value"][98]["rce_pln"].toFixed(2) < 0)
+						{
+							document.getElementById("data_b").innerHTML += "<span style=\"color: red;\">" + text["value"][98]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][98]["rce_pln"].toFixed(2) +"</span>\n";
+						}
+						else
+						{
+							document.getElementById("data_b").innerHTML += text["value"][98]["udtczas"].substring(11).replace("45", "00") + " - " + text["value"][98]["rce_pln"].toFixed(2) +"\n";
+						}
+
+						for (var i = 0; i < text2["value"].length; i++)
+						{
+							if (text2["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+							{
+								if (text2["value"][i]["rce_pln"].toFixed(2) < 0)
+								{
+									document.getElementById("data_b").innerHTML += "<span style=\"color: red;\">" + text2["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text2["value"][i]["rce_pln"].toFixed(2) +"</span>\n";
+								}
+								else
+								{
+									document.getElementById("data_b").innerHTML += text2["value"][i]["udtczas"].substring(11).replace("45", "00") + " - " + text2["value"][i]["rce_pln"].toFixed(2) +"\n";
+								}
+								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
+								loopLimiter += 1;
+								if (loopLimiter == 23) { lsuccess(`Price data for tomorrow fetched successfully.`); break; } // tutaj 23 bo się podwójnie będzie północ pokazywać
+							}
+						}
+						document.getElementById("data_b").innerHTML += "<div class=\"bottom\"><a class=\"link\" onclick=\"apiChangeContainer(0)\">&lt; DZISIAJ</a></div>";
+
+						llog(`Received JSON objects equal to ${text2["value"].length}`);
+					}).catch((e) => console.error(e));
+				} else { lwarning(`Cena na jutro nie została jeszcze opublikowana!`); } // to jeżeli nie będzie ceny jeszcze
+			}).catch((e) => console.error(e));
+		}
+
+		// funkcja która zamienia widoczność bloków 'data' i 'data_b'
+		function apiChangeContainer(idx)
+		{
+			if (idx == 0)
+			{
+				document.getElementById("data").style.display = "block";
+				document.getElementById("data_b").style.display = "none";
+			}
+			else if (idx == 1)
+			{
+				document.getElementById("data").style.display = "none";
+				document.getElementById("data_b").style.display = "block";
+			}
+		}
+	</script>
+</body>
+</html>
