@@ -15,6 +15,7 @@ permalink: /sites/rce-data/
 		th { background-color: grey; color: #ffffff; }
 		tr:nth-child(odd) { background-color: #f5f5f5; }
 		.negative-price { color: red; }
+		.empty-field { color: #00000030 }
 
 		@media (max-width: 700px) {
 			table {
@@ -123,7 +124,7 @@ permalink: /sites/rce-data/
 									`<tr>
 										<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
 										<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-										<td>---</td>
+										<td class="empty-field">b/d</td>
 									</tr>`;
 							}
 							else
@@ -132,7 +133,7 @@ permalink: /sites/rce-data/
 									`<tr>
 										<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
 										<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-										<td>---</td>
+										<td class="empty-field">b/d</td>
 									</tr>`;
 							}
 							// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
