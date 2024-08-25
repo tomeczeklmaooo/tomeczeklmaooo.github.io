@@ -11,16 +11,17 @@ permalink: /sites/rce-data/
 		body { font-family: monospace; }
 		table { border-collapse: collapse; width: 33%; }
 		tr { border: 1px #000000 solid; }
-		th, td { border: 1px grey dashed; padding: 4px 15px; text-align: center; }
+		th, td { border: 1px grey dashed; padding: 3px 15px; text-align: center; }
 		th { background-color: grey; color: #ffffff; }
 		tr:nth-child(odd) { background-color: #f5f5f5; }
 		.negative-price { color: red; }
 		.empty-field { color: #00000030 }
+		.btn { font-family: monospace; background-color: #ffffff; border: 1px #000000 dashed; border-radius: 2px; padding: 2px 10px; font-size: 10pt; transition: 0.15s ease; }
+		.btn:hover { cursor: pointer; border-radius: 5px; text-decoration: underline; }
 
 		@media (max-width: 700px) {
-			table {
-				width: 100%;
-			}
+			table { width: 100%; }
+			.btn { font-size: 12pt; }
 		}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -45,9 +46,9 @@ permalink: /sites/rce-data/
 			if (month < 10) month = '0' + month;
 			if (day < 10) day = '0' + day;
 
-			var fulldate = '%27' + year + '-' + month + '-' + day + '%27';
+			var fulldate = year + '-' + month + '-' + day;
 			llog(`fulldate: ${fulldate}`);
-			var fetchURL = baseURL + fulldate + '&$first=192';
+			var fetchURL = baseURL + '%27' +  fulldate + '%27' + '&$first=192';
 			llog(`fetchURL: ${fetchURL}`);
 			
 			fetch(fetchURL).then((res) => res.text()).then((text) => {
@@ -142,6 +143,12 @@ permalink: /sites/rce-data/
 						}
 					}
 				}
+				document.getElementById("data").innerHTML +=
+					`<tr style="border: none; display: none;">
+						<td colspan="3" style="border: none;">
+							<button class="btn" onclick="window.location.href='https:\/\/tomeczeklmaooo.github.io\/sites\/rce-data\/charts'">Wykresy</button>
+						</td>
+					</tr>`;
 			}).catch((e) => console.error(e));
 		}
 	</script>
