@@ -11,16 +11,19 @@ permalink: /sites/rce-data/
 		body { font-family: monospace; }
 		table { border-collapse: collapse; width: 33%; }
 		tr { border: 1px #000000 solid; }
-		th, td { border: 1px grey dashed; padding: 3px 15px; text-align: center; }
+		th, td { border: 1px #000000 solid; padding: 3px 15px; text-align: center; }
 		th { background-color: grey; color: #ffffff; }
 		tr:nth-child(odd) { background-color: #f5f5f5; }
 		.negative-price { color: red; }
+		.negative-price-rcn { color: green; }
 		.empty-field { color: #00000030 }
 		.btn { font-family: monospace; background-color: #ffffff; border: 1px #000000 dashed; border-radius: 2px; padding: 2px 10px; font-size: 10pt; transition: 0.15s ease; }
 		.btn:hover { cursor: pointer; border-radius: 5px; text-decoration: underline; }
 
 		@media (max-width: 700px) {
+			body { margin: 0; }
 			table { width: 100%; }
+			th, td { padding: 3px 3px; }
 			.btn { font-size: 12pt; }
 		}
 	</style>
@@ -32,9 +35,10 @@ permalink: /sites/rce-data/
 		<!-- dlaczego na tym musi być ID to ja nie wiem -->
 		<tbody id="data"></tbody>
 	</table>
-	<script src="https://cdn.jsdelivr.net/gh/tomeczeklmaooo/tomeczeklmaooo.github.io@master/scripts/logging.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/tomeczeklmaooo/tomeczeklmaooo.github.io@main/scripts/logging.js"></script>
 	<script>
 		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba%20ge%20'; // %20 = spacja, %27 = '
+		var baseURL_rcn = 'https://energy-instrat-api.azurewebsites.net/api/prices/energy_price_rdn_hourly?date_from=';
 		function apiGetPriceData()
 		{
 			// dzisiejsza data
@@ -42,113 +46,284 @@ permalink: /sites/rce-data/
 			var year = date.getFullYear();
 			var month = date.getMonth() + 1;
 			var day = date.getDate();
+			var hour = date.getHours();
+			var minute = date.getMinutes();
+			var second = date.getSeconds();
+			var day_rcn = day + 1;
 			// doklejanie '0' z przodu jeżeli dzień lub miesiąc są mniejsze od 10
 			if (month < 10) month = '0' + month;
 			if (day < 10) day = '0' + day;
+			if (hour < 10) hour = '0' + hour;
+			if (minute < 10) minute = '0' + minute;
+			if (second < 10) second = '0' + second;
 
 			var fulldate = year + '-' + month + '-' + day;
 			llog(`fulldate: ${fulldate}`);
+			var fulldate_rcn_from = day + '-' + month + '-' + year + 'T00:00:00Z';
+			llog(`fulldate_rcn_from: ${fulldate_rcn_from}`);
+			var fulldate_rcn_to = day_rcn + '-' + month + '-' + year + 'T23:59:59Z';
+			llog(`fulldate_rcn_to: ${fulldate_rcn_to}`);
 			var fetchURL = baseURL + '%27' +  fulldate + '%27' + '&$first=192';
 			llog(`fetchURL: ${fetchURL}`);
+			var fetchURL_rcn = 'https://corsproxy.io/?' + encodeURI(baseURL_rcn + fulldate_rcn_from + '&date_to=' + fulldate_rcn_to);
+			llog(`fetchURL_rcn: ${fetchURL_rcn}`);
 			
 			fetch(fetchURL).then((res) => res.text()).then((text) => {
-				text = JSON.parse(text);
-				// var text_readable = JSON.stringify(text, undefined, 4);
-				// document.body.appendChild(document.createElement('pre')).innerHTML = text_readable;
-				var loopLimiter = 0;
+				fetch(fetchURL_rcn).then((res) => res.text()).then((text_rcn) => {
+					text = JSON.parse(text);
+					text_rcn = JSON.parse(text_rcn);
+					// var text_readable = JSON.stringify(text, undefined, 4);
+					// document.body.appendChild(document.createElement('pre')).innerHTML = text_readable;
+					var loopLimiter = 0;
 
-				document.getElementById("header").innerHTML += `Dane pobrane: ${text["value"][0]["doba"]}<br><br>`;
-				document.getElementById("data").innerHTML += "<tr><th>Godzina</th> <th>Dzisiaj</th> <th>Jutro</th></tr>";
+					document.getElementById("header").innerHTML += `Dane pobrane: ${day}.${month}.${year} ${hour}:${minute}:${second}<br><br>`;
+					document.getElementById("data").innerHTML += `<tr><th rowspan='2'>Godzina</th> <th colspan='2'>Dzisiaj</th> <th colspan='2'>Jutro</th></tr>`;
+					document.getElementById("data").innerHTML += `<tr><th>Sprzedaż</th> <th>Zakup</th> <th>Sprzedaż</th> <th>Zakup</th></tr>`;
 
-				llog(`Received JSON objects equal to ${text["value"].length}`);
+					llog(`Received JSON objects from PSE API equal to ${text["value"].length}`);
+					llog(`Received JSON objects from ENERGY INSTRAT API equal to ${text_rcn.length}`);
 
-				// jeżeli w zwróconym JSON będzie więcej niż 96 elementów to 3 kolumny
-				if (text["value"].length > 96)
-				{
-					for (var i = 0; i < text["value"].length; i++)
+					// jeżeli w zwróconym JSON będzie więcej niż 96 elementów to 3 kolumny
+					if (text["value"].length > 96 && text_rcn.length > 24)
 					{
-						if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+						for (var i = 0; i < text["value"].length; i++)
 						{
-							if (text["value"][i]["rce_pln"].toFixed(2) < 0 && text["value"][i + 96]["rce_pln"].toFixed(2) < 0)
+							if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 							{
-								document.getElementById("data").innerHTML +=
-									`<tr>
-										<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-										<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-										<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-									</tr>`;
+								if (text["value"][i]["rce_pln"].toFixed(2) < 0 && text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
+									text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0 && text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
+								{
+									document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
+										</tr>`;
+								}
+								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 && text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
+										text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
+								{
+										document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
+										</tr>`;
+								}
+								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 && text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
+										text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
+								{
+										document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
+										</tr>`;
+								}
+								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 &&
+										text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0 && text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
+								{
+										document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
+										</tr>`;
+								}
+								else if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
+										text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0 && text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
+								{
+										document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
+										</tr>`;
+								}
+								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 &&
+										text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
+								{
+										document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
+										</tr>`;
+								}
+								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 &&
+										text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
+								{
+										document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
+										</tr>`;
+								}
+								else if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
+										text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
+								{
+										document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
+										</tr>`;
+								}
+								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 &&
+										text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
+								{
+										document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
+										</tr>`;
+								}
+								else if (text["value"][i]["rce_pln"].toFixed(2) < 0)
+								{
+										document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
+										</tr>`;
+								}
+								else if (text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
+								{
+										document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
+										</tr>`;
+								}
+								else if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0)
+								{
+										document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
+										</tr>`;
+								}
+								else if (text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
+								{
+										document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
+										</tr>`;
+								}
+								else
+								{
+									document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
+										</tr>`;
+								}
+								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
+								loopLimiter += 1;
+								if (loopLimiter == 24) { lsuccess(`Price data for today and tomorrow fetched successfully.`); break; }
 							}
-							else if (text["value"][i]["rce_pln"].toFixed(2) < 0)
-							{
-								document.getElementById("data").innerHTML +=
-									`<tr>
-										<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-										<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-										<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-									</tr>`;
-							}
-							else if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0)
-							{
-								document.getElementById("data").innerHTML +=
-									`<tr>
-										<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-										<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-										<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-									</tr>`;
-							}
-							else
-							{
-								document.getElementById("data").innerHTML +=
-									`<tr>
-										<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-										<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-										<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-									</tr>`;
-							}
-							// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
-							loopLimiter += 1;
-							if (loopLimiter == 24) { lsuccess(`Price data for today and tomorrow fetched successfully.`); break; }
 						}
 					}
-				}
-				else // to jeżeli nie będzie ceny jeszcze (2 kolumny)
-				{
-					lwarning(`Cena na jutro nie została jeszcze opublikowana!`);
-
-					for (var i = 0; i < text["value"].length; i++)
+					else if (text["value"].length == 96 && text_rcn.length == 24) // to jeżeli nie będzie ceny jeszcze (2 kolumny)
 					{
-						if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+						lwarning(`Cena na jutro nie została jeszcze opublikowana!`);
+
+						for (var i = 0; i < text["value"].length; i++)
 						{
-							if (text["value"][i]["rce_pln"].toFixed(2) < 0)
+							if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 							{
-								document.getElementById("data").innerHTML +=
-									`<tr>
-										<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-										<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-										<td class="empty-field">b/d</td>
-									</tr>`;
+								if (text["value"][i]["rce_pln"].toFixed(2) < 0 && text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
+								{
+									document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td class="empty-field">b/d</td>
+											<td class="empty-field">b/d</td>
+										</tr>`;
+								}
+								else if (text["value"][i]["rce_pln"].toFixed(2) < 0)
+								{
+									document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td class="empty-field">b/d</td>
+											<td class="empty-field">b/d</td>
+										</tr>`;
+								}
+								else if (text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
+								{
+									document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td class="empty-field">b/d</td>
+											<td class="empty-field">b/d</td>
+										</tr>`;
+								}
+								else
+								{
+									document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td class="empty-field">b/d</td>
+											<td class="empty-field">b/d</td>
+										</tr>`;
+								}
+								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
+								loopLimiter += 1;
+								if (loopLimiter == 24) { lsuccess(`Price data for today fetched successfully.`); break; }
 							}
-							else
-							{
-								document.getElementById("data").innerHTML +=
-									`<tr>
-										<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-										<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-										<td class="empty-field">b/d</td>
-									</tr>`;
-							}
-							// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
-							loopLimiter += 1;
-							if (loopLimiter == 24) { lsuccess(`Price data for today fetched successfully.`); break; }
 						}
 					}
-				}
-				document.getElementById("data").innerHTML +=
-					`<tr style="border: none; display: none;">
-						<td colspan="3" style="border: none;">
-							<button class="btn" onclick="window.location.href='https:\/\/tomeczeklmaooo.github.io\/sites\/rce-data\/charts'">Wykresy</button>
-						</td>
-					</tr>`;
+					document.getElementById("data").innerHTML +=
+						`<tr style="border: none; display: none;">
+							<td colspan="3" style="border: none;">
+								<button class="btn" onclick="window.location.href='https:\/\/tomeczeklmaooo.github.io\/sites\/rce-data\/charts'">Wykresy</button>
+							</td>
+						</tr>`;
+				}).catch((e) => console.error(e));
 			}).catch((e) => console.error(e));
 		}
 	</script>
