@@ -1,7 +1,7 @@
 var color_red = "color: #ff0000;";
 var color_green = "color: #00ff00;";
 var color_blue = "color: #6aaffd;";
-var color_yellow = "color: #ffff00;";
+var color_yellow = "color: #ffde21;";
 var color_orange = "color: #ffa500;";
 var color_normal = "color: inherit;";
 
