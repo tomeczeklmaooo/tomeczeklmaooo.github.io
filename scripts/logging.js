@@ -7,23 +7,23 @@ var color_normal = "color: inherit;";
 
 function lerror(message)
 {
-	console.log(`%cERROR >> %c${message}`, color_red, color_normal);
+	console.log(`%c✕ %c${message}`, color_red, color_normal);
 }
 function lwarning(message)
 {
-	console.log(`%cWARN >> %c${message}`, color_orange, color_normal);
+	console.log(`%c! %c${message}`, color_orange, color_normal);
 }
 function lsuccess(message)
 {
-	console.log(`%cSUCCESS >> %c${message}`, color_green, color_normal);
+	console.log(`%c✓ %c${message}`, color_green, color_normal);
 }
 function linfo(message)
 {
-	console.log(`%cINFO >> %c${message}`, color_blue, color_normal);
+	console.log(`%cⓘ %c${message}`, color_blue, color_normal);
 }
 function llog(message)
 {
-	console.log(`%cLOG >> %c${message}`, color_yellow, color_normal);
+	console.log(`%c📜 %c${message}`, color_yellow, color_normal);
 }
 
 // lerror("Error message here.");
