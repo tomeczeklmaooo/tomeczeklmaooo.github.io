@@ -23,6 +23,7 @@ permalink: /sites/rce-data/
 		@media (max-width: 700px) {
 			body { margin: 0; }
 			div#header { text-align: center; margin-top: 4px; }
+			div#chart { width: 100%; }
 			table { width: 100%; }
 			td:nth-child(1) { width: 10%; }
 			th, td { padding: 3px 3px; }
@@ -30,6 +31,7 @@ permalink: /sites/rce-data/
 		}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
 <body onload="apiGetPriceData()">
 	<div id="header"></div>
@@ -37,11 +39,67 @@ permalink: /sites/rce-data/
 		<!-- dlaczego na tym musi być ID to ja nie wiem -->
 		<tbody id="data"></tbody>
 	</table>
+	<div id="chart"></div>
 	<script src="https://cdn.jsdelivr.net/gh/tomeczeklmaooo/tomeczeklmaooo.github.io/scripts/logging.js"></script>
 	<script src="../../scripts/logging.js"></script>
 	<script>
 		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba%20ge%20'; // %20 = spacja, %27 = '
 		var baseURL_rcn = 'https://energy-instrat-api.azurewebsites.net/api/prices/energy_price_rdn_hourly?date_from=';
+
+		const chart = Highcharts.chart('chart', {
+			chart: {
+				type: 'line'
+			},
+			title: {
+				text: 'Wykres rynkowej ceny energii elektrycznej'
+			},
+			xAxis: {
+				categories: [
+					'00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
+					'06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
+					'12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
+					'18:00', '19:00', '20:00', '21:00', '22:00', '23:00'
+				]
+			},
+			yAxis: {
+				title: {
+					text: 'Cena (PLN)'
+				}
+			},
+			plotOptions: {
+				line: {
+					dataLabels: {
+						enabled: true
+					},
+					enableMouseTracking: true
+				},
+				series: {
+					animation: {
+						duration: 1200
+					}
+				}
+			},
+			series: [{
+				name: 'Dzisiaj',
+				data: [],
+				animation: {
+					defer: 1000
+				}
+			}, {
+				name: 'Jutro',
+				data: [],
+				animation: {
+					defer: 2000
+				}
+			}],
+			accessibility: {
+				enabled: false	
+			}
+		});
+
+		var data_prices_today_sell = [];
+		var data_prices_tomorrow_sell = [];
+
 		function apiGetPriceData()
 		{
 			// dzisiejsza data
@@ -56,6 +114,7 @@ permalink: /sites/rce-data/
 			// doklejanie '0' z przodu jeżeli dzień lub miesiąc są mniejsze od 10
 			if (month < 10) month = '0' + month;
 			if (day < 10) day = '0' + day;
+			if (day_rcn < 10) day_rcn = '0' + day_rcn;
 			if (hour < 10) hour = '0' + hour;
 			if (minute < 10) minute = '0' + minute;
 			if (second < 10) second = '0' + second;
@@ -108,7 +167,7 @@ permalink: /sites/rce-data/
 								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 && text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
 										text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
 								{
-										document.getElementById("data").innerHTML +=
+									document.getElementById("data").innerHTML +=
 										`<tr>
 											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
 											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
@@ -120,7 +179,7 @@ permalink: /sites/rce-data/
 								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 && text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
 										text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
 								{
-										document.getElementById("data").innerHTML +=
+									document.getElementById("data").innerHTML +=
 										`<tr>
 											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
 											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
@@ -132,7 +191,7 @@ permalink: /sites/rce-data/
 								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 &&
 										text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0 && text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
 								{
-										document.getElementById("data").innerHTML +=
+									document.getElementById("data").innerHTML +=
 										`<tr>
 											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
 											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
@@ -144,7 +203,7 @@ permalink: /sites/rce-data/
 								else if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
 										text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0 && text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
 								{
-										document.getElementById("data").innerHTML +=
+									document.getElementById("data").innerHTML +=
 										`<tr>
 											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
 											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
@@ -156,7 +215,7 @@ permalink: /sites/rce-data/
 								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 &&
 										text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
 								{
-										document.getElementById("data").innerHTML +=
+									document.getElementById("data").innerHTML +=
 										`<tr>
 											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
 											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
@@ -168,7 +227,7 @@ permalink: /sites/rce-data/
 								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 &&
 										text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
 								{
-										document.getElementById("data").innerHTML +=
+									document.getElementById("data").innerHTML +=
 										`<tr>
 											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
 											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
@@ -180,7 +239,7 @@ permalink: /sites/rce-data/
 								else if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
 										text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
 								{
-										document.getElementById("data").innerHTML +=
+									document.getElementById("data").innerHTML +=
 										`<tr>
 											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
 											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
@@ -192,7 +251,7 @@ permalink: /sites/rce-data/
 								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 &&
 										text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
 								{
-										document.getElementById("data").innerHTML +=
+									document.getElementById("data").innerHTML +=
 										`<tr>
 											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
 											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
@@ -203,7 +262,7 @@ permalink: /sites/rce-data/
 								}
 								else if (text["value"][i]["rce_pln"].toFixed(2) < 0)
 								{
-										document.getElementById("data").innerHTML +=
+									document.getElementById("data").innerHTML +=
 										`<tr>
 											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
 											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
@@ -214,7 +273,7 @@ permalink: /sites/rce-data/
 								}
 								else if (text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
 								{
-										document.getElementById("data").innerHTML +=
+									document.getElementById("data").innerHTML +=
 										`<tr>
 											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
 											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
@@ -225,7 +284,7 @@ permalink: /sites/rce-data/
 								}
 								else if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0)
 								{
-										document.getElementById("data").innerHTML +=
+									document.getElementById("data").innerHTML +=
 										`<tr>
 											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
 											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
@@ -236,7 +295,7 @@ permalink: /sites/rce-data/
 								}
 								else if (text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
 								{
-										document.getElementById("data").innerHTML +=
+									document.getElementById("data").innerHTML +=
 										`<tr>
 											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
 											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
@@ -256,11 +315,19 @@ permalink: /sites/rce-data/
 											<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
 										</tr>`;
 								}
+
+								data_prices_today_sell.push(text["value"][i]["rce_pln"].toFixed(2));
+								data_prices_tomorrow_sell.push(text["value"][i + 96]["rce_pln"].toFixed(2));
+								chart.series[0].addPoint(parseFloat(data_prices_today_sell[loopLimiter]));
+								chart.series[1].addPoint(parseFloat(data_prices_tomorrow_sell[loopLimiter]));
+								
 								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 								loopLimiter += 1;
 								if (loopLimiter == 24) { lsuccess(`Price data for today and tomorrow fetched successfully.`); break; }
 							}
 						}
+						llog(`Data points - sell (today): ${data_prices_today_sell}`);
+						llog(`Data points - sell (tomorrow):${data_prices_tomorrow_sell}`);
 					}
 					else if (text["value"].length == 96 && text_rcn.length == 24) // to jeżeli nie będzie ceny jeszcze (2 kolumny)
 					{
@@ -314,11 +381,57 @@ permalink: /sites/rce-data/
 											<td class="empty-field">b/d</td>
 										</tr>`;
 								}
+
+								data_prices_today_sell.push(text["value"][i]["rce_pln"].toFixed(2));
+								chart.series[0].addPoint(parseFloat(data_prices_today_sell[loopLimiter]));
+
 								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 								loopLimiter += 1;
 								if (loopLimiter == 24) { lsuccess(`Price data for today fetched successfully.`); break; }
 							}
 						}
+						llog(`Data points - sell (today): ${data_prices_today_sell}`);
+					}
+					else // to jeżeli nie będzie ceny jeszcze (2 kolumny)
+					{
+						lwarning(`Cena na jutro nie została jeszcze opublikowana!`);
+
+						for (var i = 0; i < text["value"].length; i++)
+						{
+							if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+							{
+								if (text["value"][i]["rce_pln"].toFixed(2) < 0 && text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
+								{
+									document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td class="empty-field">b/d</td>
+											<td class="empty-field">b/d</td>
+										</tr>`;
+								}
+								else
+								{
+									document.getElementById("data").innerHTML +=
+										`<tr>
+											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
+											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
+											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
+											<td class="empty-field">b/d</td>
+											<td class="empty-field">b/d</td>
+										</tr>`;
+								}
+
+								data_prices_today_sell.push(text["value"][i]["rce_pln"].toFixed(2));
+								chart.series[0].addPoint(parseFloat(data_prices_today_sell[loopLimiter]));
+
+								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
+								loopLimiter += 1;
+								if (loopLimiter == 24) { lsuccess(`Price data for today fetched successfully.`); break; }
+							}
+						}
+						llog(`Data points - sell (today): ${data_prices_today_sell}`);
 					}
 					document.getElementById("data").innerHTML +=
 						`<tr style="border: none; display: none;">
@@ -328,6 +441,7 @@ permalink: /sites/rce-data/
 						</tr>`;
 				}).catch((e) => console.error(e));
 			}).catch((e) => console.error(e));
+			chart.redraw();
 		}
 	</script>
 </body>
