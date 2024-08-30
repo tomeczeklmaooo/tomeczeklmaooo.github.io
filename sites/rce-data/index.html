@@ -175,7 +175,7 @@ permalink: /sites/rce-data/
 			llog(`fulldate_rcn_to: ${fulldate_rcn_to}`);
 			var fetchURL = baseURL + '%27' +  fulldate + '%27' + '&$first=192';
 			llog(`fetchURL: ${fetchURL}`);
-			var fetchURL_rcn = 'https://corsproxy.io/?' + encodeURI(baseURL_rcn + fulldate_rcn_from + '&date_to=' + fulldate_rcn_to);
+			var fetchURL_rcn = baseURL_rcn + fulldate_rcn_from + '&date_to=' + fulldate_rcn_to;
 			llog(`fetchURL_rcn: ${fetchURL_rcn}`);
 			
 			fetch(fetchURL).then((res) => res.text()).then((text) => {
