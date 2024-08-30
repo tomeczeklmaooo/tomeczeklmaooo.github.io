@@ -47,6 +47,8 @@ permalink: /sites/rce-data/
 		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba%20ge%20'; // %20 = spacja, %27 = '
 		var baseURL_rcn = 'https://energy-instrat-api.azurewebsites.net/api/prices/energy_price_rdn_hourly?date_from=';
 
+		function lt10(n) { if (n < 10) { n = '0' + n; } return n; }
+
 		const chart_today = Highcharts.chart('chart_today', {
 			chart: { type: 'line' },
 			title: { text: 'Wykres rynkowej ceny energii elektrycznej (dzisiaj)' },
@@ -119,26 +121,27 @@ permalink: /sites/rce-data/
 		{
 			// dzisiejsza data
 			var date = new Date();
-			var year = date.getFullYear();
-			var month = date.getMonth() + 1;
-			var day = date.getDate();
+			var nextDate = new Date(date); nextDate.setDate(nextDate.getDate() + 1);
+			var year = date.getFullYear(), nextYear = nextDate.getFullYear();
+			var month = date.getMonth() + 1, nextMonth = nextDate.getMonth() + 1;
+			var day = date.getDate(), nextDay = nextDate.getDate();
 			var hour = date.getHours();
 			var minute = date.getMinutes();
 			var second = date.getSeconds();
-			var day_rcn = day + 1;
 			// doklejanie '0' z przodu jeżeli dzień lub miesiąc są mniejsze od 10
-			if (month < 10) month = '0' + month;
-			if (day < 10) day = '0' + day;
-			if (day_rcn < 10) day_rcn = '0' + day_rcn;
-			if (hour < 10) hour = '0' + hour;
-			if (minute < 10) minute = '0' + minute;
-			if (second < 10) second = '0' + second;
+			month = lt10(month);
+			nextMonth = lt10(nextMonth);
+			day = lt10(day);
+			nextDay = lt10(nextDay);
+			hour = lt10(hour);
+			minute = lt10(minute);
+			seconds = lt10(second);
 
 			var fulldate = year + '-' + month + '-' + day;
 			llog(`fulldate: ${fulldate}`);
 			var fulldate_rcn_from = day + '-' + month + '-' + year + 'T00:00:00Z';
 			llog(`fulldate_rcn_from: ${fulldate_rcn_from}`);
-			var fulldate_rcn_to = day_rcn + '-' + month + '-' + year + 'T23:59:00Z';
+			var fulldate_rcn_to = nextDay + '-' + nextMonth + '-' + nextYear + 'T23:59:00Z';
 			llog(`fulldate_rcn_to: ${fulldate_rcn_to}`);
 			var fetchURL = baseURL + '%27' +  fulldate + '%27' + '&$first=192';
 			llog(`fetchURL: ${fetchURL}`);
