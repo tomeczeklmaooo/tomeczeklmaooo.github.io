@@ -20,7 +20,7 @@ permalink: /sites/rce-data/
 		.empty-field { color: #00000030 }
 		.btn { font-family: monospace; background-color: #ffffff; border: 1px #000000 dashed; border-radius: 2px; padding: 2px 10px; font-size: 10pt; transition: 0.15s ease; }
 		.btn:hover { cursor: pointer; border-radius: 5px; text-decoration: underline; }
-		#loader { background-color: #ffffff; z-index: 1; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2vw; }
+		#loader { background-color: #ffffff; z-index: 1; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; font-size: 2vw; }
 
 		@media (max-width: 700px) {
 			body { margin: 0; }
@@ -368,7 +368,6 @@ permalink: /sites/rce-data/
 								data_prices_today_buy.push(text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2));
 								data_prices_tomorrow_sell.push(text["value"][i + 96]["rce_pln"].toFixed(2));
 								data_prices_tomorrow_buy.push(text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2));
-								document.getElementById("chart_tomorrow").style.display = 'block';
 								chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[loopLimiter]));
 								chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[loopLimiter]));
 								chart_tomorrow.series[0].addPoint(parseFloat(data_prices_tomorrow_sell[loopLimiter]));
@@ -379,6 +378,7 @@ permalink: /sites/rce-data/
 								if (loopLimiter == 24) { lsuccess(`Price data for today and tomorrow fetched successfully.`); break; }
 							}
 						}
+						document.getElementById("chart_tomorrow").style.display = 'block';
 						llog(`Data points - sell (today): ${data_prices_today_sell}`);
 						llog(`Data points - buy (today): ${data_prices_today_buy}`);
 						llog(`Data points - sell (tomorrow):${data_prices_tomorrow_sell}`);
@@ -439,7 +439,6 @@ permalink: /sites/rce-data/
 
 								data_prices_today_sell.push(text["value"][i]["rce_pln"].toFixed(2));
 								data_prices_today_buy.push(text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2));
-								document.getElementById("chart_tomorrow").style.display = 'none';
 								chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[loopLimiter]));
 								chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[loopLimiter]));
 
@@ -448,6 +447,7 @@ permalink: /sites/rce-data/
 								if (loopLimiter == 24) { lsuccess(`Price data for today fetched successfully.`); break; }
 							}
 						}
+						document.getElementById("chart_tomorrow").style.display = 'none';
 						llog(`Data points - sell (today): ${data_prices_today_sell}`);
 						llog(`Data points - buy (today): ${data_prices_today_buy}`);
 					}
