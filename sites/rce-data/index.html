@@ -171,7 +171,7 @@ permalink: /sites/rce-data/
 			llog(`fulldate: ${fulldate}`);
 			var fulldate_rcn_from = day + '-' + month + '-' + year + 'T00:00:00Z';
 			llog(`fulldate_rcn_from: ${fulldate_rcn_from}`);
-			var fulldate_rcn_to = nextDay + '-' + nextMonth + '-' + nextYear + 'T23:59:59Z';
+			var fulldate_rcn_to = nextDay + '-' + nextMonth + '-' + nextYear + 'T23:59:00Z';
 			llog(`fulldate_rcn_to: ${fulldate_rcn_to}`);
 			var fetchURL = baseURL + '%27' +  fulldate + '%27' + '&$first=192';
 			llog(`fetchURL: ${fetchURL}`);
