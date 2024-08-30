@@ -23,7 +23,7 @@ permalink: /sites/rce-data/
 		#loader { background-color: #ffffff; width: 99vw; height: 98vh; display: flex; align-items: center; justify-content: center; font-size: 2vw; }
 
 		@media (max-width: 700px) {
-			body { margin: 0; }
+			body { margin: 2px; }
 			div#header { text-align: center; margin-top: 4px; }
 			div.chart { width: 100%; }
 			table { width: 100%; }
@@ -104,9 +104,10 @@ permalink: /sites/rce-data/
 					}
 				}
 			},
+			tooltip: { shared: true, crosshairs: true },
 			series: [
 				{ name: 'Sprzedaż', data: [], animation: { defer: 1000 } },
-				{ name: 'Zakup', data: [], animation: { defer: 2000 } }
+				{ name: 'Zakup', data: [], animation: { defer: 2000 }, color: "#ff2014", dashStyle: 'dash' }
 			],
 			accessibility: { enabled: false }
 		});
@@ -135,9 +136,10 @@ permalink: /sites/rce-data/
 					}
 				}
 			},
+			tooltip: { shared: true, crosshairs: true },
 			series: [
 				{ name: 'Sprzedaż', data: [], animation: { defer: 1000 } },
-				{ name: 'Zakup', data: [], animation: { defer: 2000 } }
+				{ name: 'Zakup', data: [], animation: { defer: 2000 }, color: "#ff2014", dashStyle: 'dash' }
 			],
 			accessibility: { enabled: false }
 		});
@@ -368,15 +370,18 @@ permalink: /sites/rce-data/
 								data_prices_today_buy.push(text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2));
 								data_prices_tomorrow_sell.push(text["value"][i + 96]["rce_pln"].toFixed(2));
 								data_prices_tomorrow_buy.push(text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2));
-								chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[loopLimiter]));
-								chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[loopLimiter]));
-								chart_tomorrow.series[0].addPoint(parseFloat(data_prices_tomorrow_sell[loopLimiter]));
-								chart_tomorrow.series[1].addPoint(parseFloat(data_prices_tomorrow_buy[loopLimiter]));
 								
 								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 								loopLimiter += 1;
 								if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy), and for tomorrow (sell, buy)`); break; }
 							}
+						}
+						for (var i = 0; i < 24; i++)
+						{
+							chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[i]));
+							chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[i]));
+							chart_tomorrow.series[0].addPoint(parseFloat(data_prices_tomorrow_sell[i]));
+							chart_tomorrow.series[1].addPoint(parseFloat(data_prices_tomorrow_buy[i]));
 						}
 						document.getElementById("chart_tomorrow").style.display = 'block';
 						llog(`Data points - sell (today): ${data_prices_today_sell}`);
@@ -487,14 +492,17 @@ permalink: /sites/rce-data/
 								data_prices_today_sell.push(text["value"][i]["rce_pln"].toFixed(2));
 								data_prices_today_buy.push(text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2));
 								data_prices_tomorrow_sell.push(text["value"][i + 96]["rce_pln"].toFixed(2));
-								chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[loopLimiter]));
-								chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[loopLimiter]));
-								chart_tomorrow.series[0].addPoint(parseFloat(data_prices_tomorrow_sell[loopLimiter]));
 
 								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 								loopLimiter += 1;
 								if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy), and for tomorrow (sell)`); break; }
 							}
+						}
+						for (var i = 0; i < 24; i++)
+						{
+							chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[i]));
+							chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[i]));
+							chart_tomorrow.series[0].addPoint(parseFloat(data_prices_tomorrow_sell[i]));
 						}
 						document.getElementById("chart_tomorrow").style.display = 'block';
 						llog(`Data points - sell (today): ${data_prices_today_sell}`);
@@ -556,13 +564,16 @@ permalink: /sites/rce-data/
 
 								data_prices_today_sell.push(text["value"][i]["rce_pln"].toFixed(2));
 								data_prices_today_buy.push(text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2));
-								chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[loopLimiter]));
-								chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[loopLimiter]));
 
 								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 								loopLimiter += 1;
 								if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy)`); break; }
 							}
+						}
+						for (var i = 0; i < 24; i++)
+						{
+							chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[i]));
+							chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[i]));
 						}
 						document.getElementById("chart_tomorrow").style.display = 'none';
 						llog(`Data points - sell (today): ${data_prices_today_sell}`);
