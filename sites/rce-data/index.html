@@ -9,6 +9,7 @@ permalink: /sites/rce-data/
 	<title>rce-data</title>
 	<style>
 		body { font-family: monospace; }
+		#container { display: none; }
 		table { border-collapse: collapse; width: 33%; }
 		tr { border: 1px #000000 solid; }
 		th, td { border: 1px #000000 solid; padding: 3px 15px; text-align: center; }
@@ -19,6 +20,7 @@ permalink: /sites/rce-data/
 		.empty-field { color: #00000030 }
 		.btn { font-family: monospace; background-color: #ffffff; border: 1px #000000 dashed; border-radius: 2px; padding: 2px 10px; font-size: 10pt; transition: 0.15s ease; }
 		.btn:hover { cursor: pointer; border-radius: 5px; text-decoration: underline; }
+		#loader { background-color: #ffffff; z-index: 1; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2vw; }
 
 		@media (max-width: 700px) {
 			body { margin: 0; }
@@ -28,25 +30,53 @@ permalink: /sites/rce-data/
 			td:nth-child(1) { width: 10%; }
 			th, td { padding: 3px 3px; }
 			.btn { font-size: 12pt; }
+			div#loader { font-size: 5vw; }
 		}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
 <body onload="apiGetPriceData()">
-	<div id="header"></div>
-	<table>
-		<!-- dlaczego na tym musi być ID to ja nie wiem -->
-		<tbody id="data"></tbody>
-	</table>
-	<div id="chart_today" class="chart"></div>
-	<div id="chart_tomorrow" class="chart"></div>
+	<div id="container">
+		<div id="header"></div>
+		<table>
+			<!-- dlaczego na tym musi być ID to ja nie wiem -->
+			<tbody id="data"></tbody>
+		</table>
+		<div id="chart_today" class="chart"></div>
+		<div id="chart_tomorrow" class="chart"></div>
+	</div>
+
+	<!-- PAGE LOADER BEGIN -->
+	<div id="loader">
+		<span>Ładowanie danych...</span>
+	</div>
+	<!-- PAGE LOADER END -->
+
 	<script src="https://cdn.jsdelivr.net/gh/tomeczeklmaooo/tomeczeklmaooo.github.io/scripts/logging.js"></script>
 	<script src="../../scripts/logging.js"></script>
 	<script>
+		// PAGE LOADER
+		function onReady(callback) {
+			var intervalID = window.setInterval(checkReady, 1000);
+			function checkReady() {
+				if (document.getElementsByTagName('body')[0] !== undefined) {
+					window.clearInterval(intervalID);
+					callback.call(this);
+				}
+			}
+		}
+		function show(id, value) { document.getElementById(id).style.display = value ? 'block' : 'none'; }
+		onReady(function () {
+			show('container', true);
+			show('loader', false);
+		});
+
+		// FETCHING DATA AND DISPLAYING IN A TABLE AND CHARTS
 		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba%20ge%20'; // %20 = spacja, %27 = '
 		var baseURL_rcn = 'https://energy-instrat-api.azurewebsites.net/api/prices/energy_price_rdn_hourly?date_from=';
 
+		// lessthan10
 		function lt10(n) { if (n < 10) { n = '0' + n; } return n; }
 
 		const chart_today = Highcharts.chart('chart_today', {
@@ -135,7 +165,7 @@ permalink: /sites/rce-data/
 			nextDay = lt10(nextDay);
 			hour = lt10(hour);
 			minute = lt10(minute);
-			seconds = lt10(second);
+			second = lt10(second);
 
 			var fulldate = year + '-' + month + '-' + day;
 			llog(`fulldate: ${fulldate}`);
