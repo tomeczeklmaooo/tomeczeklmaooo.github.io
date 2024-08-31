@@ -140,6 +140,8 @@ permalink: /sites/rce-data/
 			accessibility: { enabled: false }
 		});
 
+		var table = "";
+
 		var data_prices_today_sell = [];
 		var data_prices_today_buy = [];
 		var data_prices_tomorrow_sell = [];
@@ -185,8 +187,8 @@ permalink: /sites/rce-data/
 					var loopLimiter = 0;
 
 					document.getElementById("header").innerHTML += `Dane pobrane: ${day}.${month}.${year} ${hour}:${minute}:${second}<br><br>`;
-					document.getElementById("data").innerHTML += `<tr><th rowspan='2'>Godzina</th> <th colspan='2'>Dzisiaj</th> <th colspan='2'>Jutro</th></tr>`;
-					document.getElementById("data").innerHTML += `<tr><th>Sprzedaż</th> <th>Zakup</th> <th>Sprzedaż</th> <th>Zakup</th></tr>`;
+					table += `<tr><th rowspan='2'>Godzina</th> <th colspan='2'>Dzisiaj</th> <th colspan='2'>Jutro</th></tr>`;
+					table += `<tr><th>Sprzedaż</th> <th>Zakup</th> <th>Sprzedaż</th> <th>Zakup</th></tr>`;
 
 					llog(`Received JSON objects from PSE API equal to ${text["value"].length}`);
 					llog(`Received JSON objects from ENERGY INSTRAT API equal to ${text_rcn.length}`);
@@ -198,169 +200,22 @@ permalink: /sites/rce-data/
 						{
 							if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 							{
-								if (text["value"][i]["rce_pln"].toFixed(2) < 0 && text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
-									text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0 && text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
-										</tr>`;
-								}
-								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 && text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
-										text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
-										</tr>`;
-								}
-								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 && text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
-										text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
-										</tr>`;
-								}
-								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 &&
-										text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0 && text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
-										</tr>`;
-								}
-								else if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
-										text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0 && text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
-										</tr>`;
-								}
-								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 &&
-										text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
-										</tr>`;
-								}
-								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 &&
-										text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
-										</tr>`;
-								}
-								else if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
-										text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
-										</tr>`;
-								}
-								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 &&
-										text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
-										</tr>`;
-								}
-								else if (text["value"][i]["rce_pln"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
-										</tr>`;
-								}
-								else if (text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
-										</tr>`;
-								}
-								else if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
-										</tr>`;
-								}
-								else if (text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
-										</tr>`;
-								}
-								else
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>
-										</tr>`;
-								}
+								table += `<tr> <td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
+								
+								// DZISIAJ SPRZEDAŻ
+								if (text["value"][i]["rce_pln"].toFixed(2) < 0) { table += `<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>`; }
+								else { table += `<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>`; }
+								// DZISIAJ ZAKUP
+								if (text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0) { table += `<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`; }
+								else { table += `<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`; }
+								// JUTRO SPRZEDAŻ
+								if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0) { table += `<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>`; }
+								else { table += `<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>`; }
+								// JUTRO ZAKUP
+								if (text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0) { table += `<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>`; }
+								else { table += `<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>`; }
+								
+								table += `</tr>`;
 
 								data_prices_today_sell.push(text["value"][i]["rce_pln"].toFixed(2));
 								data_prices_today_buy.push(text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2));
@@ -372,6 +227,9 @@ permalink: /sites/rce-data/
 								if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy), and for tomorrow (sell, buy)`); break; }
 							}
 						}
+
+						document.getElementById("data").innerHTML = table;
+
 						for (var i = 0; i < 24; i++)
 						{
 							chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[i]));
@@ -385,7 +243,7 @@ permalink: /sites/rce-data/
 						llog(`Data points - sell (tomorrow): ${data_prices_tomorrow_sell}`);
 						llog(`Data points - buy (tomorrow): ${data_prices_tomorrow_buy}`);
 					}
-					else if (text["value"].length > 96 && text_rcn.length == 24) // to jeżeli nie będzie ceny jeszcze (2 kolumny)
+					else if (text["value"].length > 96 && text_rcn.length == 24) // to jeżeli nie będzie ceny zakupu na jutro jeszcze (3 kolumny)
 					{
 						lwarning(`Buy prices for tomorrow were not published yet.`);
 
@@ -393,107 +251,32 @@ permalink: /sites/rce-data/
 						{
 							if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 							{
-								if (text["value"][i]["rce_pln"].toFixed(2) < 0 && text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
-									text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td class="empty-field">b/d</td>
-										</tr>`;
-								}
-								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 &&
-										text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td class="empty-field">b/d</td>
-										</tr>`;
-								}
-								else if (text["value"][i]["rce_pln"].toFixed(2) < 0 && text["value"][i + 96]["rce_pln"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td class="empty-field">b/d</td>
-										</tr>`;
-								}
-								else if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0 &&
-										text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td class="empty-field">b/d</td>
-										</tr>`;
-								}
-								else if (text["value"][i]["rce_pln"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td class="empty-field">b/d</td>
-										</tr>`;
-								}
-								else if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td class="empty-field">b/d</td>
-										</tr>`;
-								}
-								else if (text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td class="empty-field">b/d</td>
-										</tr>`;
-								}
-								else
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>
-											<td class="empty-field">b/d</td>
-										</tr>`;
-								}
+								table += `<tr> <td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
+								
+								// DZISIAJ SPRZEDAŻ
+								if (text["value"][i]["rce_pln"].toFixed(2) < 0) { table += `<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>`; }
+								else { table += `<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>`; }
+								// DZISIAJ ZAKUP
+								if (text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0) { table += `<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`; }
+								else { table += `<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`; }
+								// JUTRO SPRZEDAŻ
+								if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0) { table += `<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>`; }
+								else { table += `<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>`; }
+
+								table += `<td class="empty-field">b/d</td> </tr>`;
 
 								data_prices_today_sell.push(text["value"][i]["rce_pln"].toFixed(2));
 								data_prices_today_buy.push(text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2));
 								data_prices_tomorrow_sell.push(text["value"][i + 96]["rce_pln"].toFixed(2));
-
+								
 								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 								loopLimiter += 1;
 								if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy), and for tomorrow (sell)`); break; }
 							}
 						}
+
+						document.getElementById("data").innerHTML = table;
+
 						for (var i = 0; i < 24; i++)
 						{
 							chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[i]));
@@ -505,7 +288,7 @@ permalink: /sites/rce-data/
 						llog(`Data points - buy (today): ${data_prices_today_buy}`);
 						llog(`Data points - sell (tomorrow): ${data_prices_tomorrow_sell}`);
 					}
-					else // to jeżeli nie będzie ceny jeszcze (2 kolumny)
+					else // to jeżeli nie będzie ceny sprzedaży i zakupu na jutro jeszcze (2 kolumny)
 					{
 						lwarning(`Sell and buy prices for tomorrow were not published yet.`);
 
@@ -513,59 +296,28 @@ permalink: /sites/rce-data/
 						{
 							if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 							{
-								if (text["value"][i]["rce_pln"].toFixed(2) < 0 && text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="empty-field">b/d</td>
-											<td class="empty-field">b/d</td>
-										</tr>`;
-								}
-								else if (text["value"][i]["rce_pln"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="empty-field">b/d</td>
-											<td class="empty-field">b/d</td>
-										</tr>`;
-								}
-								else if (text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="empty-field">b/d</td>
-											<td class="empty-field">b/d</td>
-										</tr>`;
-								}
-								else
-								{
-									document.getElementById("data").innerHTML +=
-										`<tr>
-											<td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>
-											<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>
-											<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>
-											<td class="empty-field">b/d</td>
-											<td class="empty-field">b/d</td>
-										</tr>`;
-								}
+								table += `<tr> <td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
+								
+								// DZISIAJ SPRZEDAŻ
+								if (text["value"][i]["rce_pln"].toFixed(2) < 0) { table += `<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>`; }
+								else { table += `<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>`; }
+								// DZISIAJ ZAKUP
+								if (text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0) { table += `<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`; }
+								else { table += `<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`; }
+
+								table += `<td class="empty-field">b/d</td> <td class="empty-field">b/d</td> </tr>`;
 
 								data_prices_today_sell.push(text["value"][i]["rce_pln"].toFixed(2));
 								data_prices_today_buy.push(text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2));
-
+								
 								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 								loopLimiter += 1;
 								if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy)`); break; }
 							}
 						}
+
+						document.getElementById("data").innerHTML = table;
+
 						for (var i = 0; i < 24; i++)
 						{
 							chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[i]));
