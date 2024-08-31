@@ -88,6 +88,8 @@ permalink: /sites/rce-data/
 		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba%20ge%20'; // %20 = spacja, %27 = '
 		var baseURL_rcn = 'https://energy-instrat-api.azurewebsites.net/api/prices/energy_price_rdn_hourly?date_from=';
 
+		// randomint (min included, max included)
+		function randomint(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 		// lessthan10
 		function lt10(n) { if (n < 10) { n = '0' + n; } return n; }
 
@@ -167,7 +169,7 @@ permalink: /sites/rce-data/
 			llog(`fulldate: ${fulldate}`);
 			var fulldate_rcn_from = day + '-' + month + '-' + year + 'T00:00:00Z';
 			llog(`fulldate_rcn_from: ${fulldate_rcn_from}`);
-			var fulldate_rcn_to = nextDay + '-' + nextMonth + '-' + nextYear + 'T23:' + lt10(Math.floor(Math.random() * 58) + 2) + ':00Z'; // this is so stupid, can't be 59 or 01 so randomize
+			var fulldate_rcn_to = nextDay + '-' + nextMonth + '-' + nextYear + 'T23:' + lt10(randomint(2, 58)) + ':00Z'; // this is so stupid, can't be 59 or 01 so randomize
 			llog(`fulldate_rcn_to: ${fulldate_rcn_to}`);
 			var fetchURL = baseURL + '%27' +  fulldate + '%27' + '&$first=192&$select=udtczas,rce_pln';
 			llog(`fetchURL: ${fetchURL}`);
