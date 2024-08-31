@@ -15,14 +15,24 @@ permalink: /sites/rce-data/
 		th, td { border: 1px #000000 solid; padding: 3px 15px; text-align: center; }
 		th { background-color: grey; color: #ffffff; }
 		tr:nth-child(odd) { background-color: #f5f5f5; }
+		.hoverable { transition: 0.15s ease; }
+		.hoverable:hover { box-shadow: 0px 0px 10px 0px rgba(66, 68, 90, 1); }
 		.negative-price { color: red; }
 		.negative-price-rcn { color: green; }
 		.empty-field { color: #00000030 }
 		.btn { font-family: monospace; background-color: #ffffff; border: 1px #000000 dashed; border-radius: 2px; padding: 2px 10px; font-size: 10pt; transition: 0.15s ease; }
 		.btn:hover { cursor: pointer; border-radius: 5px; text-decoration: underline; }
-		#loader { background-color: #ffffff; width: 99vw; height: 98vh; display: flex; align-items: center; justify-content: center; font-size: 2vw; }
+		#loader { background-color: #ffffff; width: 98vw; height: 96vh; display: flex; align-items: center; justify-content: center; font-size: 2vw; }
+		.loader { width: 36px; height: 36px; border: 2px solid #000000; border-bottom-color: transparent; border-radius: 50%; display: inline-block; box-sizing: border-box; animation: loader 1s linear infinite; }
 
-		@media (max-width: 700px) {
+		@keyframes loader
+		{
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+
+		@media (max-width: 700px)
+		{
 			body { margin: 2px; }
 			div#header { text-align: center; margin-top: 4px; }
 			div.chart { width: 100%; }
@@ -31,6 +41,7 @@ permalink: /sites/rce-data/
 			th, td { padding: 3px 3px; }
 			.btn { font-size: 12pt; }
 			div#loader { font-size: 5vw; }
+			span.loader { width: 20px; height: 20px; border: 1px solid #000000; border-bottom-color: transparent; }
 		}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -49,7 +60,8 @@ permalink: /sites/rce-data/
 
 	<!-- PAGE LOADER BEGIN -->
 	<div id="loader">
-		<span>Ładowanie danych...</span>
+		<span class="loader"></span>
+		<span>&emsp;Ładowanie danych...</span>
 	</div>
 	<!-- PAGE LOADER END -->
 
@@ -92,22 +104,13 @@ permalink: /sites/rce-data/
 			},
 			yAxis: { title: { text: 'Cena (PLN/MWh)' } },
 			plotOptions: {
-				line: {
-					dataLabels: {
-						enabled: true
-					},
-					enableMouseTracking: true
-				},
-				series: {
-					animation: {
-						duration: 1200
-					}
-				}
+				line: { dataLabels: { enabled: true }, enableMouseTracking: true },
+				series: { animation: { duration: 1200 } }
 			},
 			tooltip: { shared: true, crosshairs: true },
 			series: [
-				{ name: 'Sprzedaż', data: [], animation: { defer: 1000 } },
-				{ name: 'Zakup', data: [], animation: { defer: 2000 }, color: "#ff2014", dashStyle: 'dash' }
+				{ name: 'Sprzedaż', data: [], animation: { defer: 1200 } },
+				{ name: 'Zakup', data: [], animation: { defer: 2500 }, color: "#ff2014", dashStyle: 'dash' }
 			],
 			accessibility: { enabled: false }
 		});
@@ -124,22 +127,13 @@ permalink: /sites/rce-data/
 			},
 			yAxis: { title: { text: 'Cena (PLN/MWh)' } },
 			plotOptions: {
-				line: {
-					dataLabels: {
-						enabled: true
-					},
-					enableMouseTracking: true
-				},
-				series: {
-					animation: {
-						duration: 1200
-					}
-				}
+				line: { dataLabels: { enabled: true }, enableMouseTracking: true },
+				series: { animation: { duration: 1200 } }
 			},
 			tooltip: { shared: true, crosshairs: true },
 			series: [
-				{ name: 'Sprzedaż', data: [], animation: { defer: 1000 } },
-				{ name: 'Zakup', data: [], animation: { defer: 2000 }, color: "#ff2014", dashStyle: 'dash' }
+				{ name: 'Sprzedaż', data: [], animation: { defer: 1200 } },
+				{ name: 'Zakup', data: [], animation: { defer: 2500 }, color: "#ff2014", dashStyle: 'dash' }
 			],
 			accessibility: { enabled: false }
 		});
@@ -175,7 +169,7 @@ permalink: /sites/rce-data/
 			llog(`fulldate_rcn_from: ${fulldate_rcn_from}`);
 			var fulldate_rcn_to = nextDay + '-' + nextMonth + '-' + nextYear + 'T23:01:00Z';
 			llog(`fulldate_rcn_to: ${fulldate_rcn_to}`);
-			var fetchURL = baseURL + '%27' +  fulldate + '%27' + '&$first=192';
+			var fetchURL = baseURL + '%27' +  fulldate + '%27' + '&$first=192&$select=udtczas,rce_pln';
 			llog(`fetchURL: ${fetchURL}`);
 			var fetchURL_rcn = 'https://corsproxy.io/?' + encodeURI(baseURL_rcn + fulldate_rcn_from + '&date_to=' + fulldate_rcn_to);
 			llog(`fetchURL_rcn: ${fetchURL_rcn}`);
