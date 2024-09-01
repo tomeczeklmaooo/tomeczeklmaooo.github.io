@@ -41,7 +41,7 @@ permalink: /sites/rce-data/
 			th, td { padding: 3px 3px; }
 			.btn { font-size: 12pt; }
 			div#loader { font-size: 5vw; }
-			span.loader { width: 20px; height: 20px; border: 1px solid #000000; border-bottom-color: transparent; }
+			span.loader { width: 20px; height: 20px; border: 2px solid #000000; border-bottom-color: transparent; }
 		}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -85,8 +85,8 @@ permalink: /sites/rce-data/
 		});
 
 		// FETCHING DATA AND DISPLAYING IN A TABLE AND CHARTS
-		var baseURL = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba%20ge%20'; // %20 = spacja, %27 = '
-		var baseURL_rcn = 'https://energy-instrat-api.azurewebsites.net/api/prices/energy_price_rdn_hourly?date_from=';
+		var baseUrlRCE = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba%20ge%20'; // %20 = spacja, %27 = '
+		var baseUrlRDN = 'https://energy-instrat-api.azurewebsites.net/api/prices/energy_price_rdn_hourly?date_from=';
 
 		// randomint (min included, max included)
 		function randomint(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
@@ -149,7 +149,7 @@ permalink: /sites/rce-data/
 
 		function apiGetPriceData()
 		{
-			// dzisiejsza data
+			// dzisiejsza i jutrzejsza data
 			var date = new Date();
 			var nextDate = new Date(date); nextDate.setDate(nextDate.getDate() + 1);
 			var year = date.getFullYear(), nextYear = nextDate.getFullYear();
@@ -158,7 +158,7 @@ permalink: /sites/rce-data/
 			var hour = date.getHours();
 			var minute = date.getMinutes();
 			var second = date.getSeconds();
-			// doklejanie '0' z przodu jeżeli dzień lub miesiąc są mniejsze od 10
+			// doklejanie '0' z przodu jeżeli dzień, miesiąc, godzina, minuta lub sekunda są mniejsze od 10
 			month = lt10(month);
 			nextMonth = lt10(nextMonth);
 			day = lt10(day);
@@ -167,228 +167,240 @@ permalink: /sites/rce-data/
 			minute = lt10(minute);
 			second = lt10(second);
 
-			var fulldate = year + '-' + month + '-' + day;
-			llog(`fulldate: ${fulldate}`);
-			var fulldate_rcn_from = day + '-' + month + '-' + year + 'T00:00:00Z';
-			llog(`fulldate_rcn_from: ${fulldate_rcn_from}`);
-			var fulldate_rcn_to = nextDay + '-' + nextMonth + '-' + nextYear + 'T23:' + lt10(randomint(2, 58)) + ':00Z'; // this is so stupid, can't be 59 or 01 so randomize
-			llog(`fulldate_rcn_to: ${fulldate_rcn_to}`);
-			var fetchURL = baseURL + '%27' +  fulldate + '%27' + '&$first=192&$select=udtczas,rce_pln';
-			llog(`fetchURL: ${fetchURL}`);
-			var fetchURL_rcn = 'https://corsproxy.io/?' + encodeURI(baseURL_rcn + fulldate_rcn_from + '&date_to=' + fulldate_rcn_to);
-			llog(`fetchURL_rcn: ${fetchURL_rcn}`);
+			var fulldateRCE = year + '-' + month + '-' + day;
+			var fulldateRDN_0A = day + '-' + month + '-' + year + 'T00:00:00Z';
+			var fulldateRDN_0B = day + '-' + month + '-' + year + 'T23:59:00Z';
+			var fulldateRDN_1A = nextDay + '-' + nextMonth + '-' + nextYear + 'T00:00:00Z';
+			var fulldateRDN_1B = nextDay + '-' + nextMonth + '-' + nextYear + 'T23:59:00Z';
+			var fetchUrlRCE = baseUrlRCE + '%27' +  fulldateRCE + '%27' + '&$first=192&$select=udtczas,rce_pln';
+			var fetchUrlRDN_A = 'https://corsproxy.io/?' + encodeURI(baseUrlRDN + fulldateRDN_0A + '&date_to=' + fulldateRDN_0B);
+			var fetchUrlRDN_B = 'https://corsproxy.io/?' + encodeURI(baseUrlRDN + fulldateRDN_1A + '&date_to=' + fulldateRDN_1B);
+			llog(`fulldateRCE: ${fulldateRCE}`);
+			llog(`fulldateRDN_0X: ${fulldateRDN_0A} :: ${fulldateRDN_0B}`);
+			llog(`fulldateRDN_1X: ${fulldateRDN_1A} :: ${fulldateRDN_1B}`);
+			llog(`fetchUrlRCE: ${fetchUrlRCE}`);
+			llog(`fetchUrlRDN_A: ${fetchUrlRDN_A}`);
+			llog(`fetchUrlRDN_B: ${fetchUrlRDN_B}`);
 			
-			fetch(fetchURL).then((res) => res.text()).then((text) => {
-				fetch(fetchURL_rcn).then((res) => res.text()).then((text_rcn) => {
-					text = JSON.parse(text);
-					text_rcn = JSON.parse(text_rcn);
-					// var text_readable = JSON.stringify(text, undefined, 4);
-					// document.body.appendChild(document.createElement('pre')).innerHTML = text_readable;
-					var loopLimiter = 0;
+			fetch(fetchUrlRCE).then((res) => res.text()).then((rce_response) => { // RCE
+				fetch(fetchUrlRDN_A).then((res) => res.text()).then((rdn_response_a) => { // RDN_A
+					fetch(fetchUrlRDN_B).then((res) => res.text()).then((rdn_response_b) => { // RDN_B
+						rce_response = JSON.parse(rce_response);
+						rdn_response_a = JSON.parse(rdn_response_a);
+						rdn_response_b = JSON.parse(rdn_response_b);
+						// var text_readable = JSON.stringify(text, undefined, 4);
+						// document.body.appendChild(document.createElement('pre')).innerHTML = text_readable;
+						var loopLimiter = 0;
 
-					document.getElementById("header").innerHTML += `Dane pobrane: ${day}.${month}.${year} ${hour}:${minute}:${second}<br><br>`;
-					table += `<tr><th rowspan='2'>Godzina</th><th colspan='2'>Dzisiaj</th><th colspan='2'>Jutro</th></tr>`;
-					table += `<tr><th>Sprzedaż</th><th>Zakup</th><th>Sprzedaż</th><th>Zakup</th></tr>`;
+						document.getElementById("header").innerHTML += `Dane pobrane: ${day}.${month}.${year} ${hour}:${minute}:${second}<br><br>`;
+						table += `<tr><th rowspan='2'>Godzina</th><th colspan='2'>Dzisiaj</th><th colspan='2'>Jutro</th></tr>`;
+						table += `<tr><th>Sprzedaż</th><th>Zakup</th><th>Sprzedaż</th><th>Zakup</th></tr>`;
 
-					llog(`Received JSON objects from PSE API equal to ${text["value"].length}`);
-					llog(`Received JSON objects from ENERGY INSTRAT API equal to ${text_rcn.length}`);
+						llog(`Received JSON objects in rce_response equal to ${rce_response["value"].length}`);
+						llog(`Received JSON objects in rdn_response_a equal to ${rdn_response_a.length}`);
+						llog(`Received JSON objects in rdn_response_b equal to ${rdn_response_b.length}`);
 
-					// jeżeli w zwróconym JSON będzie więcej niż 96 elementów to 3 kolumny
-					if (text["value"].length > 96 && text_rcn.length > 24)
-					{
-						for (var i = 0; i < text["value"].length; i++)
+						// jeżeli w zwróconym JSON będzie więcej niż 96 elementów to 3 kolumny
+						if (rce_response["value"].length > 96 && (rdn_response_a.length && rdn_response_b.length) == 24)
 						{
-							if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+							for (var i = 0; i < rce_response["value"].length; i++)
 							{
-								table += `<tr><td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
-								
-								// DZISIAJ SPRZEDAŻ
-								if (text["value"][i]["rce_pln"].toFixed(2) < 0)
+								if (rce_response["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 								{
-									table += `<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>`;
-								}
-								else
-								{
-									table += `<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>`;
-								}
+									table += `<tr><td>${rce_response["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
+									
+									// DZISIAJ SPRZEDAŻ
+									if (rce_response["value"][i]["rce_pln"].toFixed(2) < 0)
+									{
+										table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
+									}
+									else
+									{
+										table += `<td>${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
+									}
 
-								// DZISIAJ ZAKUP
-								if (text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									table += `<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
-								}
-								else
-								{
-									table += `<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
-								}
-								
-								// JUTRO SPRZEDAŻ
-								if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0)
-								{
-									table += `<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
-								}
-								else
-								{
-									table += `<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
-								}
+									// DZISIAJ ZAKUP
+									if (rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
+									{
+										table += `<td class="negative-price-rcn">${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+									}
+									else
+									{
+										table += `<td>${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+									}
+									
+									// JUTRO SPRZEDAŻ
+									if (rce_response["value"][i + 96]["rce_pln"].toFixed(2) < 0)
+									{
+										table += `<td class="negative-price">${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
+									}
+									else
+									{
+										table += `<td>${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
+									}
 
-								// JUTRO ZAKUP
-								if (text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									table += `<td class="negative-price-rcn">${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>`;
-								}
-								else
-								{
-									table += `<td>${text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2)}</td>`;
-								}
-								
-								table += `</tr>`;
+									// JUTRO ZAKUP
+									if (rdn_response_b[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
+									{
+										table += `<td class="negative-price-rcn">${rdn_response_b[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+									}
+									else
+									{
+										table += `<td>${rdn_response_b[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+									}
+									
+									table += `</tr>`;
 
-								data_prices_today_sell.push(text["value"][i]["rce_pln"].toFixed(2));
-								data_prices_today_buy.push(text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2));
-								data_prices_tomorrow_sell.push(text["value"][i + 96]["rce_pln"].toFixed(2));
-								data_prices_tomorrow_buy.push(text_rcn[loopLimiter + 24]["fixing_i"]["price"].toFixed(2));
-								
-								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
-								loopLimiter += 1;
-								if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy), and for tomorrow (sell, buy)`); break; }
+									data_prices_today_sell.push(rce_response["value"][i]["rce_pln"].toFixed(2));
+									data_prices_today_buy.push(rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2));
+									data_prices_tomorrow_sell.push(rce_response["value"][i + 96]["rce_pln"].toFixed(2));
+									data_prices_tomorrow_buy.push(rdn_response_b[loopLimiter]["fixing_i"]["price"].toFixed(2));
+									
+									// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
+									loopLimiter += 1;
+									if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy), and for tomorrow (sell, buy)`); break; }
+								}
 							}
-						}
 
-						document.getElementById("data").innerHTML = table;
+							document.getElementById("data").innerHTML = table;
 
-						for (var i = 0; i < 24; i++)
-						{
-							chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[i]));
-							chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[i]));
-							chart_tomorrow.series[0].addPoint(parseFloat(data_prices_tomorrow_sell[i]));
-							chart_tomorrow.series[1].addPoint(parseFloat(data_prices_tomorrow_buy[i]));
-						}
-						document.getElementById("chart_tomorrow").style.display = 'block';
-						llog(`Data points - sell (today): ${data_prices_today_sell}`);
-						llog(`Data points - buy (today): ${data_prices_today_buy}`);
-						llog(`Data points - sell (tomorrow): ${data_prices_tomorrow_sell}`);
-						llog(`Data points - buy (tomorrow): ${data_prices_tomorrow_buy}`);
-					}
-					else if (text["value"].length > 96 && text_rcn.length == 24) // to jeżeli nie będzie ceny zakupu na jutro jeszcze (3 kolumny)
-					{
-						lwarning(`Buy prices for tomorrow were not published yet.`);
-
-						for (var i = 0; i < text["value"].length; i++)
-						{
-							if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+							for (var i = 0; i < 24; i++)
 							{
-								table += `<tr><td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
-								
-								// DZISIAJ SPRZEDAŻ
-								if (text["value"][i]["rce_pln"].toFixed(2) < 0)
-								{
-									table += `<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>`;
-								}
-								else
-								{
-									table += `<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>`;
-								}
-
-								// DZISIAJ ZAKUP
-								if (text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									table += `<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
-								}
-								else
-								{
-									table += `<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
-								}
-
-								// JUTRO SPRZEDAŻ
-								if (text["value"][i + 96]["rce_pln"].toFixed(2) < 0)
-								{
-									table += `<td class="negative-price">${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
-								}
-								else
-								{
-									table += `<td>${text["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
-								}
-
-								table += `<td class="empty-field">b/d</td></tr>`;
-
-								data_prices_today_sell.push(text["value"][i]["rce_pln"].toFixed(2));
-								data_prices_today_buy.push(text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2));
-								data_prices_tomorrow_sell.push(text["value"][i + 96]["rce_pln"].toFixed(2));
-								
-								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
-								loopLimiter += 1;
-								if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy), and for tomorrow (sell)`); break; }
+								chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[i]), false);
+								chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[i]), false);
+								chart_tomorrow.series[0].addPoint(parseFloat(data_prices_tomorrow_sell[i]), false);
+								chart_tomorrow.series[1].addPoint(parseFloat(data_prices_tomorrow_buy[i]), false);
+								if (i == 23) { lsuccess(`Data points added to charts: chart_today (sell, buy) and chart_tomorrow (sell, buy)`); break; }
 							}
+							document.getElementById("chart_tomorrow").style.display = 'block';
+							llog(`Data points - sell (today): ${data_prices_today_sell}`);
+							llog(`Data points - buy (today): ${data_prices_today_buy}`);
+							llog(`Data points - sell (tomorrow): ${data_prices_tomorrow_sell}`);
+							llog(`Data points - buy (tomorrow): ${data_prices_tomorrow_buy}`);
 						}
-
-						document.getElementById("data").innerHTML = table;
-
-						for (var i = 0; i < 24; i++)
+						else if (rce_response["value"].length > 96 && rdn_response_a.length == 24) // to jeżeli nie będzie ceny zakupu na jutro jeszcze (3 kolumny)
 						{
-							chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[i]));
-							chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[i]));
-							chart_tomorrow.series[0].addPoint(parseFloat(data_prices_tomorrow_sell[i]));
-						}
-						document.getElementById("chart_tomorrow").style.display = 'block';
-						llog(`Data points - sell (today): ${data_prices_today_sell}`);
-						llog(`Data points - buy (today): ${data_prices_today_buy}`);
-						llog(`Data points - sell (tomorrow): ${data_prices_tomorrow_sell}`);
-					}
-					else // to jeżeli nie będzie ceny sprzedaży i zakupu na jutro jeszcze (2 kolumny)
-					{
-						lwarning(`Sell and buy prices for tomorrow were not published yet.`);
+							lwarning(`Buy prices for tomorrow were not published yet.`);
 
-						for (var i = 0; i < text["value"].length; i++)
-						{
-							if (text["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+							for (var i = 0; i < rce_response["value"].length; i++)
 							{
-								table += `<tr><td>${text["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
-								
-								// DZISIAJ SPRZEDAŻ
-								if (text["value"][i]["rce_pln"].toFixed(2) < 0)
+								if (rce_response["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 								{
-									table += `<td class="negative-price">${text["value"][i]["rce_pln"].toFixed(2)}</td>`;
-								}
-								else
-								{
-									table += `<td>${text["value"][i]["rce_pln"].toFixed(2)}</td>`;
-								}
+									table += `<tr><td>${rce_response["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
+									
+									// DZISIAJ SPRZEDAŻ
+									if (rce_response["value"][i]["rce_pln"].toFixed(2) < 0)
+									{
+										table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
+									}
+									else
+									{
+										table += `<td>${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
+									}
 
-								// DZISIAJ ZAKUP
-								if (text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-								{
-									table += `<td class="negative-price-rcn">${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
-								}
-								else
-								{
-									table += `<td>${text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
-								}
+									// DZISIAJ ZAKUP
+									if (rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
+									{
+										table += `<td class="negative-price-rcn">${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+									}
+									else
+									{
+										table += `<td>${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+									}
 
-								table += `<td class="empty-field">b/d</td><td class="empty-field">b/d</td></tr>`;
+									// JUTRO SPRZEDAŻ
+									if (rce_response["value"][i + 96]["rce_pln"].toFixed(2) < 0)
+									{
+										table += `<td class="negative-price">${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
+									}
+									else
+									{
+										table += `<td>${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
+									}
 
-								data_prices_today_sell.push(text["value"][i]["rce_pln"].toFixed(2));
-								data_prices_today_buy.push(text_rcn[loopLimiter]["fixing_i"]["price"].toFixed(2));
-								
-								// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
-								loopLimiter += 1;
-								if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy)`); break; }
+									table += `<td class="empty-field">b/d</td></tr>`;
+
+									data_prices_today_sell.push(rce_response["value"][i]["rce_pln"].toFixed(2));
+									data_prices_today_buy.push(rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2));
+									data_prices_tomorrow_sell.push(rce_response["value"][i + 96]["rce_pln"].toFixed(2));
+									
+									// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
+									loopLimiter += 1;
+									if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy), and for tomorrow (sell)`); break; }
+								}
 							}
+
+							document.getElementById("data").innerHTML = table;
+
+							for (var i = 0; i < 24; i++)
+							{
+								chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[i]), false);
+								chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[i]), false);
+								chart_tomorrow.series[0].addPoint(parseFloat(data_prices_tomorrow_sell[i]), false);
+								if (i == 23) { lsuccess(`Data points added to charts: chart_today (sell, buy) and chart_tomorrow (sell)`); break; }
+								
+							}
+							document.getElementById("chart_tomorrow").style.display = 'block';
+							llog(`Data points - sell (today): ${data_prices_today_sell}`);
+							llog(`Data points - buy (today): ${data_prices_today_buy}`);
+							llog(`Data points - sell (tomorrow): ${data_prices_tomorrow_sell}`);
 						}
-
-						document.getElementById("data").innerHTML = table;
-
-						for (var i = 0; i < 24; i++)
+						else // to jeżeli nie będzie ceny sprzedaży i zakupu na jutro jeszcze (2 kolumny)
 						{
-							chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[i]));
-							chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[i]));
+							lwarning(`Sell and buy prices for tomorrow were not published yet.`);
+
+							for (var i = 0; i < rce_response["value"].length; i++)
+							{
+								if (rce_response["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+								{
+									table += `<tr><td>${rce_response["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
+									
+									// DZISIAJ SPRZEDAŻ
+									if (rce_response["value"][i]["rce_pln"].toFixed(2) < 0)
+									{
+										table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
+									}
+									else
+									{
+										table += `<td>${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
+									}
+
+									// DZISIAJ ZAKUP
+									if (rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
+									{
+										table += `<td class="negative-price-rcn">${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+									}
+									else
+									{
+										table += `<td>${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+									}
+
+									table += `<td class="empty-field">b/d</td><td class="empty-field">b/d</td></tr>`;
+
+									data_prices_today_sell.push(rce_response["value"][i]["rce_pln"].toFixed(2));
+									data_prices_today_buy.push(rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2));
+									
+									// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
+									loopLimiter += 1;
+									if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy)`); break; }
+								}
+							}
+
+							document.getElementById("data").innerHTML = table;
+
+							for (var i = 0; i < 24; i++)
+							{
+								chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[i]), false);
+								chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[i]), false);
+								if (i == 23) { lsuccess(`Data points added to chart: chart_today (sell, buy)`); break; }
+							}
+							document.getElementById("chart_tomorrow").style.display = 'none';
+							llog(`Data points - sell (today): ${data_prices_today_sell}`);
+							llog(`Data points - buy (today): ${data_prices_today_buy}`);
 						}
-						document.getElementById("chart_tomorrow").style.display = 'none';
-						llog(`Data points - sell (today): ${data_prices_today_sell}`);
-						llog(`Data points - buy (today): ${data_prices_today_buy}`);
-					}
-				}).catch((e) => console.error(e));
-			}).catch((e) => console.error(e));
+					}).catch((e) => console.error(e)); // RDN_B
+				}).catch((e) => console.error(e)); // RDN_A
+			}).catch((e) => console.error(e)); // RCE
 			chart_today.redraw();
 			chart_tomorrow.redraw();
 		}
