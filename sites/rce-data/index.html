@@ -251,10 +251,10 @@ permalink: /sites/rce-data/
 									
 									table += `</tr>`;
 
-									data_prices_today_sell.push(rce_response["value"][i]["rce_pln"].toFixed(2));
-									data_prices_today_buy.push(rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2));
-									data_prices_tomorrow_sell.push(rce_response["value"][i + 96]["rce_pln"].toFixed(2));
-									data_prices_tomorrow_buy.push(rdn_response_b[loopLimiter]["fixing_i"]["price"].toFixed(2));
+									data_prices_today_sell.push(parseFloat(rce_response["value"][i]["rce_pln"].toFixed(2)));
+									data_prices_today_buy.push(parseFloat(rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)));
+									data_prices_tomorrow_sell.push(parseFloat(rce_response["value"][i + 96]["rce_pln"].toFixed(2)));
+									data_prices_tomorrow_buy.push(parseFloat(rdn_response_b[loopLimiter]["fixing_i"]["price"].toFixed(2)));
 									
 									// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 									loopLimiter += 1;
@@ -264,19 +264,19 @@ permalink: /sites/rce-data/
 
 							document.getElementById("data").innerHTML = table;
 
-							for (var i = 0; i < 24; i++)
-							{
-								chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[i]), false);
-								chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[i]), false);
-								chart_tomorrow.series[0].addPoint(parseFloat(data_prices_tomorrow_sell[i]), false);
-								chart_tomorrow.series[1].addPoint(parseFloat(data_prices_tomorrow_buy[i]), false);
-								if (i == 23) { lsuccess(`Data points added to charts: chart_today (sell, buy) and chart_tomorrow (sell, buy)`); break; }
-							}
+							// pushing arrays to charts
+							chart_today.series[0].setData(data_prices_today_sell, false);
+							chart_today.series[1].setData(data_prices_today_buy, false);
+							chart_tomorrow.series[0].setData(data_prices_tomorrow_sell, false);
+							chart_tomorrow.series[1].setData(data_prices_tomorrow_buy, false);
+
 							document.getElementById("chart_tomorrow").style.display = 'block';
+
 							llog(`Data points - sell (today): ${data_prices_today_sell}`);
 							llog(`Data points - buy (today): ${data_prices_today_buy}`);
 							llog(`Data points - sell (tomorrow): ${data_prices_tomorrow_sell}`);
 							llog(`Data points - buy (tomorrow): ${data_prices_tomorrow_buy}`);
+
 							chart_today.redraw();
 							chart_tomorrow.redraw();
 						}
@@ -322,9 +322,9 @@ permalink: /sites/rce-data/
 
 									table += `<td class="empty-field">b/d</td></tr>`;
 
-									data_prices_today_sell.push(rce_response["value"][i]["rce_pln"].toFixed(2));
-									data_prices_today_buy.push(rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2));
-									data_prices_tomorrow_sell.push(rce_response["value"][i + 96]["rce_pln"].toFixed(2));
+									data_prices_today_sell.push(parseFloat(rce_response["value"][i]["rce_pln"].toFixed(2)));
+									data_prices_today_buy.push(parseFloat(rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)));
+									data_prices_tomorrow_sell.push(parseFloat(rce_response["value"][i + 96]["rce_pln"].toFixed(2)));
 									
 									// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 									loopLimiter += 1;
@@ -334,18 +334,17 @@ permalink: /sites/rce-data/
 
 							document.getElementById("data").innerHTML = table;
 
-							for (var i = 0; i < 24; i++)
-							{
-								chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[i]), false);
-								chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[i]), false);
-								chart_tomorrow.series[0].addPoint(parseFloat(data_prices_tomorrow_sell[i]), false);
-								if (i == 23) { lsuccess(`Data points added to charts: chart_today (sell, buy) and chart_tomorrow (sell)`); break; }
-								
-							}
+							// pushing arrays to charts
+							chart_today.series[0].setData(data_prices_today_sell, false);
+							chart_today.series[1].setData(data_prices_today_buy, false);
+							chart_tomorrow.series[0].setData(data_prices_tomorrow_sell, false);
+
 							document.getElementById("chart_tomorrow").style.display = 'block';
+
 							llog(`Data points - sell (today): ${data_prices_today_sell}`);
 							llog(`Data points - buy (today): ${data_prices_today_buy}`);
 							llog(`Data points - sell (tomorrow): ${data_prices_tomorrow_sell}`);
+
 							chart_today.redraw();
 							chart_tomorrow.redraw();
 						}
@@ -381,8 +380,8 @@ permalink: /sites/rce-data/
 
 									table += `<td class="empty-field">b/d</td><td class="empty-field">b/d</td></tr>`;
 
-									data_prices_today_sell.push(rce_response["value"][i]["rce_pln"].toFixed(2));
-									data_prices_today_buy.push(rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2));
+									data_prices_today_sell.push(parseFloat(rce_response["value"][i]["rce_pln"].toFixed(2)));
+									data_prices_today_buy.push(parseFloat(rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)));
 									
 									// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 									loopLimiter += 1;
@@ -392,15 +391,15 @@ permalink: /sites/rce-data/
 
 							document.getElementById("data").innerHTML = table;
 
-							for (var i = 0; i < 24; i++)
-							{
-								chart_today.series[0].addPoint(parseFloat(data_prices_today_sell[i]), false);
-								chart_today.series[1].addPoint(parseFloat(data_prices_today_buy[i]), false);
-								if (i == 23) { lsuccess(`Data points added to chart: chart_today (sell, buy)`); break; }
-							}
+							// pushing arrays to charts
+							chart_today.series[0].setData(data_prices_today_sell, false);
+							chart_today.series[1].setData(data_prices_today_buy, false);
+
 							document.getElementById("chart_tomorrow").style.display = 'none';
+
 							llog(`Data points - sell (today): ${data_prices_today_sell}`);
 							llog(`Data points - buy (today): ${data_prices_today_buy}`);
+
 							chart_today.redraw();
 							chart_tomorrow.redraw();
 						}
