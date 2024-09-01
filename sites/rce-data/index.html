@@ -277,6 +277,8 @@ permalink: /sites/rce-data/
 							llog(`Data points - buy (today): ${data_prices_today_buy}`);
 							llog(`Data points - sell (tomorrow): ${data_prices_tomorrow_sell}`);
 							llog(`Data points - buy (tomorrow): ${data_prices_tomorrow_buy}`);
+							chart_today.redraw();
+							chart_tomorrow.redraw();
 						}
 						else if (rce_response["value"].length > 96 && rdn_response_a.length == 24) // to jeżeli nie będzie ceny zakupu na jutro jeszcze (3 kolumny)
 						{
@@ -344,6 +346,8 @@ permalink: /sites/rce-data/
 							llog(`Data points - sell (today): ${data_prices_today_sell}`);
 							llog(`Data points - buy (today): ${data_prices_today_buy}`);
 							llog(`Data points - sell (tomorrow): ${data_prices_tomorrow_sell}`);
+							chart_today.redraw();
+							chart_tomorrow.redraw();
 						}
 						else // to jeżeli nie będzie ceny sprzedaży i zakupu na jutro jeszcze (2 kolumny)
 						{
@@ -397,12 +401,12 @@ permalink: /sites/rce-data/
 							document.getElementById("chart_tomorrow").style.display = 'none';
 							llog(`Data points - sell (today): ${data_prices_today_sell}`);
 							llog(`Data points - buy (today): ${data_prices_today_buy}`);
+							chart_today.redraw();
+							chart_tomorrow.redraw();
 						}
 					}).catch((e) => console.error(e)); // RDN_B
 				}).catch((e) => console.error(e)); // RDN_A
 			}).catch((e) => console.error(e)); // RCE
-			chart_today.redraw();
-			chart_tomorrow.redraw();
 		}
 	</script>
 </body>
