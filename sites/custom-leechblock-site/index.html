@@ -1,0 +1,76 @@
+---
+permalink: /sites/custom-leechblock-site/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Your time limit is up.</title>
+	<style>
+		body
+		{
+			font-family: 'Flexi IBM VGA False', sans-serif;
+			background-color: #000000;
+			margin: 0;
+			padding: 0;
+			opacity: 0;
+		}
+
+		#container
+		{
+			display: flex;
+			background-image: url('blurry_gradient_bg_a.png');
+			background-repeat: no-repeat;
+			background-size: 1920px 1080px;
+			flex-direction: column;
+			width: 100%;
+			height: 100%;
+			align-items: center;
+			justify-content: center;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.header-text
+		{
+			color: #eeedf0;
+			font-size: 24pt;
+			text-align: center;
+		}
+
+		.sub-text
+		{
+			color: #eeedf0;
+			font-size: 16pt;
+			text-align: center;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<link href="https://fonts.cdnfonts.com/css/flexi-ibm-vga-false" rel="stylesheet">
+</head>
+<body id="body">
+	<div id="container">
+		<div class="header-text">Your time is up for today.</div>
+		<div class="sub-text">Try doing something productive, not sit around and get distracted by the Internet.</div>
+	</div>
+	<script>
+		window.onload = fadeIn;
+		function fadeIn() {
+			var fade = document.getElementById("body");
+			var opacity = 0;
+			var intervalID = setInterval(function() {
+				if (opacity < 1) {
+					opacity = opacity + 0.01;
+ 					fade.style.opacity = opacity;
+				} else {
+					clearInterval(intervalID);
+				}
+			}, 1);
+		}
+	</script>
+</body>
+</html>
