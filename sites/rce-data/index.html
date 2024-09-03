@@ -163,7 +163,7 @@ permalink: /sites/rce-data/
 
 			var fulldateRCE = year + '-' + month + '-' + day;
 			var fulldateRDN_0A = day + '-' + month + '-' + year + 'T00:00:00Z';
-			var fulldateRDN_0B = day + '-' + month + '-' + year + 'T23:59:00Z';
+			var fulldateRDN_0B = day + '-' + month + '-' + year + 'T23:' + lt10(randomint(2, 58)) + ':00Z';
 			var fulldateRDN_1A = nextDay + '-' + nextMonth + '-' + nextYear + 'T00:00:00Z';
 			var fulldateRDN_1B = nextDay + '-' + nextMonth + '-' + nextYear + 'T23:' + lt10(randomint(2, 58)) + ':00Z';
 			var fetchUrlRCE = baseUrlRCE + '%27' +  fulldateRCE + '%27' + '&$first=192&$select=udtczas,rce_pln';
