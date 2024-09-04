@@ -143,29 +143,22 @@ permalink: /sites/rce-data/
 
 		function apiGetPriceData()
 		{
-			// dzisiejsza i jutrzejsza data
+			// dzisiejsza i jutrzejsza data, od razu sprawdzenie czy mniejsze od 10 przez funkcję lt10()
 			var date = new Date();
 			var nextDate = new Date(date); nextDate.setDate(nextDate.getDate() + 1);
-			var year = date.getFullYear(), nextYear = nextDate.getFullYear();
-			var month = date.getMonth() + 1, nextMonth = nextDate.getMonth() + 1;
-			var day = date.getDate(), nextDay = nextDate.getDate();
-			var hour = date.getHours();
-			var minute = date.getMinutes();
-			var second = date.getSeconds();
-			// doklejanie '0' z przodu jeżeli dzień, miesiąc, godzina, minuta lub sekunda są mniejsze od 10
-			month = lt10(month);
-			nextMonth = lt10(nextMonth);
-			day = lt10(day);
-			nextDay = lt10(nextDay);
-			hour = lt10(hour);
-			minute = lt10(minute);
-			second = lt10(second);
+			var year = lt10(date.getFullYear()), nextYear = lt10(nextDate.getFullYear());
+			var month = lt10(date.getMonth() + 1), nextMonth = lt10(nextDate.getMonth() + 1);
+			var day = lt10(date.getDate()), nextDay = lt10(nextDate.getDate());
+			var hour = lt10(date.getHours());
+			var minute = lt10(date.getMinutes());
+			var second = lt10(date.getSeconds());
+			var randomMinute = lt10(randomint(2, 58));
 
 			var fulldateRCE = year + '-' + month + '-' + day;
 			var fulldateRDN_0A = day + '-' + month + '-' + year + 'T00:00:00Z';
-			var fulldateRDN_0B = day + '-' + month + '-' + year + 'T23:' + lt10(randomint(2, 58)) + ':00Z';
+			var fulldateRDN_0B = day + '-' + month + '-' + year + 'T23:' + randomMinute + ':00Z';
 			var fulldateRDN_1A = nextDay + '-' + nextMonth + '-' + nextYear + 'T00:00:00Z';
-			var fulldateRDN_1B = nextDay + '-' + nextMonth + '-' + nextYear + 'T23:' + lt10(randomint(2, 58)) + ':00Z';
+			var fulldateRDN_1B = nextDay + '-' + nextMonth + '-' + nextYear + 'T23:' + randomMinute + ':00Z';
 			var fetchUrlRCE = baseUrlRCE + '%27' +  fulldateRCE + '%27' + '&$first=192&$select=udtczas,rce_pln';
 			var fetchUrlRDN_A = 'https://corsproxy.io/?' + encodeURI(baseUrlRDN + fulldateRDN_0A + '&date_to=' + fulldateRDN_0B);
 			var fetchUrlRDN_B = 'https://corsproxy.io/?' + encodeURI(baseUrlRDN + fulldateRDN_1A + '&date_to=' + fulldateRDN_1B);
