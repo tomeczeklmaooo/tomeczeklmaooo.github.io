@@ -163,11 +163,13 @@ permalink: /sites/rce-data/
 			var fetchUrlRDN_A = 'https://corsproxy.io/?' + encodeURI(baseUrlRDN + fulldateRDN_0A + '&date_to=' + fulldateRDN_0B);
 			var fetchUrlRDN_B = 'https://corsproxy.io/?' + encodeURI(baseUrlRDN + fulldateRDN_1A + '&date_to=' + fulldateRDN_1B);
 			llog(`fulldateRCE: ${fulldateRCE}`);
-			llog(`fulldateRDN_0X: ${fulldateRDN_0A} :: ${fulldateRDN_0B}`);
-			llog(`fulldateRDN_1X: ${fulldateRDN_1A} :: ${fulldateRDN_1B}`);
+			// llog(`fulldateRDN_0X: ${fulldateRDN_0A} :: ${fulldateRDN_0B}`);
+			// llog(`fulldateRDN_1X: ${fulldateRDN_1A} :: ${fulldateRDN_1B}`);
 			llog(`fetchUrlRCE: ${fetchUrlRCE}`);
-			llog(`fetchUrlRDN_A: ${fetchUrlRDN_A}`);
-			llog(`fetchUrlRDN_B: ${fetchUrlRDN_B}`);
+			// llog(`fetchUrlRDN_A: ${fetchUrlRDN_A}`);
+			// llog(`fetchUrlRDN_B: ${fetchUrlRDN_B}`);
+
+			linfo(`Data from RDN (Energy Instrat API) is still being fetched, but not displayed.`);
 			
 			fetch(fetchUrlRCE).then((res) => res.text()).then((rce_response) => { // RCE
 				fetch(fetchUrlRDN_A).then((res) => res.text()).then((rdn_response_a) => { // RDN_A
@@ -184,11 +186,11 @@ permalink: /sites/rce-data/
 						table += `<tr><th>Sprzedaż</th><th>Zakup</th><th>Sprzedaż</th><th>Zakup</th></tr>`;
 
 						llog(`Received JSON objects in rce_response equal to ${rce_response["value"].length}`);
-						llog(`Received JSON objects in rdn_response_a equal to ${rdn_response_a.length}`);
-						llog(`Received JSON objects in rdn_response_b equal to ${rdn_response_b.length}`);
+						// llog(`Received JSON objects in rdn_response_a equal to ${rdn_response_a.length}`);
+						// llog(`Received JSON objects in rdn_response_b equal to ${rdn_response_b.length}`);
 
 						// jeżeli w zwróconym JSON będzie więcej niż 96 elementów to 3 kolumny
-						if (rce_response["value"].length > 96 && (rdn_response_a.length && rdn_response_b.length) == 24)
+						if (rce_response["value"].length > 96 /* && (rdn_response_a.length && rdn_response_b.length) == 24 */)
 						{
 							for (var i = 0; i < rce_response["value"].length; i++)
 							{
@@ -207,14 +209,16 @@ permalink: /sites/rce-data/
 									}
 
 									// DZISIAJ ZAKUP
-									if (rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-									{
-										table += `<td class="negative-price-rcn">${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
-									}
-									else
-									{
-										table += `<td>${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
-									}
+									// if (rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
+									// {
+									// 	table += `<td class="negative-price-rcn">${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+									// }
+									// else
+									// {
+									// 	table += `<td>${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+									// }
+
+									table += `<td class="empty-field">b/d</td>`;
 									
 									// JUTRO SPRZEDAŻ
 									if (rce_response["value"][i + 96]["rce_pln"].toFixed(2) < 0)
@@ -227,99 +231,26 @@ permalink: /sites/rce-data/
 									}
 
 									// JUTRO ZAKUP
-									if (rdn_response_b[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-									{
-										table += `<td class="negative-price-rcn">${rdn_response_b[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
-									}
-									else
-									{
-										table += `<td>${rdn_response_b[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
-									}
+									// if (rdn_response_b[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
+									// {
+									// 	table += `<td class="negative-price-rcn">${rdn_response_b[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+									// }
+									// else
+									// {
+									// 	table += `<td>${rdn_response_b[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+									// }
 									
-									table += `</tr>`;
-
-									data_prices_today_sell.push(parseFloat(rce_response["value"][i]["rce_pln"].toFixed(2)));
-									data_prices_today_buy.push(parseFloat(rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)));
-									data_prices_tomorrow_sell.push(parseFloat(rce_response["value"][i + 96]["rce_pln"].toFixed(2)));
-									data_prices_tomorrow_buy.push(parseFloat(rdn_response_b[loopLimiter]["fixing_i"]["price"].toFixed(2)));
-									
-									// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
-									loopLimiter += 1;
-									if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy), and for tomorrow (sell, buy)`); break; }
-								}
-							}
-
-							document.getElementById("data").innerHTML = table;
-
-							// pushing xAxis categories to chart (hours)
-							chart_today.xAxis[0].setCategories(x_axis_categories, false);
-							chart_tomorrow.xAxis[0].setCategories(x_axis_categories, false);
-
-							// pushing arrays to charts
-							chart_today.series[0].setData(data_prices_today_sell, false);
-							chart_today.series[1].setData(data_prices_today_buy, false);
-							chart_tomorrow.series[0].setData(data_prices_tomorrow_sell, false);
-							chart_tomorrow.series[1].setData(data_prices_tomorrow_buy, false);
-
-							document.getElementById("chart_tomorrow").style.display = 'block';
-
-							llog(`Data points - sell (today): ${data_prices_today_sell}`);
-							llog(`Data points - buy (today): ${data_prices_today_buy}`);
-							llog(`Data points - sell (tomorrow): ${data_prices_tomorrow_sell}`);
-							llog(`Data points - buy (tomorrow): ${data_prices_tomorrow_buy}`);
-
-							chart_today.redraw();
-							chart_tomorrow.redraw();
-						}
-						else if (rce_response["value"].length > 96 && rdn_response_a.length == 24) // to jeżeli nie będzie ceny zakupu na jutro jeszcze (3 kolumny)
-						{
-							lwarning(`Buy prices for tomorrow were not published yet.`);
-
-							for (var i = 0; i < rce_response["value"].length; i++)
-							{
-								if (rce_response["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
-								{
-									table += `<tr><td>${rce_response["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
-									
-									// DZISIAJ SPRZEDAŻ
-									if (rce_response["value"][i]["rce_pln"].toFixed(2) < 0)
-									{
-										table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
-									}
-									else
-									{
-										table += `<td>${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
-									}
-
-									// DZISIAJ ZAKUP
-									if (rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-									{
-										table += `<td class="negative-price-rcn">${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
-									}
-									else
-									{
-										table += `<td>${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
-									}
-
-									// JUTRO SPRZEDAŻ
-									if (rce_response["value"][i + 96]["rce_pln"].toFixed(2) < 0)
-									{
-										table += `<td class="negative-price">${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
-									}
-									else
-									{
-										table += `<td>${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
-									}
-
 									table += `<td class="empty-field">b/d</td></tr>`;
 
 									data_prices_today_sell.push(parseFloat(rce_response["value"][i]["rce_pln"].toFixed(2)));
-									data_prices_today_buy.push(parseFloat(rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)));
+									// data_prices_today_buy.push(parseFloat(rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)));
 									data_prices_tomorrow_sell.push(parseFloat(rce_response["value"][i + 96]["rce_pln"].toFixed(2)));
+									// data_prices_tomorrow_buy.push(parseFloat(rdn_response_b[loopLimiter]["fixing_i"]["price"].toFixed(2)));
 									
 									// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 									loopLimiter += 1;
-									if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy), and for tomorrow (sell)`); break; }
+									if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell), and for tomorrow (sell)`); break; }
+									// if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy), and for tomorrow (sell, buy)`); break; }
 								}
 							}
 
@@ -331,18 +262,92 @@ permalink: /sites/rce-data/
 
 							// pushing arrays to charts
 							chart_today.series[0].setData(data_prices_today_sell, false);
-							chart_today.series[1].setData(data_prices_today_buy, false);
+							// chart_today.series[1].setData(data_prices_today_buy, false);
 							chart_tomorrow.series[0].setData(data_prices_tomorrow_sell, false);
+							// chart_tomorrow.series[1].setData(data_prices_tomorrow_buy, false);
 
 							document.getElementById("chart_tomorrow").style.display = 'block';
 
 							llog(`Data points - sell (today): ${data_prices_today_sell}`);
-							llog(`Data points - buy (today): ${data_prices_today_buy}`);
+							// llog(`Data points - buy (today): ${data_prices_today_buy}`);
 							llog(`Data points - sell (tomorrow): ${data_prices_tomorrow_sell}`);
+							// llog(`Data points - buy (tomorrow): ${data_prices_tomorrow_buy}`);
 
 							chart_today.redraw();
 							chart_tomorrow.redraw();
 						}
+						// else if (rce_response["value"].length > 96 && rdn_response_a.length == 24) // to jeżeli nie będzie ceny zakupu na jutro jeszcze (3 kolumny)
+						// {
+						// 	lwarning(`Buy prices for tomorrow were not published yet.`);
+
+						// 	for (var i = 0; i < rce_response["value"].length; i++)
+						// 	{
+						// 		if (rce_response["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+						// 		{
+						// 			table += `<tr><td>${rce_response["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
+									
+						// 			// DZISIAJ SPRZEDAŻ
+						// 			if (rce_response["value"][i]["rce_pln"].toFixed(2) < 0)
+						// 			{
+						// 				table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
+						// 			}
+						// 			else
+						// 			{
+						// 				table += `<td>${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
+						// 			}
+
+						// 			// DZISIAJ ZAKUP
+						// 			if (rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
+						// 			{
+						// 				table += `<td class="negative-price-rcn">${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+						// 			}
+						// 			else
+						// 			{
+						// 				table += `<td>${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+						// 			}
+
+						// 			// JUTRO SPRZEDAŻ
+						// 			if (rce_response["value"][i + 96]["rce_pln"].toFixed(2) < 0)
+						// 			{
+						// 				table += `<td class="negative-price">${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
+						// 			}
+						// 			else
+						// 			{
+						// 				table += `<td>${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
+						// 			}
+
+						// 			table += `<td class="empty-field">b/d</td></tr>`;
+
+						// 			data_prices_today_sell.push(parseFloat(rce_response["value"][i]["rce_pln"].toFixed(2)));
+						// 			data_prices_today_buy.push(parseFloat(rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)));
+						// 			data_prices_tomorrow_sell.push(parseFloat(rce_response["value"][i + 96]["rce_pln"].toFixed(2)));
+									
+						// 			// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
+						// 			loopLimiter += 1;
+						// 			if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy), and for tomorrow (sell)`); break; }
+						// 		}
+						// 	}
+
+						// 	document.getElementById("data").innerHTML = table;
+
+						// 	// pushing xAxis categories to chart (hours)
+						// 	chart_today.xAxis[0].setCategories(x_axis_categories, false);
+						// 	chart_tomorrow.xAxis[0].setCategories(x_axis_categories, false);
+
+						// 	// pushing arrays to charts
+						// 	chart_today.series[0].setData(data_prices_today_sell, false);
+						// 	chart_today.series[1].setData(data_prices_today_buy, false);
+						// 	chart_tomorrow.series[0].setData(data_prices_tomorrow_sell, false);
+
+						// 	document.getElementById("chart_tomorrow").style.display = 'block';
+
+						// 	llog(`Data points - sell (today): ${data_prices_today_sell}`);
+						// 	llog(`Data points - buy (today): ${data_prices_today_buy}`);
+						// 	llog(`Data points - sell (tomorrow): ${data_prices_tomorrow_sell}`);
+
+						// 	chart_today.redraw();
+						// 	chart_tomorrow.redraw();
+						// }
 						else // to jeżeli nie będzie ceny sprzedaży i zakupu na jutro jeszcze (2 kolumny)
 						{
 							lwarning(`Sell and buy prices for tomorrow were not published yet.`);
@@ -364,23 +369,25 @@ permalink: /sites/rce-data/
 									}
 
 									// DZISIAJ ZAKUP
-									if (rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
-									{
-										table += `<td class="negative-price-rcn">${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
-									}
-									else
-									{
-										table += `<td>${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
-									}
+									// if (rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2) < 0)
+									// {
+									// 	table += `<td class="negative-price-rcn">${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+									// }
+									// else
+									// {
+									// 	table += `<td>${rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)}</td>`;
+									// }
 
-									table += `<td class="empty-field">b/d</td><td class="empty-field">b/d</td></tr>`;
+									table += `<td class="empty-field">b/d</td><td class="empty-field">b/d</td><td class="empty-field">b/d</td></tr>`;
+									// table += `<td class="empty-field">b/d</td><td class="empty-field">b/d</td></tr>`;
 
 									data_prices_today_sell.push(parseFloat(rce_response["value"][i]["rce_pln"].toFixed(2)));
-									data_prices_today_buy.push(parseFloat(rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)));
+									// data_prices_today_buy.push(parseFloat(rdn_response_a[loopLimiter]["fixing_i"]["price"].toFixed(2)));
 									
 									// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 									loopLimiter += 1;
-									if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy)`); break; }
+									if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell)`); break; }
+									// if (loopLimiter == 24) { lsuccess(`Successfully fetched price data for today (sell, buy)`); break; }
 								}
 							}
 
@@ -392,12 +399,12 @@ permalink: /sites/rce-data/
 
 							// pushing arrays to charts
 							chart_today.series[0].setData(data_prices_today_sell, false);
-							chart_today.series[1].setData(data_prices_today_buy, false);
+							// chart_today.series[1].setData(data_prices_today_buy, false);
 
 							document.getElementById("chart_tomorrow").style.display = 'none';
 
 							llog(`Data points - sell (today): ${data_prices_today_sell}`);
-							llog(`Data points - buy (today): ${data_prices_today_buy}`);
+							// llog(`Data points - buy (today): ${data_prices_today_buy}`);
 
 							chart_today.redraw();
 							chart_tomorrow.redraw();
