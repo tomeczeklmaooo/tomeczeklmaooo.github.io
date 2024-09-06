@@ -288,7 +288,7 @@ permalink: /sites/rce-data/
 								table += `<tr><td>${rce_response["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
 								
 								// DZISIAJ SPRZEDAŻ
-								if (rce_response["value"][i]["rce_pln"].toFixed(2) < 0)
+								if (rce_response["value"][i]["rce_pln"] < 0)
 								{
 									table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
 								}
@@ -308,7 +308,7 @@ permalink: /sites/rce-data/
 								}
 
 								// JUTRO SPRZEDAŻ
-								if (rce_response["value"][i + 96]["rce_pln"].toFixed(2) < 0)
+								if (rce_response["value"][i + 96]["rce_pln"] < 0)
 								{
 									table += `<td class="negative-price">${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
 								}
@@ -360,7 +360,7 @@ permalink: /sites/rce-data/
 								table += `<tr><td>${rce_response["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
 								
 								// DZISIAJ SPRZEDAŻ
-								if (rce_response["value"][i]["rce_pln"].toFixed(2) < 0)
+								if (rce_response["value"][i]["rce_pln"] < 0)
 								{
 									table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
 								}
