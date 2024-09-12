@@ -8,10 +8,12 @@ permalink: /sites/clicker/
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Clicker</title>
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<style></style>
 </head>
-<body>
-	<h1>Nothing to see here just yet...</h1>
-	<div id="debug-out"></div>
+<body onload="clkPrintCvars()">
+	<div id="cvars"></div>
+	<button onclick="clkClickHandler()">Increment</button>
+	<button onclick="clkResetToDefault()">Reset All</button>
 
 	<script src="https://cdn.jsdelivr.net/gh/tomeczeklmaooo/tomeczeklmaooo.github.io/scripts/logging.js"></script>
 	<script src="../../scripts/logging.js"></script>
