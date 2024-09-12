@@ -51,6 +51,7 @@ permalink: /sites/thingspeak-data/
 			justify-content: center;
 			align-items: center;
 			gap: 6px;
+			transition: 0.15s ease;
 		}
 
 		.card-icon
@@ -92,131 +93,7 @@ permalink: /sites/thingspeak-data/
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 </head>
 <body onload="webInitFunc()">
-	<div class="container">
-		<div class="row">
-			<div class="card">
-				<div class="card-icon">
-					<span>[ Card Icon ]</span>
-				</div>
-				<div class="card-title">
-					<span>[ Card Title ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 1 ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 2 ]</span>
-				</div>
-			</div>
-
-			<div class="card">
-				<div class="card-icon">
-					<span>[ Card Icon ]</span>
-				</div>
-				<div class="card-title">
-					<span>[ Card Title ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 1 ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 2 ]</span>
-				</div>
-			</div>
-
-			<div class="card">
-				<div class="card-icon">
-					<span>[ Card Icon ]</span>
-				</div>
-				<div class="card-title">
-					<span>[ Card Title ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 1 ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 2 ]</span>
-				</div>
-			</div>
-
-			<div class="card">
-				<div class="card-icon">
-					<span>[ Card Icon ]</span>
-				</div>
-				<div class="card-title">
-					<span>[ Card Title ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 1 ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 2 ]</span>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="card">
-				<div class="card-icon">
-					<span>[ Card Icon ]</span>
-				</div>
-				<div class="card-title">
-					<span>[ Card Title ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 1 ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 2 ]</span>
-				</div>
-			</div>
-
-			<div class="card">
-				<div class="card-icon">
-					<span>[ Card Icon ]</span>
-				</div>
-				<div class="card-title">
-					<span>[ Card Title ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 1 ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 2 ]</span>
-				</div>
-			</div>
-
-			<div class="card">
-				<div class="card-icon">
-					<span>[ Card Icon ]</span>
-				</div>
-				<div class="card-title">
-					<span>[ Card Title ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 1 ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 2 ]</span>
-				</div>
-			</div>
-
-			<div class="card">
-				<div class="card-icon">
-					<span>[ Card Icon ]</span>
-				</div>
-				<div class="card-title">
-					<span>[ Card Title ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 1 ]</span>
-				</div>
-				<div class="card-subtitle">
-					<span>[ Card Subtitle Line 2 ]</span>
-				</div>
-			</div>
-		</div>
-	</div>
+	<div id="container" class="container"></div>
 
 	<script src="https://cdn.jsdelivr.net/gh/tomeczeklmaooo/tomeczeklmaooo.github.io/scripts/logging.js"></script>
 	<script>
@@ -228,9 +105,41 @@ permalink: /sites/thingspeak-data/
 		var card_buf = ""; // buffer for cards
 		var data_buf = []; // buffer array
 
+		// change these values to customize the displaying of cards
+		var cvars = {
+			rows: 2, // how many rows
+			cards: 4, // how many cards per row
+			theme: 'lt-d', // should it all be light or dark themed (lt-d: light cards, dark background)
+		};
+
 		function webInitFunc()
 		{
 			linfo(`webInitFunc() called.`);
+
+			for (var i = 0; i < cvars.rows; i++)
+			{
+				card_buf += `<div class="row">`;
+				for (var j = 0; j < cvars.cards; j++)
+				{
+					card_buf += `<div class="card">
+									<div class="card-icon">
+										<span>[ Card Icon ]</span>
+									</div>
+									<div class="card-title">
+										<span>[ Card Title ]</span>
+									</div>
+									<div class="card-subtitle">
+										<span>[ Card Subtitle Line 1 ]</span>
+									</div>
+									<div class="card-subtitle">
+										<span>[ Card Subtitle Line 2 ]</span>
+									</div>
+								</div>`;
+				}
+				card_buf += `</div>`;
+			}
+
+			document.getElementById('container').innerHTML = card_buf;
 		}
 	</script>
 </body>
