@@ -8,13 +8,20 @@ permalink: /sites/rce-data/
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>rce-data</title>
 	<style>
-		body { font-family: monospace; }
-		#container { display: none; }
+		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+		
+		/* body { font-family: monospace; } */
+		body { font-family: 'IBM Plex Sans', sans-serif; }
+		#container { display: none; flex-direction: row; }
+		.charts { display: flex; flex-direction: column; width: 66%; }
+		#header { margin-bottom: 15px; }
 		table { border-collapse: collapse; width: 33%; }
-		tr { border: 1px #000000 solid; }
-		th, td { border: 1px #000000 solid; padding: 3px 15px; text-align: center; }
-		th { background-color: grey; color: #ffffff; }
-		tr:nth-child(odd) { background-color: #f5f5f5; }
+		/* tr { border-bottom: 1px #000000 solid; } */
+		th, td { padding: 3px 15px; text-align: center; }
+		th { background-color: grey; color: #ffffff; font-weight: 500; }
+		tr:nth-child(even) { background-color: #f5f5f5; }
+		td:nth-child(1) { border-right: 1px #000000 dashed; }
+		tr:nth-child(2) { border-bottom: 1px #000000 solid; }
 		.hoverable { transition: 0.15s ease; }
 		.hoverable:hover { box-shadow: 0px 0px 10px 0px rgba(66, 68, 90, 1); }
 		.negative-price { color: red; }
@@ -36,6 +43,8 @@ permalink: /sites/rce-data/
 		{
 			body { margin: 4px; }
 			div#header { text-align: center; margin-top: 4px; }
+			div#container { flex-direction: column; }
+			div.charts { flex-direction: column; width: 100%; }
 			div.chart { width: 100%; }
 			table { width: 100%; }
 			td:nth-child(1) { width: 10%; }
@@ -49,14 +58,16 @@ permalink: /sites/rce-data/
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
 <body onload="apiGetPriceData()">
+	<div id="header"></div>
 	<div id="container">
-		<div id="header"></div>
 		<table>
 			<!-- dlaczego na tym musi być ID to ja nie wiem -->
 			<tbody id="data"></tbody>
 		</table>
-		<div id="chart_today" class="chart"></div>
-		<div id="chart_tomorrow" class="chart"></div>
+		<div class="charts">
+			<div id="chart_today" class="chart"></div>
+			<div id="chart_tomorrow" class="chart"></div>
+		</div>
 	</div>
 
 	<!-- PAGE LOADER BEGIN -->
@@ -79,7 +90,7 @@ permalink: /sites/rce-data/
 				}
 			}
 		}
-		function show(id, value) { document.getElementById(id).style.display = value ? 'block' : 'none'; }
+		function show(id, value) { document.getElementById(id).style.display = value ? 'flex' : 'none'; }
 		onReady(function () {
 			show('container', true);
 			show('loader', false);
@@ -98,7 +109,7 @@ permalink: /sites/rce-data/
 			chart: { type: 'line' },
 			title: { text: 'Dzisiaj' },
 			xAxis: { categories: [] },
-			yAxis: { title: { text: undefined } },
+			yAxis: { title: { text: undefined }, labels: { enabled: false } },
 			plotOptions: {
 				line: { dataLabels: { enabled: true }, enableMouseTracking: true },
 				series: { animation: { duration: 1200 } }
@@ -114,7 +125,7 @@ permalink: /sites/rce-data/
 			chart: { type: 'line' },
 			title: { text: 'Jutro' },
 			xAxis: { categories: [] },
-			yAxis: { title: { text: undefined } },
+			yAxis: { title: { text: undefined }, labels: { enabled: false } },
 			plotOptions: {
 				line: { dataLabels: { enabled: true }, enableMouseTracking: true },
 				series: { animation: { duration: 1200 } }
@@ -160,7 +171,7 @@ permalink: /sites/rce-data/
 
 			var fulldateRCE = year + '-' + month + '-' + day;
 			var fetchUrlRCE = baseUrlRCE + '%27' +  fulldateRCE + '%27' + '&$first=192&$select=udtczas,rce_pln';
-			var fetchUrlTS = 'https://api.thingspeak.com/channels/783677/status.json?results=24';
+			var fetchUrlTS = 'https://api.thingspeak.com/channels/783677/status.json?results=128';
 			llog(`fulldateRCE: ${fulldateRCE}`);
 			llog(`fetchUrlRCE: ${fetchUrlRCE}`);
 			llog(`fetchUrlTS: ${fetchUrlTS}`);
@@ -173,7 +184,7 @@ permalink: /sites/rce-data/
 					// document.body.appendChild(document.createElement('pre')).innerHTML = text_readable;
 					var loopLimiter = 0;
 
-					document.getElementById("header").innerHTML += `Dane pobrane: ${day}.${month}.${year} ${hour}:${minute}:${second}<br><br>`;
+					document.getElementById("header").innerHTML += `Dane pobrane: ${day}.${month}.${year} ${hour}:${minute}:${second}`;
 					table += `<tr><th rowspan='2'>Godzina</th><th colspan='2'>Dzisiaj</th><th colspan='2'>Jutro</th></tr>`;
 					table += `<tr><th>Sprzedaż</th><th>Zakup</th><th>Sprzedaż</th><th>Zakup</th></tr>`;
 
