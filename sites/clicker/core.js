@@ -25,11 +25,21 @@ var cvars = {
 	// ANTI-CHEAT
 	anticheat: {
 		enabled: 0
-	}
+	},
+	// MISC
+	timeout: 100
 }
 
-function clkPrintCvars()
+function webOnload()
 {
+	clkPrintCvars(true);
+	clkDisplayData();
+}
+
+function clkPrintCvars(visible)
+{
+	if (visible) document.getElementById('cvars').style.display = 'block';
+
 	document.getElementById("cvars").innerHTML  = `Game Configuration Variables:<br>`;
 	document.getElementById("cvars").innerHTML += `Clicks: ${cvars.game.clicks}<br>`;
 	document.getElementById("cvars").innerHTML += `Experience: ${cvars.game.experience}<br>`;
@@ -53,7 +63,20 @@ function clkPrintCvars()
 	document.getElementById("cvars").innerHTML += `<br>Anti-Cheat Configuration Variables:<br>`;
 	document.getElementById("cvars").innerHTML += `Enabled: ${cvars.anticheat.enabled}<br>`;
 
-	setTimeout(clkPrintCvars, '100'); // refresh every .1 seconds
+	document.getElementById("cvars").innerHTML += `<br>Misc Configuration Variables:<br>`;
+	document.getElementById("cvars").innerHTML += `Timeout: ${cvars.timeout}<br>`;
+
+	setTimeout(clkPrintCvars, cvars.timeout); // refresh every .1 seconds
+}
+
+function clkDisplayData()
+{
+	document.getElementById('clicks').innerHTML = `Clicks: ${cvars.game.clicks}`;
+	document.getElementById('experience').innerHTML = `Experience: ${cvars.game.experience}`;
+	document.getElementById('bread_pieces').innerHTML = `Bread: ${cvars.game.bread_pieces}`;
+	document.getElementById('level').innerHTML = `Level: ${cvars.game.level}`;
+
+	setTimeout(clkDisplayData, cvars.timeout);
 }
 
 function randomint(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
@@ -72,6 +95,7 @@ function clkClickHandler()
 	}
 }
 
+// RESET FUNCTION - resets every cvar to its default value
 function clkResetToDefault()
 {
 	cvars = {
@@ -100,7 +124,9 @@ function clkResetToDefault()
 		},
 		// ANTI-CHEAT
 		anticheat: {
-			enabled: 1
-		}
+			enabled: 0
+		},
+		// MISC
+		timeout: 100
 	}
 }
