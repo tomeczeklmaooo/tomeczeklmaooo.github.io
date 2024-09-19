@@ -20,7 +20,10 @@ body
 	width: 300px;
 	z-index: 1;
 	position: absolute;
+	padding: 4px 7px;
+	border-radius: 4px;
 	display: none;
+	white-space: pre;
 }
 
 .game-container-main
@@ -84,9 +87,11 @@ body
 	transition: 0.15s ease;
 }
 
-.game-footer-item:nth-child(1):hover, .game-footer-item:nth-child(3):hover
+.game-footer-item:nth-child(1):hover, .game-footer-item:nth-child(2):hover,
+.game-footer-item:nth-child(4):hover, .game-footer-item:nth-child(5):hover
 {
 	background-color: #0000004f;
+	cursor: pointer;
 }
 
 .main-button

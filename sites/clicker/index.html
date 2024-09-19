@@ -18,25 +18,31 @@ permalink: /sites/clicker/
 
 	<div id="game-container-main" class="game-container-main">
 		<div class="game-state-var prevent-select">
-			<div id="clicks" class="game-state-var-box">Clicks: %s</div>
-			<div id="experience" class="game-state-var-box">Experience: %s</div>
-			<div id="bread_pieces" class="game-state-var-box">Bread: %s</div>
-			<div id="level" class="game-state-var-box">Level: %s</div>
+			<div id="clicks" class="game-state-var-box" title="Number of times you have clicked.">Clicks: %s</div>
+			<div id="experience" class="game-state-var-box" title="Currently resets at 100; added on each click randomly from 1 to 6.">Experience: %s</div>
+			<div id="bread_pieces" class="game-state-var-box" title="Work in progress idea; most likely the currency.">Bread: %s</div>
+			<div id="level" class="game-state-var-box" title="Your current level; this determines availability of powerups.">Level: %s</div>
 		</div>
 		<div class="main-content">
 			<div class="main-button" onclick="clkClickHandler()">
-				<img src="placeholder_clicker_img.png" alt="placeholder image">
+				<img src="clicker-img-v0.png" alt="placeholder image" width="250px">
 			</div>
 		</div>
 		<div class="prevent-select game-footer">
-			<div class="game-footer-item">
+			<div class="game-footer-item" title="Reset Progress" onclick="clkResetToDefault()">
+				<i class="fa-solid fa-rotate"></i>
+			</div>
+			<div class="game-footer-item" title="Settings">
 				<i class="fa-solid fa-gear"></i>
 			</div>
 			<div class="game-footer-item">
 				Copyright &copy; <script>document.write(new Date().getFullYear());</script> toastercs
 			</div>
-			<div class="game-footer-item">
-				<i class="fa-solid fa-floppy-disk"></i>
+			<div class="game-footer-item" title="Load">
+				<i class="fa-solid fa-cloud-arrow-up"></i>
+			</div>
+			<div class="game-footer-item" title="Save">
+				<i class="fa-solid fa-cloud-arrow-down"></i>
 			</div>
 		</div>
 	</div>
