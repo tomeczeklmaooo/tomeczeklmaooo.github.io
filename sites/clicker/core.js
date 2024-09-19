@@ -32,7 +32,7 @@ var cvars = {
 
 function webOnload()
 {
-	clkPrintCvars(true);
+	clkPrintCvars(false);
 	clkDisplayData();
 }
 
