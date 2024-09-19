@@ -44,8 +44,8 @@ body
 	gap: 15px;
 	align-items: center;
 	justify-content: center;
-	height: 70px;
-	font-size: 18pt;
+	padding: 15px 0;
+	font-size: 14pt;
 	background: #0000002f;
 	color: #ffffff;
 	border-radius: 4px;

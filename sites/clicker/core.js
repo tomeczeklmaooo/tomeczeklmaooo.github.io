@@ -48,10 +48,10 @@ function clkPrintCvars(visible)
 
 function clkDisplayData()
 {
-	document.getElementById('clicks').innerHTML = `Clicks: ${cvars.game.clicks}`;
-	document.getElementById('experience').innerHTML = `Experience: ${cvars.game.experience}`;
-	document.getElementById('bread_pieces').innerHTML = `Bread: ${cvars.game.bread_pieces}`;
-	document.getElementById('level').innerHTML = `Level: ${cvars.game.level}`;
+	document.getElementById('clicks').innerHTML = `Clicks:<br>${cvars.game.clicks}`;
+	document.getElementById('experience').innerHTML = `Experience:<br>${cvars.game.experience}`;
+	document.getElementById('bread_pieces').innerHTML = `Bread:<br>${cvars.game.bread_pieces}`;
+	document.getElementById('level').innerHTML = `Level:<br>${cvars.game.level}`;
 
 	setTimeout(clkDisplayData, cvars.timeout);
 }
