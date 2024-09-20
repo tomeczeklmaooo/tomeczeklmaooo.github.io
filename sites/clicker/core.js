@@ -3,12 +3,17 @@ var cvars = {
 	game: {
 		clicks: 0,
 		experience: 0,
+		experience_required: 100,
+		experience_total: 0, // total amount of XP received, does not 
 		bread_pieces: 0,
+		bread_pieces_limit: 200,
 		level: 1,
-		level_multiplier: 1.2, // how much the required XP will go up with each level up
+		level_multiplier: 2.4, // how much the required XP will go up with each level up
 		powerup_limit: 10,
-		autoclick: 0,
-		autoclick_delay: 2
+		powerups: {
+			autoclick: 0,
+			autoclick_delay: 2
+		}
 	},
 	// GFX
 	gfx: {
@@ -40,18 +45,30 @@ function clkPrintCvars(visible)
 {
 	if (visible) document.getElementById('cvars').style.display = 'block';
 
-	document.getElementById("cvars").innerHTML = ``;
-	document.getElementById("cvars").innerHTML += JSON.stringify(cvars, null, 4).replaceAll('"', '').replaceAll(',', '');
+	document.getElementById('cvars').innerHTML = ``;
+	document.getElementById('cvars').innerHTML += JSON.stringify(cvars, null, 4).replaceAll('"', '').replaceAll(',', '');
 
 	setTimeout(clkPrintCvars, cvars.timeout); // refresh every .1 seconds
 }
 
 function clkDisplayData()
 {
-	document.getElementById('clicks').innerHTML = `Clicks:<br>${cvars.game.clicks}`;
-	document.getElementById('experience').innerHTML = `Experience:<br>${cvars.game.experience}`;
-	document.getElementById('bread_pieces').innerHTML = `Bread:<br>${cvars.game.bread_pieces}`;
-	document.getElementById('level').innerHTML = `Level:<br>${cvars.game.level}`;
+	var elClicks = document.getElementById('clicks');
+	var elExperience = document.getElementById('experience');
+	var elBread = document.getElementById('bread_pieces');
+	var elLevel = document.getElementById('level');
+
+	elClicks.innerHTML = `Clicks:<br>${cvars.game.clicks}`;
+	elClicks.title = `Number of times you have clicked.`;
+
+	elExperience.innerHTML = `Experience:<br>${cvars.game.experience}/${cvars.game.experience_required}`;
+	elExperience.title = `Currently resets at 100; added on each click randomly from 1 to 6.`;
+
+	elBread.innerHTML = `Bread:<br>${cvars.game.bread_pieces}`;
+	elBread.title = `Added randomly from 0 to 2 on each click.`;
+
+	elLevel.innerHTML = `Level:<br>${cvars.game.level}`;
+	elLevel.title = `Your current level; this determines availability of powerups.`;
 
 	setTimeout(clkDisplayData, cvars.timeout);
 }
@@ -64,11 +81,17 @@ function clkClickHandler()
 	if ((cvars.game.clicks % 5) == 0)
 	{
 		cvars.game.experience += randomint(1, 6);
+		if (cvars.game.bread_pieces < cvars.game.bread_pieces_limit)
+		{
+			cvars.game.bread_pieces += randomint(0, 2);
+		} else { cvars.game.bread_pieces = cvars.game.bread_pieces_limit; }
 	}
-	if (cvars.game.experience >= 100)
+	if (cvars.game.experience >= cvars.game.experience_required)
 	{
 		cvars.game.level++;
+		cvars.game.experience_total += cvars.game.experience;	
 		cvars.game.experience = 0;
+		cvars.game.experience_required = Math.floor(cvars.game.experience_required * cvars.game.level_multiplier);
 	}
 }
 
@@ -80,12 +103,17 @@ function clkResetToDefault()
 		game: {
 			clicks: 0,
 			experience: 0,
+			experience_required: 100,
+			experience_total: 0, // total amount of XP received, does not 
 			bread_pieces: 0,
+			bread_pieces_limit: 200,
 			level: 1,
-			level_multiplier: 1.2, // how much the required XP will go up with each level up
+			level_multiplier: 2.4, // how much the required XP will go up with each level up
 			powerup_limit: 10,
-			autoclick: 0,
-			autoclick_delay: 2
+			powerups: {
+				autoclick: 0,
+				autoclick_delay: 2
+			}
 		},
 		// GFX
 		gfx: {
