@@ -5,8 +5,8 @@ var cvars = {
 		experience: 0,
 		experience_required: 100,
 		experience_total: 0, // total amount of XP received, does not 
-		bread_pieces: 0,
-		bread_pieces_limit: 200,
+		treats: 0,
+		treats_limit: 200,
 		level: 1,
 		level_multiplier: 2.4, // how much the required XP will go up with each level up
 		powerup_limit: 10,
@@ -18,7 +18,8 @@ var cvars = {
 	// GFX
 	gfx: {
 		prettymode: 1, // enable or disable animations and effects
-		theme: 'themes.default' // change the theme
+		theme: 'themes.default', // change the theme
+		background: 'purplegradient' // background image, purplegradient or darkgradient
 	},
 	// SFX
 	audio: {
@@ -33,7 +34,7 @@ var cvars = {
 	},
 	// MISC
 	timeout: 100
-}
+};
 
 function webOnload()
 {
@@ -55,20 +56,20 @@ function clkDisplayData()
 {
 	var elClicks = document.getElementById('clicks');
 	var elExperience = document.getElementById('experience');
-	var elBread = document.getElementById('bread_pieces');
+	var elTreats = document.getElementById('treats');
 	var elLevel = document.getElementById('level');
 
 	elClicks.innerHTML = `Clicks:<br>${cvars.game.clicks}`;
 	elClicks.title = `Number of times you have clicked.`;
 
 	elExperience.innerHTML = `Experience:<br>${cvars.game.experience}/${cvars.game.experience_required}`;
-	elExperience.title = `Currently resets at 100; added on each click randomly from 1 to 6.`;
+	elExperience.title = `Added on every 5 clicks randomly from 1 to 6.`;
 
-	elBread.innerHTML = `Bread:<br>${cvars.game.bread_pieces}`;
-	elBread.title = `Added randomly from 0 to 2 on each click.`;
+	elTreats.innerHTML = `Treats:<br>${cvars.game.treats}`;
+	elTreats.title = `Added randomly from 0 to 2 on each click.`;
 
 	elLevel.innerHTML = `Level:<br>${cvars.game.level}`;
-	elLevel.title = `Your current level; this determines availability of powerups.`;
+	elLevel.title = `Your current level, this determines availability of powerups.`;
 
 	setTimeout(clkDisplayData, cvars.timeout);
 }
@@ -81,10 +82,13 @@ function clkClickHandler()
 	if ((cvars.game.clicks % 5) == 0)
 	{
 		cvars.game.experience += randomint(1, 6);
-		if (cvars.game.bread_pieces < cvars.game.bread_pieces_limit)
+	}
+	if ((cvars.game.clicks % 20) == 0)
+	{
+		if (cvars.game.treats < cvars.game.treats_limit)
 		{
-			cvars.game.bread_pieces += randomint(0, 2);
-		} else { cvars.game.bread_pieces = cvars.game.bread_pieces_limit; }
+			cvars.game.treats += randomint(0, 2);
+		} else { cvars.game.treats = cvars.game.treats_limit; }
 	}
 	if (cvars.game.experience >= cvars.game.experience_required)
 	{
@@ -105,8 +109,8 @@ function clkResetToDefault()
 			experience: 0,
 			experience_required: 100,
 			experience_total: 0, // total amount of XP received, does not 
-			bread_pieces: 0,
-			bread_pieces_limit: 200,
+			treats: 0,
+			treats_limit: 200,
 			level: 1,
 			level_multiplier: 2.4, // how much the required XP will go up with each level up
 			powerup_limit: 10,
@@ -118,7 +122,8 @@ function clkResetToDefault()
 		// GFX
 		gfx: {
 			prettymode: 1, // enable or disable animations and effects
-			theme: 'themes.default' // change the theme
+			theme: 'themes.default', // change the theme
+			background: 'purplegradient' // background image, purplegradient or darkgradient
 		},
 		// SFX
 		audio: {
@@ -133,5 +138,5 @@ function clkResetToDefault()
 		},
 		// MISC
 		timeout: 100
-	}
+	};
 }
