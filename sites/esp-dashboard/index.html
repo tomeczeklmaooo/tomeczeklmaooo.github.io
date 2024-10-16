@@ -1,0 +1,65 @@
+---
+permalink: /sites/esp-dashboard/
+---
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dashboard</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body onload="checkViewport()">
+	<div class="container">
+		<div class="header">
+			<span>
+				<script>document.write(`DASHBOARD | ${window.location.hostname}`)</script>
+			</span>
+		</div>
+		<div class="main">
+			<div class="row">
+				<div class="card-1x1">
+					<span>1x1</span>
+				</div>
+				<div class="card-1x1">
+					<span>1x1</span>
+				</div>
+				<div class="card-1x1">
+					<span>1x1</span>
+				</div>
+				<div class="card-1x1">
+					<span>1x1</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="card-1x1">
+					<span>1x1</span>
+				</div>
+				<div class="card-1x1">
+					<span>1x1</span>
+				</div>
+				<div class="card-1x1">
+					<span>1x1</span>
+				</div>
+				<div class="card-1x1">
+					<span>1x1</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		var width, height;
+		function checkViewport()
+		{
+			width = window.innerWidth;
+			height = window.innerHeight;
+		}
+
+		function generateSquares()
+		{
+			//
+		}
+	</script>
+</body>
+</html>
