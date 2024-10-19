@@ -9,40 +9,48 @@ permalink: /sites/esp-dashboard/
 	<title>Dashboard</title>
 	<link rel="stylesheet" href="style.css">
 </head>
-<body onload="checkViewport()">
+<body>
 	<div class="container">
 		<div class="header">
 			<span>
-				<script>document.write(`DASHBOARD | ${window.location.hostname}`)</script>
+				DASHBOARD
 			</span>
 		</div>
 		<div class="main">
 			<div class="row">
-				<div class="card-1x1">
-					<span>1x1</span>
+				<div class="outer-row-box">
+					<div class="card-1x1">
+						<span>1x1</span>
+					</div>
+					<div class="card-1x1">
+						<span>1x1</span>
+					</div>
 				</div>
-				<div class="card-1x1">
-					<span>1x1</span>
-				</div>
-				<div class="card-1x1">
-					<span>1x1</span>
-				</div>
-				<div class="card-1x1">
-					<span>1x1</span>
+				<div class="outer-row-box">
+					<div class="card-1x1">
+						<span>1x1</span>
+					</div>
+					<div class="card-1x1">
+						<span>1x1</span>
+					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="card-1x1">
-					<span>1x1</span>
+				<div class="outer-row-box">
+					<div class="card-1x1">
+						<span>1x1</span>
+					</div>
+					<div class="card-1x1">
+						<span>1x1</span>
+					</div>
 				</div>
-				<div class="card-1x1">
-					<span>1x1</span>
-				</div>
-				<div class="card-1x1">
-					<span>1x1</span>
-				</div>
-				<div class="card-1x1">
-					<span>1x1</span>
+				<div class="outer-row-box">
+					<div class="card-1x1">
+						<span>1x1</span>
+					</div>
+					<div class="card-1x1">
+						<span>1x1</span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -59,6 +67,11 @@ permalink: /sites/esp-dashboard/
 		function generateSquares()
 		{
 			//
+		}
+
+		window.onload = function()
+		{
+			checkViewport();
 		}
 	</script>
 </body>
