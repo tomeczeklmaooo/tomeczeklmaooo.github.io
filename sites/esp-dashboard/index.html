@@ -32,6 +32,19 @@ permalink: /sites/esp-dashboard/
 		function generateSquares()
 		{
 			var buf = "";
+			var card_1x1 = `
+				<div class="card-1x1">
+					<div class="card-header">
+						<span>
+							[ICON] [CARD TITLE]
+						</span>
+					</div>
+					<div class="card-content">
+						<span>[CARD CONTENT]</span>
+					</div>
+				</div>
+			`;
+
 			if (width < 1080)
 			{
 				for (var i = 0; i < 4; i++)
@@ -40,11 +53,7 @@ permalink: /sites/esp-dashboard/
 					buf += `<div class="outer-row-box">`;
 					for (var k = 0; k < 2; k++)
 					{
-						buf += `
-							<div class="card-1x1">
-								<span>1x1</span>
-							</div>
-						`;
+						buf += card_1x1;
 					}
 					buf += `</div>`;
 					buf += `</div>`;
@@ -61,11 +70,7 @@ permalink: /sites/esp-dashboard/
 						buf += `<div class="outer-row-box">`;
 						for (var k = 0; k < 2; k++)
 						{
-							buf += `
-								<div class="card-1x1">
-									<span>1x1</span>
-								</div>
-							`;
+							buf += card_1x1;
 						}
 						buf += `</div>`;
 					}
