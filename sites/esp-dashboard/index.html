@@ -16,43 +16,8 @@ permalink: /sites/esp-dashboard/
 				DASHBOARD
 			</span>
 		</div>
-		<div class="main">
-			<div class="row">
-				<div class="outer-row-box">
-					<div class="card-1x1">
-						<span>1x1</span>
-					</div>
-					<div class="card-1x1">
-						<span>1x1</span>
-					</div>
-				</div>
-				<div class="outer-row-box">
-					<div class="card-1x1">
-						<span>1x1</span>
-					</div>
-					<div class="card-1x1">
-						<span>1x1</span>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="outer-row-box">
-					<div class="card-1x1">
-						<span>1x1</span>
-					</div>
-					<div class="card-1x1">
-						<span>1x1</span>
-					</div>
-				</div>
-				<div class="outer-row-box">
-					<div class="card-1x1">
-						<span>1x1</span>
-					</div>
-					<div class="card-1x1">
-						<span>1x1</span>
-					</div>
-				</div>
-			</div>
+		<div class="main" id="main">
+			<!-- KWADRATY SĄ GENEROWANE W KODZIE JS -->
 		</div>
 	</div>
 
@@ -66,12 +31,54 @@ permalink: /sites/esp-dashboard/
 
 		function generateSquares()
 		{
-			//
+			var buf = "";
+			if (width < 1080)
+			{
+				for (var i = 0; i < 4; i++)
+				{
+					buf += `<div class="row">`;
+					buf += `<div class="outer-row-box">`;
+					for (var k = 0; k < 2; k++)
+					{
+						buf += `
+							<div class="card-1x1">
+								<span>1x1</span>
+							</div>
+						`;
+					}
+					buf += `</div>`;
+					buf += `</div>`;
+				}
+				document.getElementById('main').innerHTML += buf;
+			}
+			else
+			{
+				for (var i = 0; i < 2; i++)
+				{
+					buf += `<div class="row">`;
+					for (var j = 0; j < 2; j++)
+					{
+						buf += `<div class="outer-row-box">`;
+						for (var k = 0; k < 2; k++)
+						{
+							buf += `
+								<div class="card-1x1">
+									<span>1x1</span>
+								</div>
+							`;
+						}
+						buf += `</div>`;
+					}
+					buf += `</div>`;
+				}
+				document.getElementById('main').innerHTML += buf;
+			}
 		}
 
 		window.onload = function()
 		{
 			checkViewport();
+			generateSquares();
 		}
 	</script>
 </body>
