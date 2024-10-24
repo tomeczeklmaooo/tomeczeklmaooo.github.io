@@ -94,7 +94,7 @@ body
 	align-items: center;
 }
 
-@media (max-width: 1080px)
+@media (max-width: 800px)
 {
 	.container
 	{
