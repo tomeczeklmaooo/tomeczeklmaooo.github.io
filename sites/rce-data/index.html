@@ -172,7 +172,7 @@ permalink: /sites/rce-data/
 			linfo(`RDN price source: ThingSpeak (api.thingspeak.com/channels/783677/status)`);
 
 			var fulldateRCE = year + '-' + month + '-' + day;
-			var fetchUrlRCE = baseUrlRCE + '%27' +  fulldateRCE + '%27' + '&$first=192&$select=udtczas,rce_pln';
+			var fetchUrlRCE = baseUrlRCE + '%27' +  fulldateRCE + '%27' + '&$first=192&$select=udtczas_oreb,rce_pln';
 			var fetchUrlTS = 'https://api.thingspeak.com/channels/783677/status.json?results=128';
 			llog(`fulldateRCE: ${fulldateRCE}`);
 			llog(`fetchUrlRCE: ${fetchUrlRCE}`);
@@ -204,16 +204,16 @@ permalink: /sites/rce-data/
 							data_buf = thingspeak_response["feeds"][i]["status"].split(",");
 						}
 					}
-					llog(`Data points received from ThingSpeak: ${data_buf.length}`)
+					llog(`Data points received from ThingSpeak: ${data_buf.length}`);
 
 					// jeżeli w zwróconym JSON będzie więcej niż 96 elementów to 3 kolumny
 					if (rce_len > 96 && data_buf.length > 24)
 					{
 						for (var i = 0; i < rce_len; i++)
 						{
-							if (rce_response["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+							if (rce_response["value"][i]["udtczas_oreb"].substring(3, 5) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 							{
-								table += `<tr><td>${rce_response["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
+								table += `<tr><td>${rce_response["value"][i]["udtczas_oreb"].substring(0, 5).replace("45", "00")}</td>`;
 								
 								// DZISIAJ SPRZEDAŻ
 								if (rce_response["value"][i]["rce_pln"] < 0)
@@ -296,9 +296,9 @@ permalink: /sites/rce-data/
 
 						for (var i = 0; i < rce_len; i++)
 						{
-							if (rce_response["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+							if (rce_response["value"][i]["udtczas_oreb"].substring(3, 5) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 							{
-								table += `<tr><td>${rce_response["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
+								table += `<tr><td>${rce_response["value"][i]["udtczas_oreb"].substring(0, 5).replace("45", "00")}</td>`;
 								
 								// DZISIAJ SPRZEDAŻ
 								if (rce_response["value"][i]["rce_pln"] < 0)
@@ -368,9 +368,9 @@ permalink: /sites/rce-data/
 
 						for (var i = 0; i < rce_len; i++)
 						{
-							if (rce_response["value"][i]["udtczas"].substring(14) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+							if (rce_response["value"][i]["udtczas_oreb"].substring(3, 5) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 							{
-								table += `<tr><td>${rce_response["value"][i]["udtczas"].substring(11).replace("45", "00")}</td>`;
+								table += `<tr><td>${rce_response["value"][i]["udtczas_oreb"].substring(0, 5).replace("45", "00")}</td>`;
 								
 								// DZISIAJ SPRZEDAŻ
 								if (rce_response["value"][i]["rce_pln"] < 0)
