@@ -72,8 +72,8 @@ function webChangeContainerContent(idx)
 					<td><div class="button prevent-select" onclick="window.location.href='https://tomeczeklmaooo.github.io/sites/rce-data/'">Project site</div></td>
 				</tr>
 				<tr>
-					<td title="basically godzio01's clicker, but with better codebase and more frequent updates hopefully">Clicker</td>
-					<td><div class="button prevent-select" onclick="window.location.href='https://tomeczeklmaooo.github.io/sites/clicker/'">Project site</div></td>
+					<td title="yet another ridiculous programming language, written by me">yarpl</td>
+					<td><div class="button prevent-select" onclick="window.location.href='https://github.com/tomeczeklmaooo/yarpl/'">Project site</div></td>
 				</tr>
 				<tr>
 					<td>Project Copiec</td>
