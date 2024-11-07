@@ -80,6 +80,13 @@ permalink: /sites/esp-dashboard/
 			}
 		}
 
+		// ARDUINO BITREAD JS
+		// #define bitRead(value, bit) (((value) >> (bit)) & 0x01)
+		function bitRead(value, bit)
+		{
+			return (value >> bit) & 0x01;
+		}
+
 		window.onload = function()
 		{
 			checkViewport();
