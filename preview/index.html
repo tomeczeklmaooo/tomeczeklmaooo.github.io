@@ -5,41 +5,36 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="My personal website">
-	<meta name="keywords" content="cs2, tomeczeklmao tomeczeklmaooo, descent, descentesports, descent-esports, toaster, toaster000, toaster000_, toastercs">
+	<meta name="keywords" content="cs2, tomeczeklmao tomeczeklmaooo, toaster, toaster000, toaster000_, toastercs">
 	<title>tomeczeklmaooo</title>
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="style.css">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+	<link href="https://iosevka-webfonts.github.io/iosevka/iosevka.css" rel="stylesheet" />
 	<script src="https://kit.fontawesome.com/4140c3b052.js" crossorigin="anonymous"></script>
 </head>
-<body onload="webInitializeFunctionsOnload()">
-	<div class="global-container">
-		<div class="container" id="container">
-			<div class="left">
-				<header class="header">
-					<span>tomeczeklmaooo</span>
-				</header>
-				<nav class="nav">
-					<div class="button prevent-select" onclick="webChangeContainerContent(0)">About</div>
-					<div class="button prevent-select" onclick="webChangeContainerContent(1)">Education</div>
-					<div class="button prevent-select" onclick="webChangeContainerContent(2)">Projects</div>
-					<div class="button prevent-select" onclick="webChangeContainerContent(3)">CS2 Settings</div>
-					<div class="button prevent-select" onclick="webChangeContainerContent(4)">Contact</div>
-				</nav>
-			</div>
-			<div class="right">
-				<main class="main" id="main">
-					<span class="no-content-text prevent-select" id="no-content-text">&lt; select an option on the left to display here &gt;</span>
-				</main>
-			</div>
-		</div>
-		<footer class="footer prevent-select">
-			<span>Copyright &copy; 2021 &mdash; <script>document.write(new Date().getFullYear())</script> tomeczeklmaooo&emsp;&bull;&bull;&bull;&emsp;Built with HTML, CSS and JavaScript</span>
+<body onload="init_functions()">
+	<x-container>
+		<header>
+			<x-logo>tomeczeklmaooo</x-logo>
+			<nav>
+				<nav-item onclick="change_container(0)">About</nav-item>
+				<nav-item onclick="change_container(1)">Education</nav-item>
+				<nav-item onclick="change_container(2)">Projects</nav-item>
+				<nav-item onclick="change_container(3)">Contact</nav-item>
+			</nav>
+		</header>
+		<main>
+			<!--  -->
+		</main>
+		<footer>
+			<x-copyright>
+				Made with <i class="fa-solid fa-heart"></i> by tomeczeklmaooo
+			</x-copyright>
+			<x-tech-used>
+				Technologies used: HTML5, CSS, JavaScript
+			</x-tech-used>
 		</footer>
-	</div>
+	</x-container>
 	<script src="script.js"></script>
 </body>
 </html>
