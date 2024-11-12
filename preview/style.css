@@ -25,82 +25,75 @@ body
 x-container
 {
 	width: 1440px;
-	height: 800px;
+	height: 95vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	gap: 20px;
 }
 
-header
+x-banner
 {
 	display: flex;
-	flex-direction: row;
+	width: 100%;
+	height: 150px;
 	justify-content: center;
 	align-items: center;
-	width: 100%;
-	height: 64px;
 }
 
-x-logo
-{
-	font-size: 32pt;
-	flex: 1;
-}
-
-nav
-{
-	font-size: 18pt;
-	display: flex;
-	flex-direction: row;
-	gap: 50px;
-}
-
-nav-item
-{
-	position: relative;
-	user-select: none;
-	transition: 0.15s ease;
-}
-
-nav-item::before {
-	content: '';
-	position: absolute;
-	width: 100%;
-	height: 2px;
-	background-color: #eeedf0;
-	bottom: 0;
-	left: 0;
-	transform-origin: right;
-	transform: scaleX(0);
-	transition: transform .3s ease-in-out;
-}
-
-nav-item:hover::before {
-	transform-origin: left;
-	transform: scaleX(1);
-}
-
-nav-item:hover
-{
-	cursor: pointer;
-}
-
-main
-{
-	width: 100%;
-	height: calc(800px - 128px);
-}
-
-footer
+x-tech-stack
 {
 	display: flex;
-	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+	flex-direction: column;
 	width: 100%;
-	height: 64px;
-	gap: 100px;
-	opacity: 0.5;
-	user-select: none;
+	height: 100px;
+	gap: 10px;
+}
+
+x-title
+{
+	font-size: 24pt;
+	font-weight: 700;
+}
+
+x-icons
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	gap: 25px;
+}
+
+x-about-me
+{
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: column;
+}
+
+x-text
+{
+	font-size: 16pt;
+}
+
+x-projects-container
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+x-project
+{
+	font-size: 16pt;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
 }

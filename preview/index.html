@@ -14,26 +14,39 @@
 </head>
 <body onload="init_functions()">
 	<x-container>
-		<header>
-			<x-logo>tomeczeklmaooo</x-logo>
-			<nav>
-				<nav-item onclick="change_container(0)">About</nav-item>
-				<nav-item onclick="change_container(1)">Education</nav-item>
-				<nav-item onclick="change_container(2)">Projects</nav-item>
-				<nav-item onclick="change_container(3)">Contact</nav-item>
-			</nav>
-		</header>
-		<main>
-			<!--  -->
-		</main>
-		<footer>
-			<x-copyright>
-				Made with <i class="fa-solid fa-heart"></i> by tomeczeklmaooo
-			</x-copyright>
-			<x-tech-used>
-				Technologies used: HTML5, CSS, JavaScript
-			</x-tech-used>
-		</footer>
+		<x-banner>
+			[banner image here]
+		</x-banner>
+		<x-tech-stack>
+			<x-title>&lt;tech stack/&gt;</x-title>
+			<x-icons>
+				<img src="https://skillicons.dev/icons?i=c" height="40" alt="c">
+				<img src="https://skillicons.dev/icons?i=cpp" height="40" alt="cplusplus">
+				<img src="https://skillicons.dev/icons?i=js" height="40" alt="javascript">
+				<img src="https://skillicons.dev/icons?i=html" height="40" alt="html5">
+				<img src="https://skillicons.dev/icons?i=css" height="40" alt="css3">
+				<img src="https://skillicons.dev/icons?i=mysql" height="40" alt="mysql">
+				<img src="https://skillicons.dev/icons?i=linux" height="40" alt="linux">
+				<img src="https://skillicons.dev/icons?i=bash" height="40" alt="bash">
+				<img src="https://skillicons.dev/icons?i=ps" height="40" alt="photoshop">
+				<img src="https://skillicons.dev/icons?i=pr" height="40" alt="premierepro">
+			</x-icons>
+		</x-tech-stack>
+		<x-about-me>
+			<x-title>&lt;about me/&gt;</x-title>
+			<x-text>some about me text...</x-text>
+		</x-about-me>
+		<x-projects>
+			<x-title>&lt;projects/&gt;</x-title>
+			<x-projects-container>
+				<x-project>
+					<x-project-link>yarpl</x-project-link>
+					<x-project-description>
+						project description
+					</x-project-description>
+				</x-project>
+			</x-projects-container>
+		</x-projects>
 	</x-container>
 	<script src="script.js"></script>
 </body>
