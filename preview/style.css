@@ -66,6 +66,7 @@ x-icons
 	align-items: center;
 	flex-direction: row;
 	gap: 25px;
+	user-select: none;
 }
 
 x-about-me
@@ -74,11 +75,20 @@ x-about-me
 	justify-content: left;
 	align-items: center;
 	flex-direction: column;
+	width: 70%;
 }
 
 x-text
 {
 	font-size: 16pt;
+}
+
+x-projects
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
 x-projects-container
@@ -96,4 +106,43 @@ x-project
 	justify-content: center;
 	align-items: center;
 	flex-direction: row;
+	gap: 40px;
+}
+
+x-project-link
+{
+	font-weight: 700;
+	letter-spacing: 2px;
+	user-select: none;
+	transition: 0.3s ease;
+}
+x-project-link:hover
+{
+	color: #8080ff;
+	cursor: pointer;
+}
+
+.lower
+{
+	opacity: 0.3;
+	font-style: italic;
+	font-size: 12pt;
+	text-align: right;
+}
+
+img
+{
+	opacity: 0;
+}
+
+@keyframes img_onload
+{
+	0%
+	{
+		opacity: 0;
+	}
+	100%
+	{
+		opacity: 1;
+	}
 }
