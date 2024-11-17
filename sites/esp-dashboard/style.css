@@ -9,7 +9,9 @@
 
 body
 {
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
+	font-family: monospace;
+	/* font-size: 14pt; */
 	margin: 0;
 }
 

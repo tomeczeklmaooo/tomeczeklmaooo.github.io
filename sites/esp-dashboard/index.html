@@ -1,6 +1,3 @@
----
-permalink: /sites/esp-dashboard/
----
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -10,88 +7,18 @@ permalink: /sites/esp-dashboard/
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<div class="container">
+	<!-- <div class="container">
 		<div class="header">
 			<span>
 				DASHBOARD
 			</span>
 		</div>
 		<div class="main" id="main">
-			<!-- KWADRATY SĄ GENEROWANE W KODZIE JS -->
+			KWADRATY SĄ GENEROWANE W KODZIE JS
 		</div>
-	</div>
+	</div> -->
+	<div id="fields"></div>
 
-	<script>
-		var width, height;
-		function checkViewport()
-		{
-			width = window.innerWidth;
-			height = window.innerHeight;
-		}
-
-		function generateSquares()
-		{
-			var buf = "";
-			var card_1x1 = `
-				<div class="card-1x1">
-					<div class="card-header">
-						<span>
-							[ICON] [CARD TITLE]
-						</span>
-					</div>
-					<div class="card-content">
-						<span>[CARD CONTENT]</span>
-					</div>
-				</div>
-			`;
-
-			if (width < 800)
-			{
-				for (var i = 0; i < 4; i++)
-				{
-					buf += `<div class="row">`;
-					buf += `<div class="outer-row-box">`;
-					for (var k = 0; k < 2; k++)
-					{
-						buf += card_1x1;
-					}
-					buf += `</div>`;
-					buf += `</div>`;
-				}
-				document.getElementById('main').innerHTML += buf;
-			}
-			else
-			{
-				for (var i = 0; i < 2; i++)
-				{
-					buf += `<div class="row">`;
-					for (var j = 0; j < 2; j++)
-					{
-						buf += `<div class="outer-row-box">`;
-						for (var k = 0; k < 2; k++)
-						{
-							buf += card_1x1;
-						}
-						buf += `</div>`;
-					}
-					buf += `</div>`;
-				}
-				document.getElementById('main').innerHTML += buf;
-			}
-		}
-
-		// ARDUINO BITREAD JS
-		// #define bitRead(value, bit) (((value) >> (bit)) & 0x01)
-		function bitRead(value, bit)
-		{
-			return (value >> bit) & 0x01;
-		}
-
-		window.onload = function()
-		{
-			checkViewport();
-			generateSquares();
-		}
-	</script>
+	<script src="script.js"></script>
 </body>
 </html>
