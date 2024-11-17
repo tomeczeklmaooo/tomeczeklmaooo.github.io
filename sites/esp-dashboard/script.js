@@ -9,52 +9,28 @@ function checkViewport()
 function generateSquares()
 {
 	var buf = "";
-	var card_1x1 = `
-		<div class="card-1x1">
-			<div class="card-header">
-				<span>
-					[ICON] [CARD TITLE]
-				</span>
-			</div>
-			<div class="card-content">
-				<span>[CARD CONTENT]</span>
-			</div>
-		</div>
-	`;
-
-	if (width < 800)
-	{
-		for (var i; i < 4; i++)
-		{
-			buf += `<div class="row">`;
-			buf += `<div class="outer-row-box">`;
-			for (var k; k < 2; k++)
-			{
-				buf += card_1x1;
-			}
-			buf += `</div>`;
-			buf += `</div>`;
-		}
-		document.getElementById('main').innerHTML += buf;
-	}
-	else
-	{
-		for (var i; i < 2; i++)
-		{
-			buf += `<div class="row">`;
-			for (var j; j < 2; j++)
-			{
-				buf += `<div class="outer-row-box">`;
-				for (var k; k < 2; k++)
-				{
-					buf += card_1x1;
-				}
-				buf += `</div>`;
-			}
-			buf += `</div>`;
-		}
-		document.getElementById('main').innerHTML += buf;
-	}
+	buf += `<div class="card-1x1">`;
+	buf += `<div class="card-header">`;
+	buf += `<span><i class="fa-solid fa-shower"></i> Łazienka</span>`
+	buf += `</div>`;
+	buf += `<div class="card-content">`;
+	buf += `<span><i class="fa-solid fa-temperature-half"></i> ${temp_lazienka} &deg;C</span>`;
+	buf += `<span>
+				<i class="${(swiatlo_lazienka == 1) ? `fa-solid` : `fa-regular`} fa-lightbulb"></i>
+				<label class="switch">
+					<input type="checkbox" ${(swiatlo_lazienka == 1) ? `checked` : ``} disabled>
+					<span class="slider round"></span>
+				</label>
+			</span>`;
+	buf += `<span>
+				<i class="${(pompa_cwu == 1) ? `fa-solid fa-plug-circle-check` : `fa-solid fa-plug`}"></i>
+				<label class="switch">
+					<input type="checkbox" ${(pompa_cwu == 1) ? `checked` : ``} disabled>
+					<span class="slider round"></span>
+				</label>
+			</span>`;
+	buf += `</div>`;
+	document.getElementById('main').innerHTML += buf;
 }
 
 // ARDUINO BITREAD JS
@@ -77,7 +53,8 @@ var pv_produkcja_dzis, pv_konsumpcja_dzis, pv_autokonsumpcja_dzis, pv_akt_obciaz
 var zakodowany_boolean;
 // zmienne z zakodowanego booleana
 var drzwi_gosp, brama_wjazd, brama_garaz, okno_salon;
-var empty_1, empty_2, empty_3, empty_4;
+var smart_plug;
+var empty_1, empty_2, empty_3;
 var swiatlo_lazienka, swiatlo_garaz, swiatlo_pom_gosp, swiatlo_strych;
 var pralka, zmywarka;
 var fox_online;
@@ -134,10 +111,10 @@ function thingspeakFields()
 		brama_wjazd            = bitRead(zakodowany_boolean, 1);
 		brama_garaz            = bitRead(zakodowany_boolean, 2);
 		okno_salon             = bitRead(zakodowany_boolean, 3);
-		empty_1                = bitRead(zakodowany_boolean, 4);
-		empty_2                = bitRead(zakodowany_boolean, 5);
-		empty_3                = bitRead(zakodowany_boolean, 6);
-		empty_4                = bitRead(zakodowany_boolean, 7);
+		smart_plug             = bitRead(zakodowany_boolean, 4);
+		empty_1                = bitRead(zakodowany_boolean, 5);
+		empty_2                = bitRead(zakodowany_boolean, 6);
+		empty_3                = bitRead(zakodowany_boolean, 7);
 		swiatlo_lazienka       = bitRead(zakodowany_boolean, 8);
 		swiatlo_garaz          = bitRead(zakodowany_boolean, 9);
 		swiatlo_pom_gosp       = bitRead(zakodowany_boolean, 10);
@@ -164,87 +141,12 @@ function thingspeakFields()
 		pompa_zbiornik         = bitRead(zakodowany_boolean, 31);
 
 		// odwloania funkcji ktore potrzebuja tych zmiennych ponizej
-		print_fields('fields');
+		generateSquares();
 	}).catch((e) => console.error(e));
-}
-
-function print_fields(_elem)
-{
-	var elem = document.getElementById(_elem);
-
-	elem.innerHTML += `unix_time: ${unix_time}<br>`;
-	elem.innerHTML += `temp_zew_bmp: ${temp_zew_bmp}<br>`;
-	elem.innerHTML += `temp_zew_vilant: ${temp_zew_vilant}<br>`;
-	elem.innerHTML += `wilg_zew: ${wilg_zew}<br>`;
-	elem.innerHTML += `opady_dzis: ${opady_dzis}<br>`;
-	elem.innerHTML += `cisnienie: ${cisnienie}<br>`;
-	elem.innerHTML += `temp_salon_bmp: ${temp_salon_bmp}<br>`;
-	elem.innerHTML += `temp_salon_vilant: ${temp_salon_vilant}<br>`;
-	elem.innerHTML += `temp_pietro: ${temp_pietro}<br>`;
-	elem.innerHTML += `temp_garaz: ${temp_garaz}<br>`;
-	elem.innerHTML += `temp_strych_garaz: ${temp_strych_garaz}<br>`;
-	elem.innerHTML += `temp_strych: ${temp_strych}<br>`;
-	elem.innerHTML += `temp_lazienka: ${temp_lazienka}<br>`;
-	elem.innerHTML += `wilg_zew: ${wilg_wew}<br>`;
-	elem.innerHTML += `stan_pieca: ${stan_pieca}<br>`;
-	elem.innerHTML += `cis_wody: ${cis_wody}<br>`;
-	elem.innerHTML += `gaz_co: ${gaz_co}<br>`;
-	elem.innerHTML += `gaz_cwu: ${gaz_cwu}<br>`;
-	elem.innerHTML += `temp_cwu: ${temp_cwu}<br>`;
-	elem.innerHTML += `t_set_podloga: ${t_set_podloga}<br>`;
-	elem.innerHTML += `t_zas_podloga: ${t_zas_podloga}<br>`;
-	elem.innerHTML += `t_set_grzejniki: ${t_set_grzejniki}<br>`;
-	elem.innerHTML += `t_zas_grzejniki: ${t_zas_grzejniki}<br>`;
-	elem.innerHTML += `ilosc_woda_dom: ${ilosc_woda_dom}<br>`;
-	elem.innerHTML += `ilosc_woda_ogrod: ${ilosc_woda_ogrod}<br>`;
-	elem.innerHTML += `pv_produkcja_dzis: ${pv_produkcja_dzis}<br>`;
-	elem.innerHTML += `pc_konsumpcja_dzis: ${pv_konsumpcja_dzis}<br>`;
-	elem.innerHTML += `pv_autokonsumpcja_dzis: ${pv_autokonsumpcja_dzis}<br>`;
-	elem.innerHTML += `pv_akt_obciazenie: ${pv_akt_obciazenie}<br>`;
-	elem.innerHTML += `pv_power: ${pv_power}<br>`;
-	elem.innerHTML += `pv_napiecie: ${pv_napiecie}<br>`;
-	elem.innerHTML += `pv_cena_sprzedazy: ${pv_cena_sprzedazy}<br>`;
-	elem.innerHTML += `pv_cena_zakupu: ${pv_cena_zakupu}<br>`;
-	elem.innerHTML += `zakodowany_boolean: ${zakodowany_boolean}<br>`;
-	elem.innerHTML += `<br>`;
-
-	elem.innerHTML += `drzwi_gosp: ${drzwi_gosp}<br>`;
-	elem.innerHTML += `brama_wjazd: ${brama_wjazd}<br>`;
-	elem.innerHTML += `brama_garaz: ${brama_garaz}<br>`;
-	elem.innerHTML += `okno_salon: ${okno_salon}<br>`;
-	elem.innerHTML += `empty_1: ${empty_1}<br>`;
-	elem.innerHTML += `empty_2: ${empty_2}<br>`;
-	elem.innerHTML += `empty_3: ${empty_3}<br>`;
-	elem.innerHTML += `empty_4: ${empty_4}<br>`;
-	elem.innerHTML += `swiatlo_lazienka: ${swiatlo_lazienka}<br>`;
-	elem.innerHTML += `swiatlo_garaz: ${swiatlo_garaz}<br>`;
-	elem.innerHTML += `swiatlo_pom_gosp: ${swiatlo_pom_gosp}<br>`;
-	elem.innerHTML += `swiatlo_strych: ${swiatlo_strych}<br>`;
-	elem.innerHTML += `pralka: ${pralka}<br>`;
-	elem.innerHTML += `zmywarka: ${zmywarka}<br>`;
-	elem.innerHTML += `fox_online: ${fox_online}<br>`;
-	elem.innerHTML += `drzwi_wej: ${drzwi_wej}<br>`;
-	elem.innerHTML += `min_zbiornik: ${min_zbiornik}<br>`;
-	elem.innerHTML += `med_zbiornik: ${med_zbiornik}<br>`;
-	elem.innerHTML += `max_zbiornik: ${max_zbiornik}<br>`;
-	elem.innerHTML += `min_studnia: ${min_studnia}<br>`;
-	elem.innerHTML += `max_studnia: ${max_studnia}<br>`;
-	elem.innerHTML += `p_studnia_zbiornik: ${p_studnia_zbiornik}<br>`;
-	elem.innerHTML += `max_scieki: ${max_scieki}<br>`;
-	elem.innerHTML += `zmiekczacz: ${zmiekczacz}<br>`;
-	elem.innerHTML += `pompa_grzej: ${pompa_grzej}<br>`;
-	elem.innerHTML += `pompa_podloga: ${pompa_podloga}<br>`;
-	elem.innerHTML += `pompa_pieca: ${pompa_pieca}<br>`;
-	elem.innerHTML += `grzalka_cwu: ${grzalka_cwu}<br>`;
-	elem.innerHTML += `pompa_cwu: ${pompa_cwu}<br>`;
-	elem.innerHTML += `pompa_scieki: ${pompa_scieki}<br>`;
-	elem.innerHTML += `pompa_studnia: ${pompa_studnia}<br>`;
-	elem.innerHTML += `pompa_zbiornik: ${pompa_zbiornik}<br>`;
 }
 
 window.onload = function()
 {
-	// checkViewport();
-	// generateSquares();
+	checkViewport();
 	thingspeakFields();
 }
