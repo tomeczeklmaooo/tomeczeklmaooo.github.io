@@ -1,38 +1,3 @@
-var width, height;
-
-function checkViewport()
-{
-	width = window.innerWidth;
-	height = window.innerHeight;
-}
-
-function generateSquares()
-{
-	var buf = "";
-	buf += `<div class="card-1x1">`;
-	buf += `<div class="card-header">`;
-	buf += `<span><i class="fa-solid fa-shower"></i> Łazienka</span>`
-	buf += `</div>`;
-	buf += `<div class="card-content">`;
-	buf += `<span><i class="fa-solid fa-temperature-half"></i> ${temp_lazienka} &deg;C</span>`;
-	buf += `<span>
-				<i class="${(swiatlo_lazienka == 1) ? `fa-solid` : `fa-regular`} fa-lightbulb"></i>
-				<label class="switch">
-					<input type="checkbox" ${(swiatlo_lazienka == 1) ? `checked` : ``} disabled>
-					<span class="slider round"></span>
-				</label>
-			</span>`;
-	buf += `<span>
-				<i class="${(pompa_cwu == 1) ? `fa-solid fa-plug-circle-check` : `fa-solid fa-plug`}"></i>
-				<label class="switch">
-					<input type="checkbox" ${(pompa_cwu == 1) ? `checked` : ``} disabled>
-					<span class="slider round"></span>
-				</label>
-			</span>`;
-	buf += `</div>`;
-	document.getElementById('main').innerHTML += buf;
-}
-
 // ARDUINO BITREAD JS
 // #define bitRead(value, bit) (((value) >> (bit)) & 0x01)
 function bitRead(value, bit)
@@ -143,6 +108,115 @@ function thingspeakFields()
 		// odwloania funkcji ktore potrzebuja tych zmiennych ponizej
 		generateSquares();
 	}).catch((e) => console.error(e));
+}
+
+var width, height;
+
+function checkViewport()
+{
+	width = window.innerWidth;
+	height = window.innerHeight;
+}
+
+function generateSquares()
+{
+	var buf = "";
+	// === KARTY ===
+	var card_pogoda = `
+			<div class="card card-2x1">
+				<div class="card-header">
+					<span><i class="fa-solid fa-cloud-sun-rain"></i> Pogoda</span>
+				</div>
+				<div class="card-content-wrapper">
+					<div class="card-content">
+						<span><i class="fa-solid fa-temperature-half"></i> ${temp_zew_vilant} &deg;C</span>
+						<span><i class="fa-solid fa-droplet blue"></i> ${wilg_zew}%</span>
+						<span><i class="fa-solid fa-gauge"></i> ${cisnienie} hPa</span>
+					</div>
+					<div class="card-content">
+						<span><i class="fa-solid fa-cloud-rain blue"></i> ${opady_dzis} l/m<sup>2</sup></span>
+						<span><i class="fa-regular fa-sun yellow"></i>&uarr; 07:15</span>
+						<span><i class="fa-solid fa-sun yellow"></i>&darr; 15:54</span>
+					</div>
+				</div>
+			</div>
+		`;
+	var card_lazienka = `
+			<div class="card card-1x1">
+				<div class="card-header">
+					<span><i class="fa-solid fa-shower"></i> Łazienka</span>
+				</div>
+				<div class="card-content-wrapper">
+					<div class="card-content">
+						<span><i class="fa-solid fa-temperature-half"></i> ${temp_lazienka} &deg;C</span>
+						<span>
+							<i class="${(swiatlo_lazienka == 1) ? `fa-solid yellow` : `fa-regular`} fa-lightbulb"></i>
+							<label class="switch">
+								<input type="checkbox" ${(swiatlo_lazienka == 1) ? `checked` : ``} disabled>
+								<span class="slider round"></span>
+							</label>
+						</span>
+						<span>
+							<i class="${(smart_plug == 1) ? `fa-solid fa-plug-circle-check` : `fa-solid fa-plug`}"></i>
+							<label class="switch">
+								<input type="checkbox" ${(smart_plug == 1) ? `checked` : ``} disabled>
+								<span class="slider round"></span>
+							</label>
+						</span>
+					</div>
+				</div>
+			</div>
+		`;
+	var card_salon = `
+			<div class="card card-1x1">
+				<div class="card-header">
+					<span><i class="fa-solid fa-couch"></i> Salon</span>
+				</div>
+				<div class="card-content-wrapper">
+					<div class="card-content">
+						<span><i class="fa-solid fa-temperature-half"></i> ${temp_salon_vilant} &deg;C</span>
+						<span><i class="fa-solid fa-droplet blue"></i> ${wilg_wew}%</span>
+					</div>
+				</div>
+			</div>
+		`;
+	var card_tall = `
+			<div class="card card-1x2">
+				<div class="card-header">
+					<span><i class="fa-solid fa-couch"></i> Salon</span>
+				</div>
+				<div class="card-content-wrapper">
+					<div class="card-content">
+						<span><i class="fa-solid fa-temperature-half"></i> ${temp_salon_vilant} &deg;C</span>
+						<span><i class="fa-solid fa-droplet blue"></i> ${wilg_wew}%</span>
+					</div>
+				</div>
+			</div>
+		`;
+
+	// === TWORZENIE TYCH NO ===
+	document.getElementById('lastupdated').innerHTML = `Ost. akt.: ${g_ts_response['created_at']}`;
+	buf += `<div class="row">`;
+	buf += `<div class="outer-row-box">`;
+	buf += card_pogoda;
+	buf += `</div>`;
+	buf += `<div class="outer-row-box">`;
+	buf += card_lazienka;
+	buf += card_salon;
+	buf += `</div>`;
+	buf += `</div>`;
+	
+	buf += `<div class="row">`;
+	buf += `<div class="outer-row-box">`;
+	buf += card_tall;
+	buf += card_salon;
+	buf += `</div>`;
+	buf += `<div class="outer-row-box">`;
+	buf += card_salon;
+	buf += card_salon;
+	buf += `</div>`;
+	buf += `</div>`;
+	document.getElementById('main').innerHTML += buf;
 }
 
 window.onload = function()
