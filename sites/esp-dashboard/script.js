@@ -180,19 +180,73 @@ function generateSquares()
 				</div>
 			</div>
 		`;
-	var card_tall = `
+	var card_fox = `
 			<div class="card card-1x2">
 				<div class="card-header">
-					<span><i class="fa-solid fa-couch"></i> Salon</span>
+					<span><i class="fa-solid fa-question"></i> FOX</span>
 				</div>
 				<div class="card-content-wrapper">
 					<div class="card-content">
-						<span><i class="fa-solid fa-temperature-half"></i> ${temp_salon_vilant} &deg;C</span>
-						<span><i class="fa-solid fa-droplet blue"></i> ${wilg_wew}%</span>
+						<span>???</span>
+						<span>???</span>
 					</div>
 				</div>
 			</div>
 		`;
+	var card_vilant = `
+			<div class="card card-1x2">
+				<div class="card-header">
+					<span><i class="fa-solid fa-question"></i> Vilant</span>
+				</div>
+				<div class="card-content-wrapper">
+					<div class="card-content">
+						<span>???</span>
+						<span>???</span>
+					</div>
+				</div>
+			</div>
+		`;
+	var card_nawo = `
+		<div class="card card-1x1">
+			<div class="card-header">
+				<span><i class="fa-solid fa-question"></i> NAWO</span>
+			</div>
+			<div class="card-content-wrapper">
+				<div class="card-content">
+					<span>???</span>
+					<span>???</span>
+					<span>???</span>
+					<span>???</span>
+				</div>
+			</div>
+		</div>
+	`;
+	var card_garaz = `
+		<div class="card card-1x1">
+			<div class="card-header">
+				<span><i class="fa-solid fa-question"></i> Garaż</span>
+			</div>
+			<div class="card-content-wrapper">
+				<div class="card-content">
+					<span>???</span>
+					<span>???</span>
+				</div>
+			</div>
+		</div>
+	`;
+	var card_undefined = `
+		<div class="card card-1x1">
+			<div class="card-header">
+				<span><i class="fa-solid fa-question"></i> ???</span>
+			</div>
+			<div class="card-content-wrapper">
+				<div class="card-content">
+					<span>???</span>
+					<span>???</span>
+				</div>
+			</div>
+		</div>
+	`;
 
 	// === TWORZENIE TYCH NO ===
 	document.getElementById('lastupdated').innerHTML = `Ost. akt.: ${g_ts_response['created_at']}`;
@@ -208,12 +262,22 @@ function generateSquares()
 	
 	buf += `<div class="row">`;
 	buf += `<div class="outer-row-box">`;
-	buf += card_tall;
-	buf += card_salon;
+	buf += `<div class="inner-column">`;
+	buf += card_fox;
+	buf += `</div>`;
+	buf += `<div class="inner-column">`;
+	buf += card_undefined;
+	buf += card_undefined;
+	buf += `</div>`;
 	buf += `</div>`;
 	buf += `<div class="outer-row-box">`;
-	buf += card_salon;
-	buf += card_salon;
+	buf += `<div class="inner-column">`;
+	buf += card_nawo;
+	buf += card_garaz;
+	buf += `</div>`;
+	buf += `<div class="inner-column">`;
+	buf += card_vilant;
+	buf += `</div>`;
 	buf += `</div>`;
 	buf += `</div>`;
 	document.getElementById('main').innerHTML += buf;
