@@ -523,7 +523,7 @@ function generateSquares()
 						</tr>
 						<tr>
 							<td><i class="fa-solid fa-bolt"></i></td>
-							<td>${pv_konsumpcja_dzis} kWh</td>
+							<td>${enea_import} kWh</td>
 						</tr>
 					</table>
 				</div>
