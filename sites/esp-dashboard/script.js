@@ -32,7 +32,7 @@ var pompa_grzej, pompa_podloga, pompa_pieca, grzalka_cwu, pompa_cwu, pompa_sciek
 
 function thingspeakFields()
 {
-	fetch('https://corsproxy.io/?https://thingspeak.mathworks.com/channels/432818/status/last.json').then((res) => res.text()).then((response) => {
+	fetch('https://corsproxy.io/?https://thingspeak.mathworks.com/channels/432818/status/last.json?timezone=Europe/Warsaw').then((res) => res.text()).then((response) => {
 		g_ts_response = JSON.parse(response);
 
 		wartosci = g_ts_response['status'].split('|');
@@ -129,14 +129,36 @@ function generateSquares()
 				</div>
 				<div class="card-content-wrapper">
 					<div class="card-content">
-						<span><i class="fa-solid fa-temperature-half"></i> ${temp_zew_vilant} &deg;C</span>
-						<span><i class="fa-solid fa-droplet blue"></i> ${wilg_zew}%</span>
-						<span><i class="fa-solid fa-gauge"></i> ${cisnienie} hPa</span>
+						<table>
+							<tr>
+								<td><i class="fa-solid fa-temperature-half"></i></td>
+								<td>${temp_zew_vilant} &deg;C</td>
+							</tr>
+							<tr>
+								<td><i class="fa-solid fa-droplet blue"></i></td>
+								<td>${wilg_zew}%</td>
+							</tr>
+							<tr>
+								<td><i class="fa-solid fa-gauge"></i></td>
+								<td>${cisnienie} hPa</td>
+							</tr>
+						</table>
 					</div>
 					<div class="card-content">
-						<span><i class="fa-solid fa-cloud-rain blue"></i> ${opady_dzis} l/m<sup>2</sup></span>
-						<span><i class="fa-regular fa-sun yellow"></i>&uarr; 07:15</span>
-						<span><i class="fa-solid fa-sun yellow"></i>&darr; 15:54</span>
+						<table>
+							<tr>
+								<td class="l-align"><i class="fa-solid fa-cloud-rain blue"></i></td>
+								<td>${opady_dzis} l/m<sup>2</sup></td>
+							</tr>
+							<tr>
+								<td><i class="fa-regular fa-sun yellow"></i>&uarr;</td>
+								<td>07:15</td>
+							</tr>
+							<tr>
+								<td><i class="fa-solid fa-sun yellow"></i>&darr;</td>
+								<td>15:54</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -148,21 +170,39 @@ function generateSquares()
 				</div>
 				<div class="card-content-wrapper">
 					<div class="card-content">
-						<span><i class="fa-solid fa-temperature-half"></i> ${temp_lazienka} &deg;C</span>
-						<span>
-							<i class="${(swiatlo_lazienka == 1) ? `fa-solid yellow` : `fa-regular`} fa-lightbulb"></i>
-							<label class="switch">
-								<input type="checkbox" ${(swiatlo_lazienka == 1) ? `checked` : ``} disabled>
-								<span class="slider round"></span>
-							</label>
-						</span>
-						<span>
-							<i class="${(smart_plug == 1) ? `fa-solid fa-plug-circle-check` : `fa-solid fa-plug`}"></i>
-							<label class="switch">
-								<input type="checkbox" ${(smart_plug == 1) ? `checked` : ``} disabled>
-								<span class="slider round"></span>
-							</label>
-						</span>
+						<table>
+							<tr>
+								<td><i class="fa-solid fa-temperature-half"></i></td>
+								<td>${temp_lazienka} &deg;C</td>
+							</tr>
+							<tr>
+								<td><i class="${(swiatlo_lazienka == 1) ? `fa-solid yellow` : `fa-regular`} fa-lightbulb"></i></td>
+								<td>
+									<label class="switch">
+										<input type="checkbox" ${(swiatlo_lazienka == 1) ? `checked` : ``} disabled>
+										<span class="slider round"></span>
+									</label>
+								</td>
+							</tr>
+							<tr>
+								<td><i class="fa-solid fa-shirt"></i></td>
+								<td>
+									<label class="switch">
+										<input type="checkbox" ${(pralka == 1) ? `checked` : ``} disabled>
+										<span class="slider round"></span>
+									</label>
+								</td>
+							</tr>
+							<tr>
+								<td><i class="${(smart_plug == 1) ? `fa-solid fa-plug-circle-check` : `fa-solid fa-plug`}"></i></td>
+								<td>
+									<label class="switch">
+										<input type="checkbox" ${(smart_plug == 1) ? `checked` : ``} disabled>
+										<span class="slider round"></span>
+									</label>
+								</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -174,40 +214,85 @@ function generateSquares()
 				</div>
 				<div class="card-content-wrapper">
 					<div class="card-content">
-						<span><i class="fa-solid fa-temperature-half"></i> ${temp_salon_vilant} &deg;C</span>
-						<span><i class="fa-solid fa-droplet blue"></i> ${wilg_wew}%</span>
+						<table>
+							<tr>
+								<td><i class="fa-solid fa-temperature-half"></i></td>
+								<td>${temp_salon_vilant} &deg;C</td>
+							</tr>
+							<tr>
+								<td><i class="fa-solid fa-droplet blue"></i></td>
+								<td>${wilg_wew}%</td>
+							</tr>
+							<tr>
+								<td><i class="fa-brands fa-windows"></i></td>
+								<td>
+									<label class="switch">
+										<input type="checkbox" ${(okno_salon == 1) ? `checked` : ``} disabled>
+										<span class="slider round"></span>
+									</label>
+								</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>
 		`;
-	var card_fox = `
+	var card_fotowoltaika = `
 			<div class="card card-1x2">
 				<div class="card-header">
-					<span><i class="fa-solid fa-question"></i> FOX</span>
+					<span><i class="fa-solid fa-solar-panel"></i> Fotowoltaika</span>
 				</div>
 				<div class="card-content-wrapper">
 					<div class="card-content">
-						<span>???</span>
-						<span>???</span>
-					</div>
-				</div>
-			</div>
-		`;
-	var card_vilant = `
-			<div class="card card-1x2">
-				<div class="card-header">
-					<span><i class="fa-solid fa-question"></i> Vilant</span>
-				</div>
-				<div class="card-content-wrapper">
-					<div class="card-content">
-						<span>???</span>
-						<span>???</span>
+						<table>
+							<tr>
+								<td><i class="fa-solid fa-bolt"></i><sub>DC power</sub></td>
+								<td>${pv_power} W</td>
+							</tr>
+							<tr>
+								<td><i class="fa-solid fa-bolt"></i><sub>prod.</sub></td>
+								<td>${pv_produkcja_dzis} kWh</td>
+							</tr>
+							<tr>
+								<td><i class="fa-solid fa-bolt"></i><sub>zużycie</sub></td>
+								<td>${pv_konsumpcja_dzis} kWh</td>
+							</tr>
+							<tr>
+								<td><i class="fa-solid fa-bolt"></i><sub>auto.</sub></td>
+								<td>${pv_autokonsumpcja_dzis} kWh</td>
+							</tr>
+							<tr>
+								<td><i class="fa-solid fa-bolt"></i><sub>obciąż.</sub></td>
+								<td>${pv_akt_obciazenie} W</td>
+							</tr>
+							<tr>
+								<td><i class="fa-solid fa-bolt"></i><sub>napięcie</sub></td>
+								<td>${pv_napiecie} V</td>
+							</tr>
+							<tr>
+								<td><i class="fa-solid fa-sack-dollar green"></i></td>
+								<td>${pv_cena_sprzedazy} PLN</td>
+							</tr>
+							<tr>
+								<td><i class="fa-solid fa-sack-dollar red"></i></td>
+								<td>${pv_cena_zakupu} PLN</td>
+							</tr>
+							<tr>
+								<td><i class="fa-solid fa-fire-flame-curved"></i><sub>CWU</sub></td>
+								<td>
+									<label class="switch">
+										<input type="checkbox" ${(grzalka_cwu == 1) ? `checked` : ``} disabled>
+										<span class="slider round"></span>
+									</label>
+								</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>
 		`;
 	var card_nawo = `
-		<div class="card card-1x1">
+		<div class="card card-2x1">
 			<div class="card-header">
 				<span><i class="fa-solid fa-question"></i> NAWO</span>
 			</div>
@@ -221,15 +306,231 @@ function generateSquares()
 			</div>
 		</div>
 	`;
-	var card_garaz = `
-		<div class="card card-1x1">
+	var card_vilant = `
+		<div class="card card-2x1">
 			<div class="card-header">
-				<span><i class="fa-solid fa-question"></i> Garaż</span>
+				<span><i class="fa-solid fa-fire"></i> Vilant</span>
 			</div>
 			<div class="card-content-wrapper">
 				<div class="card-content">
-					<span>???</span>
-					<span>???</span>
+					<span><i class="fa-solid fa-gauge-high"></i> ${cis_wody} bar</span>
+					<span>
+						<i class="fa-solid red fa-droplet"></i><sub>CWU</sub>
+						<span>${temp_cwu} &deg;C</span>
+						<label class="switch">
+							<input type="checkbox" ${(pompa_cwu == 1) ? `checked` : ``} disabled>
+							<span class="slider round"></span>
+						</label>
+					</span>
+					<span>
+						P&nbsp;
+						<span>SP: ${t_set_podloga} &deg;C</span>
+						<span>PV: ${t_zas_podloga} &deg;C</span>
+						<label class="switch">
+							<input type="checkbox" ${(pompa_podloga == 1) ? `checked` : ``} disabled>
+							<span class="slider round"></span>
+						</label>
+					</span>
+					<span>
+						G&nbsp;
+						<span>SP: ${t_set_grzejniki} &deg;C</span>
+						<span>PV: ${t_zas_grzejniki} &deg;C</span>
+						<label class="switch">
+							<input type="checkbox" ${(pompa_grzej == 1) ? `checked` : ``} disabled>
+							<span class="slider round"></span>
+						</label>
+					</span>
+				</div>
+			</div>
+		</div>
+	`;
+	var card_garaz = `
+		<div class="card card-1x1">
+			<div class="card-header">
+				<span><i class="fa-solid fa-car"></i> Garaż</span>
+			</div>
+			<div class="card-content-wrapper">
+				<div class="card-content">
+					<table>
+						<tr>
+							<td><i class="fa-solid fa-temperature-half"></i></td>
+							<td>${temp_garaz} &deg;C</td>
+						</tr>
+						<tr>
+							<td><i class="${(swiatlo_garaz == 1) ? `fa-solid yellow` : `fa-regular`} fa-lightbulb"></i></td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" ${(swiatlo_garaz == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td><i class="fa-solid fa-water"></i></td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" ${(zmiekczacz == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td><i class="fa-solid fa-warehouse"></i></td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" ${(brama_garaz == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	`;
+	var card_drzwi = `
+		<div class="card card-1x1">
+			<div class="card-header">
+				<span><i class="fa-solid fa-door-closed"></i> Drzwi</span>
+			</div>
+			<div class="card-content-wrapper">
+				<div class="card-content">
+					<table>
+						<tr>
+							<td><i class="fa-solid ${drzwi_wej == 1 ? `fa-door-open` : `fa-door-closed`}"></i><sub>wej.</sub></td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" ${(drzwi_wej == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td><i class="fa-solid ${drzwi_gosp == 1 ? `fa-door-open` : `fa-door-closed`}"></i><sub>gosp.</sub></td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" ${(drzwi_gosp == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td><i class="fa-solid fa-road-barrier"></i><sub>wjazd</sub></td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" ${(brama_wjazd == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	`;
+	var card_media = `
+		<div class="card card-1x1">
+			<div class="card-header">
+				<span><i class="fa-solid fa-industry"></i> Media</span>
+			</div>
+			<div class="card-content-wrapper">
+				<div class="card-content">
+					<table>
+						<tr>
+							<td><i class="fa-solid fa-faucet-drip"></i></td>
+							<td>${ilosc_woda_dom} l</td>
+						</tr>
+						<tr>
+							<td><i class="fa-solid fa-fire-flame-simple"></i><sub>CO</sub></td>
+							<td>${gaz_co} m<sup>3</sup></td>
+						</tr>
+						<tr>
+							<td><i class="fa-solid fa-fire-flame-simple"></i><sub>CWU</sub></td>
+							<td>${gaz_cwu} m<sup>3</sup></td>
+						</tr>
+						<tr>
+							<td><i class="fa-solid fa-bolt"></i></td>
+							<td>${pv_konsumpcja_dzis} kWh</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	`;
+	var card_temperatury = `
+		<div class="card card-1x1">
+			<div class="card-header">
+				<span><i class="fa-solid fa-temperature-full"></i> Temperatury</span>
+			</div>
+			<div class="card-content-wrapper">
+				<div class="card-content">
+					<table>
+						<tr>
+							<td><i class="fa-solid fa-temperature-half"></i><sub>piętro</sub></td>
+							<td>${temp_pietro} &deg;C</td>
+						</tr>
+						<tr>
+							<td><i class="fa-solid fa-temperature-half"></i><sub>strych</sub></td>
+							<td>${temp_strych} &deg;C</td>
+						</tr>
+						<tr>
+							<td><i class="fa-solid fa-temperature-half"></i><sub>strych gar.</sub></td>
+							<td>${temp_strych_garaz} &deg;C</td>
+						</tr>
+						<tr>
+							<td><i class="fa-solid fa-droplet blue"></i></td>
+							<td>${wilg_wew}%</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	`;
+	var card_inne = `
+		<div class="card card-1x1">
+			<div class="card-header">
+				<span><i class="fa-solid fa-otter"></i> Inne</span>
+			</div>
+			<div class="card-content-wrapper">
+				<div class="card-content">
+					<table>
+						<tr>
+							<td><i class="fa-solid fa-biohazard"></i><sub>ścieki</sub></td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" ${(pompa_scieki == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td><i class="fa-solid fa-utensils"></i><sub>zmyw.</sub></td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" ${(zmywarka == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td><i class="${(swiatlo_pom_gosp == 1) ? `fa-solid yellow` : `fa-regular`} fa-lightbulb"></i><sub>pom. gosp.</sub></td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" ${(swiatlo_pom_gosp == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td><i class="${(swiatlo_strych == 1) ? `fa-solid yellow` : `fa-regular`} fa-lightbulb"></i><sub>strych</sub></td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" ${(swiatlo_strych == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -249,7 +550,7 @@ function generateSquares()
 	`;
 
 	// === TWORZENIE TYCH NO ===
-	document.getElementById('lastupdated').innerHTML = `Ost. akt.: ${g_ts_response['created_at']}`;
+	document.getElementById('lastupdated').innerHTML = `${g_ts_response['created_at'].replace('T', ' ').replaceAll('-', '.').substring(0, 19)}`;
 	buf += `<div class="row">`;
 	buf += `<div class="outer-row-box">`;
 	buf += card_pogoda;
@@ -263,21 +564,31 @@ function generateSquares()
 	buf += `<div class="row">`;
 	buf += `<div class="outer-row-box">`;
 	buf += `<div class="inner-column">`;
-	buf += card_fox;
+	buf += card_fotowoltaika;
 	buf += `</div>`;
 	buf += `<div class="inner-column">`;
-	buf += card_undefined;
-	buf += card_undefined;
+	buf += card_media;
+	buf += card_temperatury;
 	buf += `</div>`;
 	buf += `</div>`;
 	buf += `<div class="outer-row-box">`;
 	buf += `<div class="inner-column">`;
-	buf += card_nawo;
 	buf += card_garaz;
+	buf += card_drzwi;
 	buf += `</div>`;
 	buf += `<div class="inner-column">`;
+	buf += card_undefined;
+	buf += card_inne;
+	buf += `</div>`;
+	buf += `</div>`;
+	buf += `</div>`;
+
+	buf += `<div class="row">`;
+	buf += `<div class="outer-row-box">`;
 	buf += card_vilant;
 	buf += `</div>`;
+	buf += `<div class="outer-row-box">`;
+	buf += card_nawo;
 	buf += `</div>`;
 	buf += `</div>`;
 	document.getElementById('main').innerHTML += buf;
