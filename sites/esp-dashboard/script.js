@@ -8,14 +8,15 @@ function bitRead(value, bit)
 // THINGSPEAK FIELDS
 var g_ts_response;
 var wartosci;
-var unix_time;
+var enea_import;
 var temp_zew_bmp, temp_zew_vilant, wilg_zew;
 var opady_dzis, cisnienie;
 var temp_salon_bmp, temp_salon_vilant, temp_pietro, temp_garaz, temp_strych_garaz, temp_strych, temp_lazienka, wilg_wew;
-var stan_pieca, cis_wody, gaz_co, gaz_cwu, temp_cwu, t_set_podloga, t_zas_podloga, t_set_grzejniki, t_zas_grzejniki;
+var stan_pieca, piec_status, cis_wody, gaz_co, gaz_cwu, temp_cwu, t_set_podloga, t_zas_podloga, t_set_grzejniki, t_zas_grzejniki;
 var ilosc_woda_dom, ilosc_woda_ogrod;
 var pv_produkcja_dzis, pv_konsumpcja_dzis, pv_autokonsumpcja_dzis, pv_akt_obciazenie, pv_power, pv_napiecie, pv_cena_sprzedazy, pv_cena_zakupu;
 var zakodowany_boolean;
+var sunrise, sunset;
 // zmienne z zakodowanego booleana
 var drzwi_gosp, brama_wjazd, brama_garaz, okno_salon;
 var smart_plug;
@@ -37,7 +38,7 @@ function thingspeakFields()
 
 		wartosci = g_ts_response['status'].split('|');
 
-		unix_time              = wartosci[0];
+		enea_import            = wartosci[0];
 		temp_zew_bmp           = wartosci[1];
 		temp_zew_vilant        = wartosci[2];
 		wilg_zew               = wartosci[3];
@@ -71,6 +72,8 @@ function thingspeakFields()
 		pv_cena_sprzedazy      = wartosci[31];
 		pv_cena_zakupu         = wartosci[32];
 		zakodowany_boolean     = wartosci[33];
+		sunrise                = wartosci[34];
+		sunset                 = wartosci[35];
 
 		drzwi_gosp             = bitRead(zakodowany_boolean, 0);
 		brama_wjazd            = bitRead(zakodowany_boolean, 1);
@@ -105,6 +108,65 @@ function thingspeakFields()
 		pompa_studnia          = bitRead(zakodowany_boolean, 30);
 		pompa_zbiornik         = bitRead(zakodowany_boolean, 31);
 
+		// switch do stanu pieca
+		switch (parseInt(stan_pieca))
+		{
+			case 0:
+				piec_status = "Ogrz-B.Zapo";
+				break;
+			case 1:
+				piec_status = "Ogrz-R.went";
+				break;
+			case 2:
+				piec_status = "Ogrz-Pr.pom";
+				break;
+			case 3:
+				piec_status = "Ogrz-Zaplon";
+				break;
+			case 4:
+				piec_status = "Ogrz-Pal.ON";
+				break;
+			case 5:
+				piec_status = "Ogrz-Wybieg";
+				break;
+			case 6:
+				piec_status = "Ogrz-Wy.wen";
+				break;
+			case 7:
+				piec_status = "Ogrz-Wy.pom";
+				break;
+			case 8:
+				piec_status = "Ogrz-Blo.Pal";
+				break;
+			case 20:
+				piec_status = "CWU.Zapo";
+				break;
+			case 21:
+				piec_status = "CWU-R.went";
+				break;
+			case 22:
+				piec_status = "CWU-Pr.pom";
+				break;
+			case 23:
+				piec_status = "CWU-Zaplon";
+				break;
+			case 24:
+				piec_status = "CWU-Pal.ON";
+				break;
+			case 25:
+				piec_status = "CWU-Wybieg";
+				break;
+			case 26:
+				piec_status = "CWU-Wy.wen";
+				break;
+			case 27:
+				piec_status = "CWU-Wy.pom";
+				break;
+			case 28:
+				piec_status = "CWU-Blo.Pal";
+				break;
+		}
+
 		// odwloania funkcji ktore potrzebuja tych zmiennych ponizej
 		generateSquares();
 	}).catch((e) => console.error(e));
@@ -132,7 +194,7 @@ function generateSquares()
 						<table>
 							<tr>
 								<td><i class="fa-solid fa-temperature-half"></i></td>
-								<td>${temp_zew_vilant} &deg;C</td>
+								<td>${temp_zew_vilant}&deg;C</td>
 							</tr>
 							<tr>
 								<td><i class="fa-solid fa-droplet blue"></i></td>
@@ -152,11 +214,11 @@ function generateSquares()
 							</tr>
 							<tr>
 								<td><i class="fa-regular fa-sun yellow"></i>&uarr;</td>
-								<td>07:15</td>
+								<td>${sunrise}</td>
 							</tr>
 							<tr>
 								<td><i class="fa-solid fa-sun yellow"></i>&darr;</td>
-								<td>15:54</td>
+								<td>${sunset}</td>
 							</tr>
 						</table>
 					</div>
@@ -173,7 +235,7 @@ function generateSquares()
 						<table>
 							<tr>
 								<td><i class="fa-solid fa-temperature-half"></i></td>
-								<td>${temp_lazienka} &deg;C</td>
+								<td>${temp_lazienka}&deg;C</td>
 							</tr>
 							<tr>
 								<td><i class="${(swiatlo_lazienka == 1) ? `fa-solid yellow` : `fa-regular`} fa-lightbulb"></i></td>
@@ -185,7 +247,7 @@ function generateSquares()
 								</td>
 							</tr>
 							<tr>
-								<td><i class="fa-solid fa-shirt"></i></td>
+								<td><i class="fa-solid fa-shirt"></i><sub>pralka</sub></td>
 								<td>
 									<label class="switch">
 										<input type="checkbox" ${(pralka == 1) ? `checked` : ``} disabled>
@@ -194,7 +256,7 @@ function generateSquares()
 								</td>
 							</tr>
 							<tr>
-								<td><i class="${(smart_plug == 1) ? `fa-solid fa-plug-circle-check` : `fa-solid fa-plug`}"></i></td>
+								<td><i class="${(smart_plug == 1) ? `fa-solid fa-plug-circle-check` : `fa-solid fa-plug`}"></i><sub>grzejnik</sub></td>
 								<td>
 									<label class="switch">
 										<input type="checkbox" ${(smart_plug == 1) ? `checked` : ``} disabled>
@@ -217,7 +279,7 @@ function generateSquares()
 						<table>
 							<tr>
 								<td><i class="fa-solid fa-temperature-half"></i></td>
-								<td>${temp_salon_vilant} &deg;C</td>
+								<td>${temp_salon_vilant}&deg;C</td>
 							</tr>
 							<tr>
 								<td><i class="fa-solid fa-droplet blue"></i></td>
@@ -313,33 +375,44 @@ function generateSquares()
 			</div>
 			<div class="card-content-wrapper">
 				<div class="card-content">
-					<span><i class="fa-solid fa-gauge-high"></i> ${cis_wody} bar</span>
-					<span>
-						<i class="fa-solid red fa-droplet"></i><sub>CWU</sub>
-						<span>${temp_cwu} &deg;C</span>
-						<label class="switch">
-							<input type="checkbox" ${(pompa_cwu == 1) ? `checked` : ``} disabled>
-							<span class="slider round"></span>
-						</label>
-					</span>
-					<span>
-						P&nbsp;
-						<span>SP: ${t_set_podloga} &deg;C</span>
-						<span>PV: ${t_zas_podloga} &deg;C</span>
-						<label class="switch">
-							<input type="checkbox" ${(pompa_podloga == 1) ? `checked` : ``} disabled>
-							<span class="slider round"></span>
-						</label>
-					</span>
-					<span>
-						G&nbsp;
-						<span>SP: ${t_set_grzejniki} &deg;C</span>
-						<span>PV: ${t_zas_grzejniki} &deg;C</span>
-						<label class="switch">
-							<input type="checkbox" ${(pompa_grzej == 1) ? `checked` : ``} disabled>
-							<span class="slider round"></span>
-						</label>
-					</span>
+					<table>
+						<tr>
+							<td colspan="4">${piec_status}</td>
+						</tr>
+						<tr>
+							<td><i class="fa-solid fa-gauge-high"></i> ${cis_wody}&nbsp;bar</td>
+							<td><i class="fa-solid red fa-droplet"></i><sub>CWU</sub></td>
+							<td>${temp_cwu}&deg;C</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" ${(pompa_cwu == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td>Podłoga</td>
+							<td>SP:${t_set_podloga}&deg;C</td>
+							<td>PV:${t_zas_podloga}&deg;C</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" ${(pompa_podloga == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td>Grzejniki</td>
+							<td>SP:${t_set_grzejniki}&deg;C</td>
+							<td>PV:${t_zas_grzejniki}&deg;C</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" ${(pompa_grzej == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -354,7 +427,7 @@ function generateSquares()
 					<table>
 						<tr>
 							<td><i class="fa-solid fa-temperature-half"></i></td>
-							<td>${temp_garaz} &deg;C</td>
+							<td>${temp_garaz}&deg;C</td>
 						</tr>
 						<tr>
 							<td><i class="${(swiatlo_garaz == 1) ? `fa-solid yellow` : `fa-regular`} fa-lightbulb"></i></td>
@@ -366,7 +439,7 @@ function generateSquares()
 							</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-water"></i></td>
+							<td><i class="fa-solid fa-water"></i><sub>zmięk.</sub></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(zmiekczacz == 1) ? `checked` : ``} disabled>
@@ -467,15 +540,15 @@ function generateSquares()
 					<table>
 						<tr>
 							<td><i class="fa-solid fa-temperature-half"></i><sub>piętro</sub></td>
-							<td>${temp_pietro} &deg;C</td>
+							<td>${temp_pietro}&deg;C</td>
 						</tr>
 						<tr>
 							<td><i class="fa-solid fa-temperature-half"></i><sub>strych</sub></td>
-							<td>${temp_strych} &deg;C</td>
+							<td>${temp_strych}&deg;C</td>
 						</tr>
 						<tr>
 							<td><i class="fa-solid fa-temperature-half"></i><sub>strych gar.</sub></td>
-							<td>${temp_strych_garaz} &deg;C</td>
+							<td>${temp_strych_garaz}&deg;C</td>
 						</tr>
 						<tr>
 							<td><i class="fa-solid fa-droplet blue"></i></td>
