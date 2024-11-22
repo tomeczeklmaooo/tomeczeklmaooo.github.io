@@ -140,8 +140,20 @@ body
 	/* background-color: blue; */
 	flex-direction: row;
 	width: 100%;
-	height: calc(var(--card-width) * 2 + var(--gap) - 50px);
 	gap: var(--gap);
+}
+
+.card-1x1 .card-content-wrapper
+{
+	height: calc(var(--card-width) - 50px);
+}
+.card-2x1 .card-content-wrapper
+{
+	height: calc(var(--card-width) - 50px);
+}
+.card-1x2 .card-content-wrapper
+{
+	height: calc(var(--card-width) * 2 + var(--gap) - 50px);
 }
 
 .card-content
@@ -296,6 +308,14 @@ td:nth-child(1)
 	.card-content-wrapper
 	{
 		height: calc((100vw) - var(--gap) - 50px)
+	}
+	.card-1x1 .card-content-wrapper
+	{
+		height: calc((100vw) - 50px);
+	}
+	.card-2x1 .card-content-wrapper
+	{
+		height: calc((100vw) - 50px);
 	}
 	.card-1x2 .card-header
 	{
