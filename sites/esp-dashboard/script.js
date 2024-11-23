@@ -113,58 +113,58 @@ function thingspeakFields()
 		switch (parseInt(stan_pieca))
 		{
 			case 0:
-				piec_status = "Ogrz-B.Zapo";
+				piec_status = "Ogrzewanie: Brak zapotrzebowania";
 				break;
 			case 1:
-				piec_status = "Ogrz-R.went";
+				piec_status = "Ogrzewanie: Rozruch wentylator";
 				break;
 			case 2:
-				piec_status = "Ogrz-Pr.pom";
+				piec_status = "Ogrzewanie: Praca pompy";
 				break;
 			case 3:
-				piec_status = "Ogrz-Zaplon";
+				piec_status = "Ogrzewanie: Zapłon";
 				break;
 			case 4:
-				piec_status = "Ogrz-Pal.ON";
+				piec_status = "Ogrzewanie: Palnik włączony";
 				break;
 			case 5:
-				piec_status = "Ogrz-Wybieg";
+				piec_status = "Ogrzewanie: Wybieg";
 				break;
 			case 6:
-				piec_status = "Ogrz-Wy.wen";
+				piec_status = "Ogrzewanie: Wybieg wentylatora";
 				break;
 			case 7:
-				piec_status = "Ogrz-Wy.pom";
+				piec_status = "Ogrzewanie: Wybieg pompy";
 				break;
 			case 8:
-				piec_status = "Ogrz-Blo.Pal";
+				piec_status = "Ogrzewanie: Blokada palnika";
 				break;
 			case 20:
-				piec_status = "CWU.Zapo";
+				piec_status = "CWU: Zapotrzebowanie";
 				break;
 			case 21:
-				piec_status = "CWU-R.went";
+				piec_status = "CWU: Rozruch wentylator";
 				break;
 			case 22:
-				piec_status = "CWU-Pr.pom";
+				piec_status = "CWU: Praca pompy";
 				break;
 			case 23:
-				piec_status = "CWU-Zaplon";
+				piec_status = "CWU: Zapłon";
 				break;
 			case 24:
-				piec_status = "CWU-Pal.ON";
+				piec_status = "CWU: Palnik włączony";
 				break;
 			case 25:
-				piec_status = "CWU-Wybieg";
+				piec_status = "CWU: Wybieg";
 				break;
 			case 26:
-				piec_status = "CWU-Wy.wen";
+				piec_status = "CWU: Wybieg wentylatora";
 				break;
 			case 27:
-				piec_status = "CWU-Wy.pom";
+				piec_status = "CWU: Wybieg pompy";
 				break;
 			case 28:
-				piec_status = "CWU-Blo.Pal";
+				piec_status = "CWU: Blokada palnika";
 				break;
 		}
 
@@ -382,7 +382,7 @@ function generateSquares()
 						</tr>
 						<tr>
 							<td><i class="fa-solid fa-gauge-high"></i> ${parseFloat(cis_wody).toFixed(2)}&nbsp;bar</td>
-							<td style="text-align: right"><i class="fa-solid red fa-droplet"></i><sub>CWU</sub></td>
+							<td style="text-align: right"><i class="fa-solid fa-faucet-drip red"></i><sub>CWU</sub></td>
 							<td>${temp_cwu}&deg;C</td>
 							<td>
 								<label class="switch">
@@ -471,7 +471,7 @@ function generateSquares()
 				<div class="card-content">
 					<table>
 						<tr>
-							<td><i class="fa-solid ${drzwi_wej == 1 ? `fa-door-open` : `fa-door-closed`}"></i><sub>wej.</sub></td>
+							<td><i class="fa-solid ${drzwi_wej == 1 ? `fa-door-open` : `fa-door-closed`}"></i><sub>&nbsp;wej.</sub></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(drzwi_wej == 1) ? `checked` : ``} disabled>
@@ -480,7 +480,7 @@ function generateSquares()
 							</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid ${drzwi_gosp == 1 ? `fa-door-open` : `fa-door-closed`}"></i><sub>gosp.</sub></td>
+							<td><i class="fa-solid ${drzwi_gosp == 1 ? `fa-door-open` : `fa-door-closed`}"></i><sub>&nbsp;gosp.</sub></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(drzwi_gosp == 1) ? `checked` : ``} disabled>
@@ -489,7 +489,7 @@ function generateSquares()
 							</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-road-barrier"></i><sub>wjazd</sub></td>
+							<td><i class="fa-solid fa-road-barrier"></i><sub>&nbsp;wjazd</sub></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(brama_wjazd == 1) ? `checked` : ``} disabled>
