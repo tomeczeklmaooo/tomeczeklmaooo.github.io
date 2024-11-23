@@ -12,7 +12,6 @@
 body
 {
 	font-family: 'DM Sans', sans-serif;
-	/* font-family: monospace; */
 	font-size: 14pt;
 	margin: 0;
 }
@@ -20,7 +19,6 @@ body
 .container
 {
 	width: 100vw;
-	/* height: 100vh; */
 	background-color: #f2f1f2;
 	color: #1e2023;
 	display: flex;
@@ -126,7 +124,6 @@ body
 	font-weight: 600;
 	width: calc(100% - 20px);
 	height: 50px;
-	/* background-color: aqua; */
 	padding: 5px 10px;
     font-size: 180%;
 	display: flex;
@@ -137,7 +134,6 @@ body
 .card-content-wrapper
 {
 	display: flex;
-	/* background-color: blue; */
 	flex-direction: row;
 	width: 100%;
 	gap: var(--gap);
@@ -160,7 +156,6 @@ body
 {
 	flex: 1;
 	height: 100%;
-	/* background-color: blue; */
 	display: flex;
     font-size: 160%;
 	font-family: 'Geist', sans-serif;
