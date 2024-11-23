@@ -20,7 +20,8 @@ var sunrise, sunset;
 // zmienne z zakodowanego booleana
 var drzwi_gosp, brama_wjazd, brama_garaz, okno_salon;
 var smart_plug;
-var empty_1, empty_2, empty_3;
+var zawor_wod_dom;
+var empty_1, empty_2;
 var swiatlo_lazienka, swiatlo_garaz, swiatlo_pom_gosp, swiatlo_strych;
 var pralka, zmywarka;
 var fox_online;
@@ -81,8 +82,8 @@ function thingspeakFields()
 		okno_salon             = bitRead(zakodowany_boolean, 3);
 		smart_plug             = bitRead(zakodowany_boolean, 4);
 		zawor_wod_dom          = bitRead(zakodowany_boolean, 5);
-		empty_2                = bitRead(zakodowany_boolean, 6);
-		empty_3                = bitRead(zakodowany_boolean, 7);
+		empty_1                = bitRead(zakodowany_boolean, 6);
+		empty_2                = bitRead(zakodowany_boolean, 7);
 		swiatlo_lazienka       = bitRead(zakodowany_boolean, 8);
 		swiatlo_garaz          = bitRead(zakodowany_boolean, 9);
 		swiatlo_pom_gosp       = bitRead(zakodowany_boolean, 10);
@@ -377,7 +378,7 @@ function generateSquares()
 				<div class="card-content">
 					<table>
 						<tr>
-							<td colspan="4">${piec_status}</td>
+							<td colspan="4" style="text-align: center;">${piec_status}</td>
 						</tr>
 						<tr>
 							<td><i class="fa-solid fa-gauge-high"></i> ${parseFloat(cis_wody).toFixed(2)}&nbsp;bar</td>
@@ -510,7 +511,7 @@ function generateSquares()
 				<div class="card-content">
 					<table>
 						<tr>
-							<td><i class="fa-solid fa-faucet-drip"></i></td>
+							<td><i class="fa-solid fa-faucet-drip blue"></i></td>
 							<td>
 								<span>${ilosc_woda_dom} l</span>
 								<label class="switch">
@@ -520,15 +521,15 @@ function generateSquares()
 							</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-fire-flame-simple"></i><sub>CO</sub></td>
+							<td><i class="fa-solid fa-fire-flame-simple yellow"></i><sub>CO</sub></td>
 							<td>${gaz_co} m<sup>3</sup></td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-fire-flame-simple"></i><sub>CWU</sub></td>
+							<td><i class="fa-solid fa-fire-flame-simple yellow"></i><sub>CWU</sub></td>
 							<td>${gaz_cwu} m<sup>3</sup></td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-bolt"></i></td>
+							<td><i class="fa-solid fa-bolt red"></i></td>
 							<td>${enea_import} kWh</td>
 						</tr>
 					</table>
@@ -557,7 +558,7 @@ function generateSquares()
 							<td>${temp_strych_garaz}&deg;C</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-droplet blue"></i></td>
+							<td><i class="fa-solid fa-droplet blue"></i><sub>salon</sub></td>
 							<td>${wilg_wew}%</td>
 						</tr>
 					</table>
@@ -583,7 +584,7 @@ function generateSquares()
 							</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-utensils"></i><sub>zmyw.</sub></td>
+							<td><i class="fa-solid fa-utensils"></i><sub>&nbsp;&nbsp;zmyw.</sub></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(zmywarka == 1) ? `checked` : ``} disabled>
@@ -656,7 +657,7 @@ function generateSquares()
 	buf += card_drzwi;
 	buf += `</div>`;
 	buf += `<div class="inner-column">`;
-	buf += card_undefined;
+	// buf += card_undefined;
 	buf += card_inne;
 	buf += `</div>`;
 	buf += `</div>`;

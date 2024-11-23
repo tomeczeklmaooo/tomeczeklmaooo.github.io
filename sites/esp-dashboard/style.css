@@ -250,6 +250,11 @@ input:checked + .slider:before
 	color: #80ef80;
 }
 
+.orange
+{
+	color: #ffa447;
+}
+
 sub, sup
 {
 	font-size: 50%;
@@ -354,6 +359,7 @@ td:nth-child(1)
 	{
 		font-size: 100%;
 	}
+	/* TO DO NAPRAWY */
 	/* .card-content-wrapper
 	{
 		height: calc((100vw) - var(--gap) - 50px)
