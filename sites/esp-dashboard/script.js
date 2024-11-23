@@ -80,7 +80,7 @@ function thingspeakFields()
 		brama_garaz            = bitRead(zakodowany_boolean, 2);
 		okno_salon             = bitRead(zakodowany_boolean, 3);
 		smart_plug             = bitRead(zakodowany_boolean, 4);
-		empty_1                = bitRead(zakodowany_boolean, 5);
+		zawor_wod_dom          = bitRead(zakodowany_boolean, 5);
 		empty_2                = bitRead(zakodowany_boolean, 6);
 		empty_3                = bitRead(zakodowany_boolean, 7);
 		swiatlo_lazienka       = bitRead(zakodowany_boolean, 8);
@@ -380,7 +380,7 @@ function generateSquares()
 							<td colspan="4">${piec_status}</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-gauge-high"></i> ${cis_wody}&nbsp;bar</td>
+							<td><i class="fa-solid fa-gauge-high"></i> ${parseFloat(cis_wody).toFixed(2)}&nbsp;bar</td>
 							<td style="text-align: right"><i class="fa-solid red fa-droplet"></i><sub>CWU</sub></td>
 							<td>${temp_cwu}&deg;C</td>
 							<td>
@@ -511,7 +511,13 @@ function generateSquares()
 					<table>
 						<tr>
 							<td><i class="fa-solid fa-faucet-drip"></i></td>
-							<td>${ilosc_woda_dom} l</td>
+							<td>
+								<span>${ilosc_woda_dom} l</span>
+								<label class="switch">
+									<input type="checkbox" ${(zawor_wod_dom == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
 						</tr>
 						<tr>
 							<td><i class="fa-solid fa-fire-flame-simple"></i><sub>CO</sub></td>
