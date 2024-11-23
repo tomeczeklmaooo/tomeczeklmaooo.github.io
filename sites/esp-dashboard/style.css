@@ -126,7 +126,6 @@ body
 {
 	font-weight: 600;
 	width: calc(100% - 20px);
-	/* height: 50px; */
 	height: 25%;
 	padding: 5px 10px;
     font-size: 180%;
@@ -145,19 +144,25 @@ body
 	gap: var(--gap);
 	transition: 0.3s ease all;
 }
-/* 
+
+/* TO ZAKOMENTOWAĆ W RAZIE CZEGO */
 .card-1x1 .card-content-wrapper
 {
-	height: calc(var(--card-width) - 50px);
+	height: calc(var(--card-width) - 25%);
 }
 .card-2x1 .card-content-wrapper
 {
-	height: calc(var(--card-width) - 50px);
+	height: calc(var(--card-width) - 25%);
+}
+.card-1x2 .card-header
+{
+	height: 12.25%;
 }
 .card-1x2 .card-content-wrapper
 {
-	height: calc(var(--card-width) * 2 + var(--gap) - 50px);
-} */
+	height: calc(var(--card-width) * 2 + var(--gap) - 12.25%);
+}
+/*  */
 
 .card-content
 {
@@ -360,26 +365,27 @@ td:nth-child(1)
 		font-size: 100%;
 	}
 	/* TO DO NAPRAWY */
-	/* .card-content-wrapper
+	.card-content-wrapper
 	{
-		height: calc((100vw) - var(--gap) - 50px)
+		height: calc((100vw) - var(--gap) - 25%)
 	}
 	.card-1x1 .card-content-wrapper
 	{
-		height: calc((100vw) - 50px);
+		height: calc((100vw) - 25%);
 	}
 	.card-2x1 .card-content-wrapper
 	{
-		height: calc((100vw) - 50px);
+		height: calc((100vw) - 25%);
 	}
 	.card-1x2 .card-header
 	{
-		height: 28px;
+		height: 7%;
 	}
 	.card-1x2 .card-content-wrapper
 	{
-		height: calc((100vw) - var(--gap) - 28px)
-	} */
+		height: calc((100vw) - var(--gap) - 7%)
+	}
+	/*  */
 	.card-content
 	{
 		font-size: 90%;
