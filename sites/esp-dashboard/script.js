@@ -381,7 +381,7 @@ function generateSquares()
 						</tr>
 						<tr>
 							<td><i class="fa-solid fa-gauge-high"></i> ${cis_wody}&nbsp;bar</td>
-							<td><i class="fa-solid red fa-droplet"></i><sub>CWU</sub></td>
+							<td style="text-align: right"><i class="fa-solid red fa-droplet"></i><sub>CWU</sub></td>
 							<td>${temp_cwu}&deg;C</td>
 							<td>
 								<label class="switch">
