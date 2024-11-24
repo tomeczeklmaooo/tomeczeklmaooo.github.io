@@ -145,7 +145,6 @@ body
 	transition: 0.3s ease all;
 }
 
-/* TO ZAKOMENTOWAĆ W RAZIE CZEGO */
 .card-1x1 .card-content-wrapper
 {
 	height: calc(var(--card-width) - 25%);
@@ -162,7 +161,6 @@ body
 {
 	height: calc(var(--card-width) * 2 + var(--gap) - 12.25%);
 }
-/*  */
 
 .card-content
 {
@@ -364,7 +362,6 @@ td:nth-child(1)
 	{
 		font-size: 100%;
 	}
-	/* TO DO NAPRAWY */
 	.card-content-wrapper
 	{
 		height: calc((100vw) - var(--gap) - 25%)
@@ -385,7 +382,6 @@ td:nth-child(1)
 	{
 		height: calc((100vw) - var(--gap) - 7%)
 	}
-	/*  */
 	.card-content
 	{
 		font-size: 90%;
