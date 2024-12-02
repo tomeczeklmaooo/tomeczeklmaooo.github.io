@@ -32,7 +32,7 @@ var max_scieki;
 var zmiekczacz;
 var pompa_grzej, pompa_podloga, pompa_pieca, grzalka_cwu, pompa_cwu, pompa_scieki, pompa_studnia, pompa_zbiornik;
 
-function thingspeakFields()
+function thingspeak_fields()
 {
 	fetch('https://corsproxy.io/?https://thingspeak.mathworks.com/channels/432818/status/last.json?timezone=Europe/Warsaw').then((res) => res.text()).then((response) => {
 		g_ts_response = JSON.parse(response);
@@ -169,19 +169,19 @@ function thingspeakFields()
 		}
 
 		// odwloania funkcji ktore potrzebuja tych zmiennych ponizej
-		generateSquares();
+		generate_squares();
 	}).catch((e) => console.error(e));
 }
 
 var width, height;
 
-function checkViewport()
+function check_viewport()
 {
 	width = window.innerWidth;
 	height = window.innerHeight;
 }
 
-function generateSquares()
+function generate_squares()
 {
 	var buf = "";
 	// === KARTY ===
@@ -676,6 +676,6 @@ function generateSquares()
 
 window.onload = function()
 {
-	checkViewport();
-	thingspeakFields();
+	check_viewport();
+	thingspeak_fields();
 }

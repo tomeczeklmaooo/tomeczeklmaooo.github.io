@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Zwolnieni z teorii</title>
+	<title>CyberTwórcy</title>
 	<link rel="stylesheet" href="style.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,59 +12,101 @@
 <body>
 	<div class="container">
 		<header>
-			<span class="logo">[NAZWA_PROJEKTU]</span>
+			<span class="logo">CyberTwórcy</span>
 			<nav>
-				<nav-item>
+				<nav-item onclick="scroll_view('o-projekcie')">
 					<span>O projekcie</span>
 				</nav-item>
-				<nav-item>
-					<span>Terminy</span>
+				<nav-item onclick="scroll_view('cele')">
+					<span>Cele</span>
 				</nav-item>
-				<nav-item>
-					<span>O nas</span>
+				<nav-item onclick="scroll_view('forma-zajec')">
+					<span>Forma zajęć</span>
 				</nav-item>
-				<nav-item>
-					<span>Kontakt</span>
+				<nav-item onclick="scroll_view('korzysci')">
+					<span>Korzyści</span>
+				</nav-item>
+				<nav-item onclick="scroll_view('misja')">
+					<span>Misja</span>
 				</nav-item>
 			</nav>
 		</header>
 		
 		<summary-banner>
-			<span class="summary-header">Jakiś headline</span>
+			<span class="summary-header">CyberTwórcy</span>
 			<span>Tutaj jakiś opis skrótowy tego tam no<br>W tle jakieś zdjęcie przyciemnione albo jakiś filmik idk</span>
-			<div class="button">
+			<div class="button" onclick="scroll_view('main')">
 				<span>Dowiedz się więcej</span>
 			</div>
 		</summary-banner>
 
-		<main>
-			<section class="about-project">
+		<main id="main">
+			<section class="o-projekcie" id="o-projekcie">
 				<span class="section-header">O projekcie</span>
-				<span>Wysokość jest hard-coded 300px, generalnie to raczej wysokość będzie zależna od ilości treści.</span>
-				<span>Tutaj będą jakieś informacje o projekcie, sam wsm nie wiem jakie lol.</span>
+				<span>CyberTwórcy to innowacyjny projekt edukacyjny, którego celem jest rozwijanie zainteresowania informatyką wśród uczniów szkół podstawowych poprzez angażujące warsztaty. Projekt powstał z myślą o przełamywaniu barier tradycyjnego nauczania informatyki, które często ogranicza się do rutynowych działań, takich jak obsługa edytora tekstu czy tworzenie prezentacji. Cybertwórcy kładą nacisk na kreatywność, współpracę i praktyczne umiejętności, które przygotowują dzieci do wyzwań współczesnego cyfrowego świata.</span>
 			</section>
-			<section class="calendar">
-				<span class="section-header">Terminy</span>
-				<span>Wysokość jest hard-coded 300px, generalnie to raczej wysokość będzie zależna od ilości treści.</span>
-				<span>Z tym to nie wiem, ale spoko by było mieć taki terminarz co pokazywałby dostępność tych tych no.</span>
+			<section class="cele" id="cele">
+				<span class="section-header">Cele</span>
+				<ol>
+					<li>
+						<strong>Rozwijanie pasji technologicznych</strong> &ndash; uczniowie mają okazję odkrywać świat programowania, projektowania gier, tworzenia stron internetowych, a także eksperymentować z komputerami.
+					</li>
+					<li>
+						<strong>Praktyczne zastosowanie wiedzy</strong> &ndash; warsztaty ukazują, jak umiejętności informatyczne można wykorzystać w codziennym życiu oraz różnych zawodach przyszłości.
+					</li>
+					<li>
+						<strong>Promowanie pracy zespołowej</strong> &ndash; zadania projektowe uczą współpracy, podziału ról i rozwiązywania problemów w grupie.
+					</li>
+					<li>
+						<strong>Nowoczesne metody nauczania</strong> &ndash; zajęcia prowadzone są z wykorzystaniem interaktywnych platform, nowoczesnych urządzeń i innowacyjnych narzędzi edukacyjnych.
+					</li>
+				</ol>
 			</section>
-			<section class="about-us">
-				<span class="section-header">O nas</span>
-				<span>Wysokość jest hard-coded 300px, generalnie to raczej wysokość będzie zależna od ilości treści.</span>
-				<span>Coś tam o każdym wsm git.</span>
+			<section class="forma-zajec" id="forma-zajec">
+				<span class="section-header">Forma zajęć</span>
+				<span>Warsztaty są dostosowane do różnych grup wiekowych i poziomów zaawansowania. Każda lekcja ma interaktywną formę, obejmując:</span>
+				<ul>
+					<li>
+						<strong>Mini wykłady i pokazy</strong> &ndash; wprowadzenie do tematu przy użyciu przykładów z życia codziennego.
+					</li>
+					<li>
+						<strong>Ćwiczenia praktyczne</strong> &ndash; uczniowie realizują projekty, takie jak stworzenie własnej gry, zabawę z fizycznymi komputerami czy zaprojektowanie strony internetowej.
+					</li>
+					<li>
+						<strong>Dyskusje i refleksje</strong> &ndash; podsumowanie, podczas którego uczestnicy dzielą się doświadczeniami i pomysłami.
+					</li>
+				</ul>
 			</section>
-			<section class="contact">
-				<span class="section-header">Kontakt</span>
-				<span>Wysokość jest hard-coded 300px, generalnie to raczej wysokość będzie zależna od ilości treści.</span>
-				<span>Informacje do kontaktu jakby ktoś coś chciał.</span>
+			<section class="korzysci" id="korzysci">
+				<span class="section-header">Korzyści</span>
+				<ul>
+					<li>
+						Zdobycie cennych umiejętności technicznych
+					</li>
+					<li>
+						Rozwój logicznego myślenia i kreatywności
+					</li>
+					<li>
+						Zwiększenie świadomości na temat technologii i jej roli w świecie
+					</li>
+					<li>
+						Zwiększenie pewności siebie w pracy z nowoczesnymi narzędziami
+					</li>
+				</ul>
+			</section>
+			<section class="misja" id="misja">
+				<span class="section-header">Misja CyberTwórców</span>
+				<span>Chcemy, aby informatyka była nie tylko przedmiotem w szkole, ale także inspiracją do rozwijania pasji, kreatywności i innowacyjnego myślenia. Dzięki naszym warsztatom dzieci mogą stać się nie tylko użytkownikami technologii, ale także jej twórcami, gotowymi sprostać wyzwaniom cyfrowego świata.</span>
 			</section>
 		</main>
 		<footer>
 			<span>
-				&copy; <script>document.write(new Date().getFullYear());</script> [NAZWA_PROJEKTU] &ndash; Wszelkie prawa zastrzeżone<br>
+				&copy; <script>document.write(new Date().getFullYear());</script> CyberTwórcy &ndash; Wszelkie prawa zastrzeżone<br>
 				Projekt stworzony w ramach <em>Zwolnieni z teorii</em>
 			</span>
 		</footer>
 	</div>
+
+	<script src="script.js"></script>
 </body>
 </html>
