@@ -34,7 +34,7 @@ var pompa_grzej, pompa_podloga, pompa_pieca, grzalka_cwu, pompa_cwu, pompa_sciek
 
 function thingspeak_fields()
 {
-	fetch('https://corsproxy.io/?https://thingspeak.mathworks.com/channels/432818/status/last.json?timezone=Europe/Warsaw').then((res) => res.text()).then((response) => {
+	fetch('https://corsproxy.io/?https://thingspeak.mathworks.com/channels/432818/status/last.json').then((res) => res.text()).then((response) => {
 		g_ts_response = JSON.parse(response);
 
 		wartosci = g_ts_response['status'].split('|');
@@ -355,16 +355,13 @@ function generate_squares()
 			</div>
 		`;
 	var card_nawo = `
-		<div class="card card-2x1">
+		<div class="card card-1x2">
 			<div class="card-header">
-				<span><i class="fa-solid fa-question"></i> NAWO</span>
+				<span><i class="fa-solid fa-plant-wilt"></i> Nawodnienie</span>
 			</div>
 			<div class="card-content-wrapper">
 				<div class="card-content">
-					<span>???</span>
-					<span>???</span>
-					<span>???</span>
-					<span>???</span>
+					<img src="nawo.png" width="100%">
 				</div>
 			</div>
 		</div>
@@ -628,9 +625,24 @@ function generate_squares()
 			</div>
 		</div>
 	`;
+	var card_invisible = `
+		<div class="card card-1x1" style="opacity: 0;">
+			<div class="card-header">
+				<span><i class="fa-solid fa-question"></i> ???</span>
+			</div>
+			<div class="card-content-wrapper">
+				<div class="card-content">
+					<span>???</span>
+					<span>???</span>
+				</div>
+			</div>
+		</div>
+	`;
 
 	// === TWORZENIE TYCH NO ===
-	document.getElementById('lastupdated').innerHTML = `${g_ts_response['created_at'].replace('T', ' ').replaceAll('-', '.').substring(0, 19)}`;
+	var last_updated = new Date(g_ts_response['created_at']);
+	last_updated = last_updated.toLocaleString('en-GB', { timeZone: 'Europe/Warsaw' }).replace(',', '').replaceAll('/', '.');
+	document.getElementById('lastupdated').innerHTML = `${last_updated}`;
 	buf += `<div class="row">`;
 	buf += `<div class="outer-row-box">`;
 	buf += card_pogoda;
@@ -657,8 +669,7 @@ function generate_squares()
 	buf += card_drzwi;
 	buf += `</div>`;
 	buf += `<div class="inner-column">`;
-	// buf += card_undefined;
-	buf += card_inne;
+	buf += card_nawo;
 	buf += `</div>`;
 	buf += `</div>`;
 	buf += `</div>`;
@@ -668,7 +679,8 @@ function generate_squares()
 	buf += card_vilant;
 	buf += `</div>`;
 	buf += `<div class="outer-row-box">`;
-	buf += card_nawo;
+	buf += card_inne;
+	buf += card_invisible;
 	buf += `</div>`;
 	buf += `</div>`;
 	document.getElementById('main').innerHTML += buf;
