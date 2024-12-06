@@ -554,10 +554,6 @@ function generate_squares()
 							<td><i class="fa-solid fa-temperature-half"></i><sub>strych gar.</sub></td>
 							<td>${temp_strych_garaz}&deg;C</td>
 						</tr>
-						<tr>
-							<td><i class="fa-solid fa-droplet blue"></i><sub>salon</sub></td>
-							<td>${wilg_wew}%</td>
-						</tr>
 					</table>
 				</div>
 			</div>
