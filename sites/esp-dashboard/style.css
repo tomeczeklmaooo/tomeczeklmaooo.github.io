@@ -26,19 +26,23 @@ body
 	transition: 0.3s ease all;
 }
 
+#header
+{
+	position: sticky;
+	top: 0;
+	z-index: 10;
+}
+
 .header
 {
 	padding: 5px 0;
 	background-color: #f7f7f7;
 	display: flex;
-	position: sticky;
-	top: 0;
 	justify-content: center;
 	align-items: center;
 	font-weight: 700;
 	letter-spacing: 2px;
 	box-shadow: 0px 0px 8px 0px #a2bffe8f;
-	z-index: 10;
 }
 
 .header span
@@ -48,12 +52,54 @@ body
 	padding: 0 10px;
 }
 
+.btn-c
+{
+	text-align: left;
+}
+
 #lastupdated
 {
 	font-family: 'Geist', sans-serif;
 	font-weight: 500;
 	text-align: right;
 	opacity: 0.5;
+}
+
+.alarm
+{
+	padding: 5px 0;
+	background-color: #f7f7f7;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: 700;
+	letter-spacing: 2px;
+	animation: alarm 1s infinite;
+}
+
+.alarm span
+{
+	flex: 1;
+	text-align: center;
+	padding: 0 10px;
+}
+
+.buttons
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap);
+}
+
+.buttons button
+{
+	width: 100%;
+	font-size: 120%;
+}
+
+#result
+{
+	text-align: center;
 }
 
 .main
@@ -389,5 +435,24 @@ td:nth-child(1)
 	.switch
 	{
 		transform: scale(0.6);
+	}
+}
+
+@keyframes alarm
+{
+	0%
+	{
+		background-color: #ff2014;
+		color: #393e46;
+	}
+	50%
+	{
+		color: #ff2014;
+		background-color: #393e46;
+	}
+	100%
+	{
+		background-color: #ff2014;
+		color: #393e46;
 	}
 }

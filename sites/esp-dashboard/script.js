@@ -183,6 +183,8 @@ function check_viewport()
 
 function generate_squares()
 {
+	document.getElementById('main').innerHTML = '';
+	document.getElementById('main').style.height = '100%';
 	var buf = "";
 	// === KARTY ===
 	var card_pogoda = `
@@ -193,7 +195,7 @@ function generate_squares()
 				<div class="card-content-wrapper">
 					<div class="card-content">
 						<table>
-							<tr>
+							<tr onclick="window.location.href = 'https://thingspeak.mathworks.com/channels/432818/charts/2?dynamic=true&results=15&title=Ceradz&export=true&width=auto&height=400'">
 								<td><i class="fa-solid fa-temperature-half"></i></td>
 								<td>${temp_zew_vilant}&deg;C</td>
 							</tr>
@@ -648,7 +650,7 @@ function generate_squares()
 	buf += card_salon;
 	buf += `</div>`;
 	buf += `</div>`;
-	
+
 	buf += `<div class="row">`;
 	buf += `<div class="outer-row-box">`;
 	buf += `<div class="inner-column">`;
@@ -682,8 +684,45 @@ function generate_squares()
 	document.getElementById('main').innerHTML += buf;
 }
 
+function remote_control()
+{
+	document.getElementById('main').innerHTML = '';
+	document.getElementById('main').style.height = '100vh';
+	var buf = "";
+	buf += `<div class="buttons">`;
+	buf += `<table>`;
+	buf += `<tr>`;
+	buf += `<td><button type="button" onclick="loadXMLDoc(1001)">TURN ON</button></td>`;
+	buf += `<td><button type="button" onclick="loadXMLDoc(1002)">TURN OFF</button></td>`;
+	buf += `</tr>`;
+	buf += `<tr>`;
+	buf += `<td><button type="button" onclick="loadXMLDoc(1003)">NAWO ON</button></td>`;
+	buf += `<td><button type="button" onclick="loadXMLDoc(1004)">NAWO OFF</button></td>`;
+	buf += `</tr>`;
+	buf += `<tr>`;
+	buf += `<td><button type="button" onclick="loadXMLDoc(1005)">COS ON</button></td>`;
+	buf += `<td><button type="button" onclick="loadXMLDoc(1006)">COS OFF</button></td>`;
+	buf += `</tr>`;
+	buf += `</table>`;
+	buf += `<div id="result"></div>`;
+	buf += `</div>`;
+	buf += `<button onclick="thingspeak_fields()">Powrót</button>`;
+
+	document.getElementById('main').innerHTML += buf;
+}
+
+function loadXMLDoc(command_string)
+{
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function()
+	{
+		if (this.readyState == 4 && this.status == 200) document.getElementById("result").innerHTML = this.responseText;
+	};
+	xhttp.open('POST', `https://api.thingspeak.com/talkbacks/32600/commands?api_key=XBAUGXOD6LHDGDE0&command_string=${command_string}`, true);
+	xhttp.send();
+}
+
 window.onload = function()
 {
-	check_viewport();
 	thingspeak_fields();
 }
