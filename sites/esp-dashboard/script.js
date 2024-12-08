@@ -195,7 +195,7 @@ function generate_squares()
 				<div class="card-content-wrapper">
 					<div class="card-content">
 						<table>
-							<tr onclick="window.location.href = 'https://thingspeak.mathworks.com/channels/432818/charts/2?dynamic=true&results=15&title=Ceradz&export=true&width=auto&height=400'">
+							<tr onclick="window.location.href = 'https://thingspeak.mathworks.com/channels/432818/charts/2?dynamic=true&results=240&title=Ceradz&export=true&width=auto&height=400'">
 								<td><i class="fa-solid fa-temperature-half"></i></td>
 								<td>${temp_zew_vilant}&deg;C</td>
 							</tr>
