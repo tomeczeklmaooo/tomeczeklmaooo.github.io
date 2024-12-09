@@ -188,14 +188,14 @@ function generate_squares()
 	var buf = "";
 	// === KARTY ===
 	var card_pogoda = `
-			<div class="card card-2x1">
+			<div class="card card-2x1" onclick="show_chart()">
 				<div class="card-header">
 					<span><i class="fa-solid fa-cloud-sun-rain"></i> Pogoda</span>
 				</div>
 				<div class="card-content-wrapper">
 					<div class="card-content">
 						<table>
-							<tr onclick="window.location.href = 'https://thingspeak.mathworks.com/channels/432818/charts/2?dynamic=true&results=240&title=Ceradz&export=true&width=auto&height=400'">
+							<tr>
 								<td><i class="fa-solid fa-temperature-half"></i></td>
 								<td>${temp_zew_vilant}&deg;C</td>
 							</tr>
@@ -681,6 +681,14 @@ function generate_squares()
 	buf += card_invisible;
 	buf += `</div>`;
 	buf += `</div>`;
+	
+	buf += `<div id="modal" class="chart-modal">`;
+	buf += `<div class="chart-modal-content">`;
+	buf += `<span>Wykres temperatury</span>`;
+	buf += `<span class="close">&times;</span>`;
+	buf += `<iframe width="100%" height="400" style="border: 0;" src="https://thingspeak.mathworks.com/channels/432818/charts/2?dynamic=true&results=240&export=true&width=auto&height=auto"></iframe>`;
+	buf += `</div>`;
+	buf += `</div>`;
 	document.getElementById('main').innerHTML += buf;
 }
 
@@ -711,14 +719,29 @@ function remote_control()
 	document.getElementById('main').innerHTML += buf;
 }
 
-function loadXMLDoc(command_string)
+function show_chart()
+{
+	var modal = document.getElementById('modal');
+	var close = document.getElementsByClassName('close')[0];
+	modal.style.visibility = 'visible';
+	close.onclick = function()
+	{
+		modal.style.visibility = 'hidden';
+	}
+	window.onclick = function(event)
+	{
+		if (event.target == modal) modal.style.visibility = 'hidden';
+	}
+}
+
+function loadXMLDoc(_cmdstr)
 {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function()
 	{
 		if (this.readyState == 4 && this.status == 200) document.getElementById("result").innerHTML = this.responseText;
 	};
-	xhttp.open('POST', `https://api.thingspeak.com/talkbacks/32600/commands?api_key=XBAUGXOD6LHDGDE0&command_string=${command_string}`, true);
+	xhttp.open('POST', `https://api.thingspeak.com/talkbacks/32600/commands?api_key=XBAUGXOD6LHDGDE0&command_string=${_cmdstr}`, true);
 	xhttp.send();
 }
 
