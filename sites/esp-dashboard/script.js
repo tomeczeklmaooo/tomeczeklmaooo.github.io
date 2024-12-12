@@ -34,10 +34,10 @@ var pompa_grzej, pompa_podloga, pompa_pieca, grzalka_cwu, pompa_cwu, pompa_sciek
 
 function thingspeak_fields()
 {
-	fetch('https://corsproxy.io/?url=https://thingspeak.mathworks.com/channels/432818/status/last.json').then((res) => res.text()).then((response) => {
+	fetch('https://corsproxy.io/?url=https://thingspeak.mathworks.com/channels/432818/status.json?results=1').then((res) => res.text()).then((response) => {
 		g_ts_response = JSON.parse(response);
 
-		wartosci = g_ts_response['status'].split('|');
+		wartosci = g_ts_response['feeds'][0]['status'].split('|');
 
 		enea_import            = wartosci[0];
 		temp_zew_bmp           = wartosci[1];
