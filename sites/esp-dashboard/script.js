@@ -638,7 +638,7 @@ function generate_squares()
 	`;
 
 	// === TWORZENIE TYCH NO ===
-	var last_updated = new Date(g_ts_response['created_at']);
+	var last_updated = new Date(g_ts_response['feeds'][0]['created_at']);
 	last_updated = last_updated.toLocaleString('en-GB', { timeZone: 'Europe/Warsaw' }).replace(',', '').replaceAll('/', '.');
 	document.getElementById('lastupdated').innerHTML = `${last_updated}`;
 	buf += `<div class="row">`;
