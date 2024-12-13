@@ -6,7 +6,7 @@ function bitRead(value, bit)
 }
 
 // THINGSPEAK FIELDS
-var g_ts_response, g_ts_media_response_a, g_ts_media_response_b;
+var g_ts_response, g_ts_media_response_a, g_ts_media_response_b, g_ts_media_response_c; // global, co/cwu, water, electricity
 var wartosci;
 var enea_import;
 var temp_zew_bmp, temp_zew_vilant, wilg_zew;
@@ -37,146 +37,175 @@ function thingspeak_fields()
 	fetch('https://api.thingspeak.com/channels/432818/status.json?results=1').then((res) => res.text()).then((main_response) => {
 		fetch('https://api.thingspeak.com/channels/864444/feeds.json?results=480').then((res) => res.text()).then((media_response_a) => {
 			fetch('https://api.thingspeak.com/channels/432818/fields/4.json?results=240').then((res) => res.text()).then((media_response_b) => {
-				g_ts_response = JSON.parse(main_response);
-				g_ts_media_response_a = JSON.parse(media_response_a);
-				g_ts_media_response_b = JSON.parse(media_response_b);
+				fetch('https://api.thingspeak.com/channels/783677/fields/1.json?days=1').then((res) => res.text()).then((media_response_c) => {
+					g_ts_response = JSON.parse(main_response);
+					g_ts_media_response_a = JSON.parse(media_response_a);
+					g_ts_media_response_b = JSON.parse(media_response_b);
+					g_ts_media_response_c = JSON.parse(media_response_c);
 
-				console.log(g_ts_media_response_a);
-				console.log(g_ts_media_response_b);
+					var response_a1 = []; // field7
+					var response_a2 = []; // field8
+					for (var i = 0; i < g_ts_media_response_a['feeds'].length; i++)
+					{
+						if (g_ts_media_response_a['feeds'][i]['field7'] == null) continue;
+						else response_a1.push(g_ts_media_response_a['feeds'][i]['field7']);
 
-				wartosci = g_ts_response['feeds'][0]['status'].split('|');
+						if (g_ts_media_response_a['feeds'][i]['field8'] == null) continue;
+						else response_a2.push(g_ts_media_response_a['feeds'][i]['field8']);
+					}
+					console.log(response_a1);
+					console.log(response_a2);
 
-				enea_import            = wartosci[0];
-				temp_zew_bmp           = wartosci[1];
-				temp_zew_vilant        = wartosci[2];
-				wilg_zew               = wartosci[3];
-				opady_dzis             = wartosci[4];
-				cisnienie              = wartosci[5];
-				temp_salon_bmp         = wartosci[6];
-				temp_salon_vilant      = wartosci[7];
-				temp_pietro            = wartosci[8];
-				temp_garaz             = wartosci[9];
-				temp_strych_garaz      = wartosci[10];
-				temp_strych            = wartosci[11];
-				temp_lazienka          = wartosci[12];
-				wilg_wew               = wartosci[13];
-				stan_pieca             = wartosci[14];
-				cis_wody               = wartosci[15];
-				gaz_co                 = wartosci[16];
-				gaz_cwu                = wartosci[17];
-				temp_cwu               = wartosci[18];
-				t_set_podloga          = wartosci[19];
-				t_zas_podloga          = wartosci[20];
-				t_set_grzejniki        = wartosci[21];
-				t_zas_grzejniki        = wartosci[22];
-				ilosc_woda_dom         = wartosci[23];
-				ilosc_woda_ogrod       = wartosci[24];
-				pv_produkcja_dzis      = wartosci[25];
-				pv_konsumpcja_dzis     = wartosci[26];
-				pv_autokonsumpcja_dzis = wartosci[27];
-				pv_akt_obciazenie      = wartosci[28];
-				pv_power               = wartosci[29];
-				pv_napiecie            = wartosci[30];
-				pv_cena_sprzedazy      = wartosci[31];
-				pv_cena_zakupu         = wartosci[32];
-				zakodowany_boolean     = wartosci[33];
-				sunrise                = wartosci[34];
-				sunset                 = wartosci[35];
+					var response_b = [];
+					for (var i = 0; i < g_ts_media_response_b['feeds'].length; i++)
+					{
+						if (g_ts_media_response_b['feeds'][i]['field4'] == null) continue;
+						else response_b.push(g_ts_media_response_b['feeds'][i]['field4']);
+					}
+					console.log(response_b);
 
-				drzwi_gosp             = bitRead(zakodowany_boolean, 0);
-				brama_wjazd            = bitRead(zakodowany_boolean, 1);
-				brama_garaz            = bitRead(zakodowany_boolean, 2);
-				okno_salon             = bitRead(zakodowany_boolean, 3);
-				smart_plug             = bitRead(zakodowany_boolean, 4);
-				zawor_wod_dom          = bitRead(zakodowany_boolean, 5);
-				empty_1                = bitRead(zakodowany_boolean, 6);
-				empty_2                = bitRead(zakodowany_boolean, 7);
-				swiatlo_lazienka       = bitRead(zakodowany_boolean, 8);
-				swiatlo_garaz          = bitRead(zakodowany_boolean, 9);
-				swiatlo_pom_gosp       = bitRead(zakodowany_boolean, 10);
-				swiatlo_strych         = bitRead(zakodowany_boolean, 11);
-				pralka                 = bitRead(zakodowany_boolean, 12);
-				zmywarka               = bitRead(zakodowany_boolean, 13);
-				fox_online             = bitRead(zakodowany_boolean, 14);
-				drzwi_wej              = bitRead(zakodowany_boolean, 15);
-				min_zbiornik           = bitRead(zakodowany_boolean, 16);
-				med_zbiornik           = bitRead(zakodowany_boolean, 17);
-				max_zbiornik           = bitRead(zakodowany_boolean, 18);
-				min_studnia            = bitRead(zakodowany_boolean, 19);
-				max_studnia            = bitRead(zakodowany_boolean, 20);
-				p_studnia_zbiornik     = bitRead(zakodowany_boolean, 21);
-				max_scieki             = bitRead(zakodowany_boolean, 22);
-				zmiekczacz             = bitRead(zakodowany_boolean, 23);
-				pompa_grzej            = bitRead(zakodowany_boolean, 24);
-				pompa_podloga          = bitRead(zakodowany_boolean, 25);
-				pompa_pieca            = bitRead(zakodowany_boolean, 26);
-				grzalka_cwu            = bitRead(zakodowany_boolean, 27);
-				pompa_cwu              = bitRead(zakodowany_boolean, 28);
-				pompa_scieki           = bitRead(zakodowany_boolean, 29);
-				pompa_studnia          = bitRead(zakodowany_boolean, 30);
-				pompa_zbiornik         = bitRead(zakodowany_boolean, 31);
+					var response_c = [];
+					for (var i = 0; i < g_ts_media_response_c['feeds'].length; i++)
+					{
+						if (g_ts_media_response_c['feeds'][i]['field1'] == null) continue;
+						else response_c.push(g_ts_media_response_c['feeds'][i]['field1']);
+					}
+					console.log(response_c);
 
-				// switch do stanu pieca
-				switch (parseInt(stan_pieca))
-				{
-					case 0:
-						piec_status = "Ogrzewanie: Brak zapotrzebowania";
-						break;
-					case 1:
-						piec_status = "Ogrzewanie: Rozruch wentylator";
-						break;
-					case 2:
-						piec_status = "Ogrzewanie: Praca pompy";
-						break;
-					case 3:
-						piec_status = "Ogrzewanie: Zapłon";
-						break;
-					case 4:
-						piec_status = "Ogrzewanie: Palnik włączony";
-						break;
-					case 5:
-						piec_status = "Ogrzewanie: Wybieg";
-						break;
-					case 6:
-						piec_status = "Ogrzewanie: Wybieg wentylatora";
-						break;
-					case 7:
-						piec_status = "Ogrzewanie: Wybieg pompy";
-						break;
-					case 8:
-						piec_status = "Ogrzewanie: Blokada palnika";
-						break;
-					case 20:
-						piec_status = "CWU: Zapotrzebowanie";
-						break;
-					case 21:
-						piec_status = "CWU: Rozruch wentylator";
-						break;
-					case 22:
-						piec_status = "CWU: Praca pompy";
-						break;
-					case 23:
-						piec_status = "CWU: Zapłon";
-						break;
-					case 24:
-						piec_status = "CWU: Palnik włączony";
-						break;
-					case 25:
-						piec_status = "CWU: Wybieg";
-						break;
-					case 26:
-						piec_status = "CWU: Wybieg wentylatora";
-						break;
-					case 27:
-						piec_status = "CWU: Wybieg pompy";
-						break;
-					case 28:
-						piec_status = "CWU: Blokada palnika";
-						break;
-				}
+					wartosci = g_ts_response['feeds'][0]['status'].split('|');
 
-				// odwloania funkcji ktore potrzebuja tych zmiennych ponizej
-				generate_squares();
+					enea_import            = wartosci[0];
+					temp_zew_bmp           = wartosci[1];
+					temp_zew_vilant        = wartosci[2];
+					wilg_zew               = wartosci[3];
+					opady_dzis             = wartosci[4];
+					cisnienie              = wartosci[5];
+					temp_salon_bmp         = wartosci[6];
+					temp_salon_vilant      = wartosci[7];
+					temp_pietro            = wartosci[8];
+					temp_garaz             = wartosci[9];
+					temp_strych_garaz      = wartosci[10];
+					temp_strych            = wartosci[11];
+					temp_lazienka          = wartosci[12];
+					wilg_wew               = wartosci[13];
+					stan_pieca             = wartosci[14];
+					cis_wody               = wartosci[15];
+					gaz_co                 = wartosci[16];
+					gaz_cwu                = wartosci[17];
+					temp_cwu               = wartosci[18];
+					t_set_podloga          = wartosci[19];
+					t_zas_podloga          = wartosci[20];
+					t_set_grzejniki        = wartosci[21];
+					t_zas_grzejniki        = wartosci[22];
+					ilosc_woda_dom         = wartosci[23];
+					ilosc_woda_ogrod       = wartosci[24];
+					pv_produkcja_dzis      = wartosci[25];
+					pv_konsumpcja_dzis     = wartosci[26];
+					pv_autokonsumpcja_dzis = wartosci[27];
+					pv_akt_obciazenie      = wartosci[28];
+					pv_power               = wartosci[29];
+					pv_napiecie            = wartosci[30];
+					pv_cena_sprzedazy      = wartosci[31];
+					pv_cena_zakupu         = wartosci[32];
+					zakodowany_boolean     = wartosci[33];
+					sunrise                = wartosci[34];
+					sunset                 = wartosci[35];
+
+					drzwi_gosp             = bitRead(zakodowany_boolean, 0);
+					brama_wjazd            = bitRead(zakodowany_boolean, 1);
+					brama_garaz            = bitRead(zakodowany_boolean, 2);
+					okno_salon             = bitRead(zakodowany_boolean, 3);
+					smart_plug             = bitRead(zakodowany_boolean, 4);
+					zawor_wod_dom          = bitRead(zakodowany_boolean, 5);
+					empty_1                = bitRead(zakodowany_boolean, 6);
+					empty_2                = bitRead(zakodowany_boolean, 7);
+					swiatlo_lazienka       = bitRead(zakodowany_boolean, 8);
+					swiatlo_garaz          = bitRead(zakodowany_boolean, 9);
+					swiatlo_pom_gosp       = bitRead(zakodowany_boolean, 10);
+					swiatlo_strych         = bitRead(zakodowany_boolean, 11);
+					pralka                 = bitRead(zakodowany_boolean, 12);
+					zmywarka               = bitRead(zakodowany_boolean, 13);
+					fox_online             = bitRead(zakodowany_boolean, 14);
+					drzwi_wej              = bitRead(zakodowany_boolean, 15);
+					min_zbiornik           = bitRead(zakodowany_boolean, 16);
+					med_zbiornik           = bitRead(zakodowany_boolean, 17);
+					max_zbiornik           = bitRead(zakodowany_boolean, 18);
+					min_studnia            = bitRead(zakodowany_boolean, 19);
+					max_studnia            = bitRead(zakodowany_boolean, 20);
+					p_studnia_zbiornik     = bitRead(zakodowany_boolean, 21);
+					max_scieki             = bitRead(zakodowany_boolean, 22);
+					zmiekczacz             = bitRead(zakodowany_boolean, 23);
+					pompa_grzej            = bitRead(zakodowany_boolean, 24);
+					pompa_podloga          = bitRead(zakodowany_boolean, 25);
+					pompa_pieca            = bitRead(zakodowany_boolean, 26);
+					grzalka_cwu            = bitRead(zakodowany_boolean, 27);
+					pompa_cwu              = bitRead(zakodowany_boolean, 28);
+					pompa_scieki           = bitRead(zakodowany_boolean, 29);
+					pompa_studnia          = bitRead(zakodowany_boolean, 30);
+					pompa_zbiornik         = bitRead(zakodowany_boolean, 31);
+
+					// switch do stanu pieca
+					switch (parseInt(stan_pieca))
+					{
+						case 0:
+							piec_status = "Ogrzewanie: Brak zapotrzebowania";
+							break;
+						case 1:
+							piec_status = "Ogrzewanie: Rozruch wentylator";
+							break;
+						case 2:
+							piec_status = "Ogrzewanie: Praca pompy";
+							break;
+						case 3:
+							piec_status = "Ogrzewanie: Zapłon";
+							break;
+						case 4:
+							piec_status = "Ogrzewanie: Palnik włączony";
+							break;
+						case 5:
+							piec_status = "Ogrzewanie: Wybieg";
+							break;
+						case 6:
+							piec_status = "Ogrzewanie: Wybieg wentylatora";
+							break;
+						case 7:
+							piec_status = "Ogrzewanie: Wybieg pompy";
+							break;
+						case 8:
+							piec_status = "Ogrzewanie: Blokada palnika";
+							break;
+						case 20:
+							piec_status = "CWU: Zapotrzebowanie";
+							break;
+						case 21:
+							piec_status = "CWU: Rozruch wentylator";
+							break;
+						case 22:
+							piec_status = "CWU: Praca pompy";
+							break;
+						case 23:
+							piec_status = "CWU: Zapłon";
+							break;
+						case 24:
+							piec_status = "CWU: Palnik włączony";
+							break;
+						case 25:
+							piec_status = "CWU: Wybieg";
+							break;
+						case 26:
+							piec_status = "CWU: Wybieg wentylatora";
+							break;
+						case 27:
+							piec_status = "CWU: Wybieg pompy";
+							break;
+						case 28:
+							piec_status = "CWU: Blokada palnika";
+							break;
+					}
+
+					// odwloania funkcji ktore potrzebuja tych zmiennych ponizej
+					generate_squares();
+				}).catch((e) => console.error(e));
 			}).catch((e) => console.error(e));
 		}).catch((e) => console.error(e));
 	}).catch((e) => console.error(e));
