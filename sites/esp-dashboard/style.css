@@ -355,7 +355,6 @@ td:nth-child(1)
 	float: right;
 	font-size: 28px;
 	font-weight: bold;
-	transition: 0.3s ease;
 }
 
 .close:hover, .close:focus

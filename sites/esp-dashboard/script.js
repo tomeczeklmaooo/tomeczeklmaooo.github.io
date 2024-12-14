@@ -7,6 +7,7 @@ function bitRead(value, bit)
 
 // THINGSPEAK FIELDS
 var g_ts_response, g_ts_media_response_a, g_ts_media_response_b, g_ts_media_response_c; // global, co/cwu, water, electricity
+var response_a1 = [], response_a2 = [], response_b = [], response_c = []; // field7, field8, ..., ...
 var wartosci;
 var enea_import;
 var temp_zew_bmp, temp_zew_vilant, wilg_zew;
@@ -43,8 +44,6 @@ function thingspeak_fields()
 					g_ts_media_response_b = JSON.parse(media_response_b);
 					g_ts_media_response_c = JSON.parse(media_response_c);
 
-					var response_a1 = []; // field7
-					var response_a2 = []; // field8
 					for (var i = 0; i < g_ts_media_response_a['feeds'].length; i++)
 					{
 						if (g_ts_media_response_a['feeds'][i]['field7'] == null) continue;
@@ -56,7 +55,6 @@ function thingspeak_fields()
 					console.log(response_a1);
 					console.log(response_a2);
 
-					var response_b = [];
 					for (var i = 0; i < g_ts_media_response_b['feeds'].length; i++)
 					{
 						if (g_ts_media_response_b['feeds'][i]['field4'] == null) continue;
@@ -64,7 +62,6 @@ function thingspeak_fields()
 					}
 					console.log(response_b);
 
-					var response_c = [];
 					for (var i = 0; i < g_ts_media_response_c['feeds'].length; i++)
 					{
 						if (g_ts_media_response_c['feeds'][i]['field1'] == null) continue;
@@ -732,29 +729,31 @@ function generate_squares()
 	buf += `<div class="chart-modal-content">`;
 	buf += `<span>Wykresy mediów</span>`;
 	buf += `<span class="close">&times;</span>`;
-	buf += `<div id="media_chart_container></div>`;
+	buf += `<div id="media_chart_container"></div>`;
 	buf += `</div>`;
 	buf += `</div>`;
 	document.getElementById('main').innerHTML += buf;
 
 	// HIGHCHARTS SETUP
-	// const chart_today = Highcharts.chart('media_chart_container', {
-	// 	chart: { type: 'line' },
-	// 	title: { text: undefined },
-	// 	xAxis: { categories: [] },
-	// 	yAxis: { title: { text: undefined }, labels: { enabled: false } },
-	// 	plotOptions: {
-	// 		line: { dataLabels: { enabled: true }, enableMouseTracking: true },
-	// 		series: { animation: { duration: 1200 } }
-	// 	},
-	// 	tooltip: { shared: true, crosshairs: true },
-	// 	series: [
-	// 		{ name: 'Sprzedaż', data: [], animation: { defer: 1200 } },
-	// 		{ name: 'Zakup', data: [], animation: { defer: 2500 }, color: "#ff2014", dashStyle: 'dash' }
-	// 	],
-	// 	accessibility: { enabled: false },
-	// 	credits: { enabled: false }
-	// });
+	const chart = Highcharts.chart('media_chart_container', {
+		chart: { type: 'line' },
+		title: { text: undefined },
+		xAxis: { categories: [] },
+		yAxis: { title: { text: undefined }, labels: { enabled: false } },
+		plotOptions: {
+			line: { dataLabels: { enabled: true }, enableMouseTracking: true },
+			series: { animation: { duration: 1200 } }
+		},
+		tooltip: { shared: true, crosshairs: true },
+		series: [
+			{ name: 'CO', data: [], animation: { defer: 1200 } },
+			{ name: 'CWU', data: [], animation: { defer: 2500 } },
+			{ name: 'Woda', data: [], animation: { defer: 3800 } },
+			{ name: 'Prąd', data: [], animation: { defer: 5100 } }
+		],
+		accessibility: { enabled: false },
+		credits: { enabled: false }
+	});
 
 	// var x_axis_categories = [
 	// 	'00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
@@ -762,6 +761,15 @@ function generate_squares()
 	// 	'12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
 	// 	'18:00', '19:00', '20:00', '21:00', '22:00', '23:00'
 	// ];
+
+	// chart.xAxis[0].setCategories(x_axis_categories, false);
+	
+	chart.series[0].setData(response_a1, false);
+	chart.series[1].setData(response_a2, false);
+	chart.series[2].setData(response_b, false);
+	chart.series[3].setData(response_c, false);
+
+	chart.redraw();
 }
 
 function remote_control()
@@ -795,13 +803,14 @@ function show_chart(_type)
 {
 	var modal_weather = document.getElementById('modal-weather');
 	var modal_media = document.getElementById('modal-media');
-	var close = document.getElementsByClassName('close')[0];
+	var close_1 = document.getElementsByClassName('close')[0];
+	var close_2 = document.getElementsByClassName('close')[1];
 	switch (_type)
 	{
 		case 0:
 		{
 			modal_weather.style.visibility = 'visible';
-			close.onclick = function()
+			close_1.onclick = function()
 			{
 				modal_weather.style.visibility = 'hidden';
 			}
@@ -814,7 +823,7 @@ function show_chart(_type)
 		case 1:
 		{
 			modal_media.style.visibility = 'visible';
-			close.onclick = function()
+			close_2.onclick = function()
 			{
 				modal_media.style.visibility = 'hidden';
 			}
