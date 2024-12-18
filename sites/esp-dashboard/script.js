@@ -8,6 +8,7 @@ function bitRead(value, bit)
 // THINGSPEAK FIELDS
 var g_ts_response, g_ts_media_response_a, g_ts_media_response_b, g_ts_media_response_c; // global, co/cwu, water, electricity
 var response_a1 = [], response_a2 = [], response_b = [], response_c = []; // field7, field8, ..., ...
+var split_date_a = [], split_date_b = [], split_date_c = [];
 var wartosci;
 var enea_import;
 var temp_zew_bmp, temp_zew_vilant, wilg_zew;
@@ -47,10 +48,10 @@ function thingspeak_fields()
 					for (var i = 0; i < g_ts_media_response_a['feeds'].length; i++)
 					{
 						if (g_ts_media_response_a['feeds'][i]['field7'] == null) continue;
-						else response_a1.push(g_ts_media_response_a['feeds'][i]['field7']);
+						else response_a1.push(parseFloat(g_ts_media_response_a['feeds'][i]['field7']));
 
 						if (g_ts_media_response_a['feeds'][i]['field8'] == null) continue;
-						else response_a2.push(g_ts_media_response_a['feeds'][i]['field8']);
+						else response_a2.push(parseFloat(g_ts_media_response_a['feeds'][i]['field8']));
 					}
 					console.log(response_a1);
 					console.log(response_a2);
@@ -58,16 +59,26 @@ function thingspeak_fields()
 					for (var i = 0; i < g_ts_media_response_b['feeds'].length; i++)
 					{
 						if (g_ts_media_response_b['feeds'][i]['field4'] == null) continue;
-						else response_b.push(g_ts_media_response_b['feeds'][i]['field4']);
+						else response_b.push(parseFloat(g_ts_media_response_b['feeds'][i]['field4']));
 					}
 					console.log(response_b);
 
 					for (var i = 0; i < g_ts_media_response_c['feeds'].length; i++)
 					{
 						if (g_ts_media_response_c['feeds'][i]['field1'] == null) continue;
-						else response_c.push(g_ts_media_response_c['feeds'][i]['field1']);
+						else response_c.push(parseFloat(g_ts_media_response_c['feeds'][i]['field1']));
 					}
 					console.log(response_c);
+
+					split_date_a = g_ts_media_response_a['feeds'][0]['created_at'].replace('T', ' ').replace('Z', '').replaceAll('-', ' ').replaceAll(':', ' ').split(" ");
+					for (var i = 0; i < split_date_a.length; i++) split_date_a[i] = parseInt(split_date_a[i]);
+					console.log(split_date_a);
+					split_date_b = g_ts_media_response_b['feeds'][0]['created_at'].replace('T', ' ').replace('Z', '').replaceAll('-', ' ').replaceAll(':', ' ').split(" ");
+					for (var i = 0; i < split_date_b.length; i++) split_date_b[i] = parseInt(split_date_b[i]);
+					console.log(split_date_b);
+					split_date_c = g_ts_media_response_c['feeds'][0]['created_at'].replace('T', ' ').replace('Z', '').replaceAll('-', ' ').replaceAll(':', ' ').split(" ");
+					for (var i = 0; i < split_date_c.length; i++) split_date_c[i] = parseInt(split_date_c[i]);
+					console.log(split_date_c);
 
 					wartosci = g_ts_response['feeds'][0]['status'].split('|');
 
@@ -735,25 +746,54 @@ function generate_squares()
 	document.getElementById('main').innerHTML += buf;
 
 	// HIGHCHARTS SETUP
-	const chart = Highcharts.chart('media_chart_container', {
-		chart: { type: 'line' },
+	const chart = Highcharts.chart("media_chart_container", {
+		chart: { type: "line" },
 		title: { text: undefined },
-		xAxis: { categories: [] },
+		xAxis: {
+			categories: [],
+			type: 'datetime'
+		},
 		yAxis: { title: { text: undefined }, labels: { enabled: false } },
 		plotOptions: {
 			line: { dataLabels: { enabled: true }, enableMouseTracking: true },
-			series: { animation: { duration: 1200 } }
+			series: { animation: { duration: 1200 } },
 		},
 		tooltip: { shared: true, crosshairs: true },
 		series: [
-			{ name: 'CO', data: [], animation: { defer: 1200 } },
-			{ name: 'CWU', data: [], animation: { defer: 2500 } },
-			{ name: 'Woda', data: [], animation: { defer: 3800 } },
-			{ name: 'Prąd', data: [], animation: { defer: 5100 } }
+			{
+				name: "CO",
+				data: [],
+				animation: { defer: 1200 },
+				pointStart: Date.UTC(split_date_a[0], split_date_a[1] - 1, split_date_a[2], split_date_a[3], split_date_a[4], split_date_a[5]),
+				pointInterval: 180 * 1000 // 3 min
+			},
+			{
+				name: "CWU",
+				data: [],
+				animation: { defer: 2500 },
+				pointStart: Date.UTC(split_date_a[0], split_date_a[1] - 1, split_date_a[2], split_date_a[3], split_date_a[4], split_date_a[5]),
+				pointInterval: 180 * 1000 // 3 min
+			},
+			{
+				name: "Woda",
+				data: [],
+				animation: { defer: 3800 },
+				pointStart: Date.UTC(split_date_b[0], split_date_b[1] - 1, split_date_b[2], split_date_b[3], split_date_b[4], split_date_b[5]),
+				pointInterval: 360 * 1000 // 6 min
+			},
+			{
+				name: "Prąd",
+				data: [],
+				animation: { defer: 5100 },
+				pointStart: Date.UTC(split_date_c[0], split_date_c[1] - 1, split_date_c[2], split_date_c[3], split_date_c[4], split_date_c[5]),
+				pointInterval: 360 * 1000 // 6 min
+			}
 		],
 		accessibility: { enabled: false },
-		credits: { enabled: false }
+		credits: { enabled: false },
 	});
+
+	console.log(Date.UTC(split_date_b[0], split_date_b[1] - 1, split_date_b[2], split_date_b[3], split_date_b[4], split_date_b[5]));
 
 	// var x_axis_categories = [
 	// 	'00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
@@ -764,6 +804,8 @@ function generate_squares()
 
 	// chart.xAxis[0].setCategories(x_axis_categories, false);
 	
+	// chart.xAxis.dateFormat('%Y/%m/%d %H:%M');
+
 	chart.series[0].setData(response_a1, false);
 	chart.series[1].setData(response_a2, false);
 	chart.series[2].setData(response_b, false);
