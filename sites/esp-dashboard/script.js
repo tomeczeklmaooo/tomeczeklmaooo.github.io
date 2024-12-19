@@ -751,9 +751,17 @@ function generate_squares()
 		title: { text: undefined },
 		xAxis: {
 			categories: [],
-			type: 'datetime'
+			type: 'datetime',
+labels: {
+formatter: function() {
+return Highcharts.dateFormat('%H:%M', this.value)
+}
+}
 		},
-		yAxis: { title: { text: undefined }, labels: { enabled: false } },
+		yAxis: [
+{ title: { text: undefined }, labels: { enabled: false } },
+{ title: { text: undefined }, labels: { enabled: false } }
+],
 		plotOptions: {
 			line: { dataLabels: { enabled: true }, enableMouseTracking: true },
 			series: { animation: { duration: 1200 } },
@@ -779,7 +787,8 @@ function generate_squares()
 				data: [],
 				animation: { defer: 3800 },
 				pointStart: Date.UTC(split_date_b[0], split_date_b[1] - 1, split_date_b[2], split_date_b[3], split_date_b[4], split_date_b[5]),
-				pointInterval: 360 * 1000 // 6 min
+				pointInterval: 360 * 1000, // 6 min
+yAxis: 1
 			},
 			{
 				name: "Prąd",
