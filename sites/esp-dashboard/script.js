@@ -752,16 +752,22 @@ function generate_squares()
 		xAxis: {
 			categories: [],
 			type: 'datetime',
-labels: {
-formatter: function() {
-return Highcharts.dateFormat('%H:%M', this.value)
-}
-}
+			labels: {
+				formatter: function() {
+					return Highcharts.dateFormat('%H:%M', this.value)
+				}
+			}
 		},
 		yAxis: [
-{ title: { text: undefined }, labels: { enabled: false } },
-{ title: { text: undefined }, labels: { enabled: false } }
-],
+			{
+				title: { text: undefined },
+				labels: { enabled: false }
+			},
+			{
+				title: { text: undefined },
+				labels: { enabled: false }
+			}
+		],
 		plotOptions: {
 			line: { dataLabels: { enabled: true }, enableMouseTracking: true },
 			series: { animation: { duration: 1200 } },
@@ -788,7 +794,7 @@ return Highcharts.dateFormat('%H:%M', this.value)
 				animation: { defer: 3800 },
 				pointStart: Date.UTC(split_date_b[0], split_date_b[1] - 1, split_date_b[2], split_date_b[3], split_date_b[4], split_date_b[5]),
 				pointInterval: 360 * 1000, // 6 min
-yAxis: 1
+				yAxis: 1
 			},
 			{
 				name: "Prąd",
@@ -801,19 +807,6 @@ yAxis: 1
 		accessibility: { enabled: false },
 		credits: { enabled: false },
 	});
-
-	console.log(Date.UTC(split_date_b[0], split_date_b[1] - 1, split_date_b[2], split_date_b[3], split_date_b[4], split_date_b[5]));
-
-	// var x_axis_categories = [
-	// 	'00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
-	// 	'06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
-	// 	'12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
-	// 	'18:00', '19:00', '20:00', '21:00', '22:00', '23:00'
-	// ];
-
-	// chart.xAxis[0].setCategories(x_axis_categories, false);
-	
-	// chart.xAxis.dateFormat('%Y/%m/%d %H:%M');
 
 	chart.series[0].setData(response_a1, false);
 	chart.series[1].setData(response_a2, false);
