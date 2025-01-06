@@ -334,7 +334,7 @@
 				};
 
 				for (var channelIndex = 0; channelIndex < channelKeys.length; channelIndex++) {
-					for (var fieldIndex = 0; fieldIndex < hannelKeys[channelIndex].fieldList.length; fieldIndex++) {
+					for (var fieldIndex = 0; fieldIndex < channelKeys[channelIndex].fieldList.length; fieldIndex++) {
 						window.console && console.log("Channel " + channelIndex + " field " + fieldIndex);
 						chartOptions.series.push({
 							data: channelKeys[channelIndex].fieldList[fieldIndex].data,
