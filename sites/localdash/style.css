@@ -1,0 +1,57 @@
+:root
+{
+	--gap: 10px;
+}
+
+*
+{
+	font-family: monospace;
+}
+
+body
+{
+	background-color: #080808;
+	color: #eeedf0;
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	width: 100vw;
+	height: 100vh;
+}
+
+header
+{
+	height: 50px;
+	padding: 0 10px;
+	display: flex;
+	align-items: center;
+	font-size: 24pt;
+	border-bottom: 1px solid #ffffff1c;
+}
+
+.container
+{
+	height: calc(100vh - 50px - 20px - 20px);
+	padding: 10px;
+	display: flex;
+	flex-direction: row;
+	gap: var(--gap);
+}
+
+options-menu
+{
+	flex: 1;
+}
+
+console-view
+{
+	flex: 2;
+	border: 1px solid #ffffff1c;
+	overflow: scroll;
+}
+
+footer
+{
+	color: #ffffff1c;
+	border-top: 1px solid #ffffff1c;
+}

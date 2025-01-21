@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>localdash</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<header>
+		<span>Network Console</span>
+	</header>
+	<div class="container">
+		<options-menu>
+			OPTIONS MENU
+			<button onclick="push_msg('ERROR', 'SAMPLE ERROR MESSAGE')">Send error</button>
+			<button onclick="push_msg('WARN', 'SAMPLE WARNING MESSAGE')">Send warning</button>
+			<button onclick="push_msg('INFO', 'SAMPLE INFORMATION MESSAGE')">Send info</button>
+			<button onclick="push_msg('LOG', 'SAMPLE LOGGING MESSAGE')">Send log</button>
+		</options-menu>
+		<console-view>
+			<!-- CONSOLE VIEW -->
+		</console-view>
+	</div>
+	<footer>
+		<span>versionstring</span>
+	</footer>
+
+	<script src="script.js"></script>
+</body>
+</html>

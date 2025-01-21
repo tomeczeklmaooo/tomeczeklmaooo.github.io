@@ -5,41 +5,54 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="My personal website">
-	<meta name="keywords" content="cs2, tomeczeklmao tomeczeklmaooo, descent, descentesports, descent-esports, toaster, toaster000, toaster000_, toastercs">
+	<meta name="keywords" content="tomeczeklmao, tomeczeklmaooo, toaster, toaster000, toaster000_">
 	<title>tomeczeklmaooo</title>
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="style.css">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+	<link href="https://iosevka-webfonts.github.io/iosevka/iosevka.css" rel="stylesheet" />
 	<script src="https://kit.fontawesome.com/4140c3b052.js" crossorigin="anonymous"></script>
 </head>
-<body onload="webInitializeFunctionsOnload()">
-	<div class="global-container">
-		<div class="container" id="container">
-			<div class="left">
-				<header class="header">
-					<span>tomeczeklmaooo</span>
-				</header>
-				<nav class="nav">
-					<div class="button prevent-select" onclick="webChangeContainerContent(0)">About</div>
-					<div class="button prevent-select" onclick="webChangeContainerContent(1)">Education</div>
-					<div class="button prevent-select" onclick="webChangeContainerContent(2)">Projects</div>
-					<div class="button prevent-select" onclick="webChangeContainerContent(3)">CS2 Settings</div>
-					<div class="button prevent-select" onclick="webChangeContainerContent(4)">Contact</div>
-				</nav>
-			</div>
-			<div class="right">
-				<main class="main" id="main">
-					<span class="no-content-text prevent-select" id="no-content-text">&lt; select an option on the left to display here &gt;</span>
-				</main>
-			</div>
-		</div>
-		<footer class="footer prevent-select">
-			<span>Copyright &copy; 2021 &mdash; <script>document.write(new Date().getFullYear())</script> tomeczeklmaooo&emsp;&bull;&bull;&bull;&emsp;Built with HTML, CSS and JavaScript</span>
-		</footer>
-	</div>
+<body onload="init_functions()">
+	<x-container>
+		<x-banner>
+			[banner image here]
+		</x-banner>
+		<x-tech-stack>
+			<x-title>&lt;tech stack/&gt;</x-title>
+			<x-icons>
+				<img src="https://skillicons.dev/icons?i=c" height="40" alt="c" draggable="false">
+				<img src="https://skillicons.dev/icons?i=cpp" height="40" alt="cplusplus" draggable="false">
+				<img src="https://skillicons.dev/icons?i=js" height="40" alt="javascript" draggable="false">
+				<img src="https://skillicons.dev/icons?i=html" height="40" alt="html5" draggable="false">
+				<img src="https://skillicons.dev/icons?i=css" height="40" alt="css3" draggable="false">
+				<img src="https://skillicons.dev/icons?i=mysql" height="40" alt="mysql" draggable="false">
+				<img src="https://skillicons.dev/icons?i=linux" height="40" alt="linux" draggable="false">
+				<img src="https://skillicons.dev/icons?i=bash" height="40" alt="bash" draggable="false">
+				<img src="https://skillicons.dev/icons?i=ps" height="40" alt="photoshop" draggable="false">
+				<img src="https://skillicons.dev/icons?i=pr" height="40" alt="premierepro" draggable="false">
+			</x-icons>
+		</x-tech-stack>
+		<x-about-me>
+			<x-title>&lt;about me/&gt;</x-title>
+			<x-text>
+				<p>4th grade IT student from Poland, kind of a nerd when it comes to computers.</p>
+				<p>Writing some buggy software in my free time, and making websites for fun just because I can.</p>
+				<br>
+				<p class="lower">And I use Arch btw.</p>
+			</x-text>
+		</x-about-me>
+		<x-projects>
+			<x-title>&lt;projects/&gt;</x-title>
+			<x-projects-container>
+				<x-project>
+					<x-project-link>pocket</x-project-link>
+					<x-project-description>
+						a simple terminal program to track all your finances
+					</x-project-description>
+				</x-project>
+			</x-projects-container>
+		</x-projects>
+	</x-container>
 	<script src="script.js"></script>
 </body>
 </html>
