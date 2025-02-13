@@ -408,9 +408,7 @@ function generate_squares()
 				<span><i class="fa-solid fa-plant-wilt"></i> Nawodnienie</span>
 			</div>
 			<div class="card-content-wrapper">
-				<div class="card-content">
-					<img src="nawo.png" width="100%">
-				</div>
+				<canvas id="canvas"></canvas>
 			</div>
 		</div>
 	`;
@@ -814,6 +812,17 @@ function generate_squares()
 	chart.series[3].setData(response_c, false);
 
 	chart.redraw();
+
+	// rysowanie canvas
+	var canvas = document.getElementById('canvas');
+
+	var additional_offset = 0;
+	if (width > 1080) additional_offset = 0;
+	else additional_offset = 200;
+
+	canvas.height = canvas.offsetHeight + additional_offset;
+
+	draw_canvas();
 }
 
 function remote_control()
@@ -891,7 +900,108 @@ function loadXMLDoc(_cmdstr)
 	xhttp.send();
 }
 
+// canvas nawo
+function draw_canvas()
+{
+	var ctx = canvas.getContext('2d');
+	var zbiorniki_odstep = 35, linia_gora_odstep = 35;
+	var zbiornik2_width = 90;
+	var zbiornik2_height = 400;
+	var zbiornik1_width = 150;
+	var zbiornik1_height = 200;
+	var total_width = zbiornik2_width + zbiornik1_width + zbiorniki_odstep;
+	var start_x = (canvas.width - total_width) / 2
+	var zbiornik2 = { x: start_x, y: 100, width: zbiornik2_width, height: zbiornik2_height }; // zbiornik cienki
+	var zbiornik1 = { x: zbiornik2.x + zbiornik2.width + zbiorniki_odstep, y: 100, width: zbiornik1_width, height: zbiornik1_height };
+
+	var zbiornik1_wypelnienie; // poziom wypelnienia w procentach
+	var zbiornik2_wypelnienie; // poziom wypelnienia w procentach
+
+	if (min_zbiornik == 1 && med_zbiornik == 0 && max_zbiornik == 0)
+	{
+		zbiornik1_wypelnienie = 0.2;
+	}
+	else if (min_zbiornik == 1 && med_zbiornik == 1 && max_zbiornik == 0)
+	{
+		zbiornik1_wypelnienie = 0.5;
+	}
+	else if (min_zbiornik == 1 && med_zbiornik == 1 && max_zbiornik == 1)
+	{
+		zbiornik1_wypelnienie = 1.0;
+	}
+
+	if (min_studnia == 1 && max_studnia == 0)
+	{
+		zbiornik2_wypelnienie = 0.2;
+	}
+	else if (min_studnia == 1 && max_studnia == 1)
+	{
+		zbiornik2_wypelnienie = 1.0;
+	}
+
+	function draw_container(container)
+	{
+		ctx.strokeStyle = 'black';
+		ctx.lineWidth = 2;
+		ctx.beginPath();
+		ctx.moveTo(container.x, container.y + container.height);
+		ctx.lineTo(container.x, container.y);
+		ctx.lineTo(container.x + container.width, container.y);
+		ctx.lineTo(container.x + container.width, container.y + container.height);
+		ctx.stroke();
+	}
+
+	function fill_container(container, fillLevel, color)
+	{
+		const fillHeight = container.height * fillLevel;
+		ctx.fillStyle = color;
+		ctx.fillRect(container.x, container.y + (container.height - fillHeight), container.width, fillHeight);
+	}
+
+	function draw_top_line()
+	{
+		const topLineY = zbiornik1.y - linia_gora_odstep;
+		const startX = zbiornik2.x + zbiornik2.width / 2;
+		const endX = zbiornik1.x + zbiornik1.width / 2;
+		ctx.beginPath();
+		ctx.moveTo(startX, topLineY);
+		ctx.lineTo(endX, topLineY);
+		ctx.stroke();
+	}
+
+	function draw_dropping_lines()
+	{
+		draw_dropping_line(zbiornik1, 'red');
+		draw_dropping_line(zbiornik2, 'blue');
+	}
+
+	function draw_dropping_line(container, color)
+	{
+		ctx.strokeStyle = 'black';
+		ctx.beginPath();
+		const midX = container.x + container.width / 2;
+		const topLineY = zbiornik1.y - linia_gora_odstep;
+		const circleY = container.y + container.height - 20;
+		ctx.moveTo(midX, topLineY);
+		ctx.lineTo(midX, circleY);
+		ctx.stroke();
+		
+		ctx.fillStyle = color;
+		ctx.beginPath();
+		ctx.arc(midX, circleY, 10, 0, Math.PI * 2);
+		ctx.fill();
+	}
+
+	draw_top_line();
+	draw_container(zbiornik1);
+	draw_container(zbiornik2);
+	fill_container(zbiornik1, zbiornik1_wypelnienie, '#a2bffe');
+	fill_container(zbiornik2, zbiornik2_wypelnienie, '#a2bffe');
+	draw_dropping_lines();
+}
+
 window.onload = function()
 {
+	check_viewport()
 	thingspeak_fields();
 }

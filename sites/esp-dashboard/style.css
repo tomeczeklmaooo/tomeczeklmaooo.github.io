@@ -364,6 +364,12 @@ td:nth-child(1)
 	cursor: pointer;
 }
 
+canvas
+{
+	width: 100%;
+	height: 100%;
+}
+
 @media (max-width: 1500px)
 {
 	#lastupdated
