@@ -209,6 +209,9 @@ function thingspeak_fields()
 						case 28:
 							piec_status = "CWU: Blokada palnika";
 							break;
+						default:
+							piec_status = "Nieznany status"
+							break;
 					}
 
 					// odwloania funkcji ktore potrzebuja tych zmiennych ponizej
@@ -408,7 +411,20 @@ function generate_squares()
 				<span><i class="fa-solid fa-plant-wilt"></i> Nawodnienie</span>
 			</div>
 			<div class="card-content-wrapper">
-				<canvas id="canvas"></canvas>
+				<div class="card-content">
+					<!--<table>
+						<tr>
+							<td><i class="fa-brands fa-windows"></i></td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" ${(okno_salon == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+					</table>-->
+					<canvas id="canvas"></canvas>
+				</div>
 			</div>
 		</div>
 	`;
@@ -818,9 +834,10 @@ function generate_squares()
 
 	var additional_offset = 0;
 	if (width > 1080) additional_offset = 0;
-	else additional_offset = 200;
+	else additional_offset = 150;
 
 	canvas.height = canvas.offsetHeight + additional_offset;
+	canvas.width = canvas.offsetWidth + additional_offset;
 
 	draw_canvas();
 }
@@ -914,8 +931,8 @@ function draw_canvas()
 	var zbiornik2 = { x: start_x, y: 100, width: zbiornik2_width, height: zbiornik2_height }; // zbiornik cienki
 	var zbiornik1 = { x: zbiornik2.x + zbiornik2.width + zbiorniki_odstep, y: 100, width: zbiornik1_width, height: zbiornik1_height };
 
-	var zbiornik1_wypelnienie; // poziom wypelnienia w procentach
-	var zbiornik2_wypelnienie; // poziom wypelnienia w procentach
+	// poziom wypelnienia
+	var zbiornik1_wypelnienie, zbiornik2_wypelnienie;
 
 	if (min_zbiornik == 1 && med_zbiornik == 0 && max_zbiornik == 0)
 	{
@@ -939,15 +956,37 @@ function draw_canvas()
 		zbiornik2_wypelnienie = 1.0;
 	}
 
+	// wybrana pompa i czy dziala
+	var zbiornik1_pompa_color, zbiornik2_pompa_color;
+	if (p_studnia_zbiornik == 0)
+	{
+		zbiornik1_pompa_color = 'gray';
+		zbiornik2_pompa_color = 'yellow';
+		if (pompa_zbiornik == 1)
+		{
+			zbiornik2_pompa_color = 'green';
+		}
+	}
+	else
+	{
+		zbiornik1_pompa_color = 'yellow';
+		zbiornik2_pompa_color = 'gray';
+		if (pompa_studnia == 1)
+		{
+			zbiornik1_pompa_color = 'green';
+		}
+	}
+
 	function draw_container(container)
 	{
 		ctx.strokeStyle = 'black';
-		ctx.lineWidth = 2;
+		ctx.lineWidth = 3;
 		ctx.beginPath();
 		ctx.moveTo(container.x, container.y + container.height);
 		ctx.lineTo(container.x, container.y);
 		ctx.lineTo(container.x + container.width, container.y);
 		ctx.lineTo(container.x + container.width, container.y + container.height);
+		ctx.closePath();
 		ctx.stroke();
 	}
 
@@ -963,6 +1002,7 @@ function draw_canvas()
 		const topLineY = zbiornik1.y - linia_gora_odstep;
 		const startX = zbiornik2.x + zbiornik2.width / 2;
 		const endX = zbiornik1.x + zbiornik1.width / 2;
+		ctx.lineWidth = 3;
 		ctx.beginPath();
 		ctx.moveTo(startX, topLineY);
 		ctx.lineTo(endX, topLineY);
@@ -971,8 +1011,8 @@ function draw_canvas()
 
 	function draw_dropping_lines()
 	{
-		draw_dropping_line(zbiornik1, 'red');
-		draw_dropping_line(zbiornik2, 'blue');
+		draw_dropping_line(zbiornik1, zbiornik1_pompa_color);
+		draw_dropping_line(zbiornik2, zbiornik2_pompa_color);
 	}
 
 	function draw_dropping_line(container, color)
@@ -988,7 +1028,7 @@ function draw_canvas()
 		
 		ctx.fillStyle = color;
 		ctx.beginPath();
-		ctx.arc(midX, circleY, 10, 0, Math.PI * 2);
+		ctx.arc(midX, circleY, 15, 0, Math.PI * 2);
 		ctx.fill();
 	}
 
