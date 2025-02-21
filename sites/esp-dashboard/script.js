@@ -834,7 +834,8 @@ function generate_squares()
 
 	var additional_offset = 0;
 	if (width > 1080) additional_offset = 0;
-	else additional_offset = 150;
+	else additional_offset = 200;
+	// var additional_offset = (width > 1080) ? 150 : 0;
 
 	canvas.height = canvas.offsetHeight + additional_offset;
 	canvas.width = canvas.offsetWidth + additional_offset;
@@ -960,20 +961,20 @@ function draw_canvas()
 	var zbiornik1_pompa_color, zbiornik2_pompa_color;
 	if (p_studnia_zbiornik == 0)
 	{
-		zbiornik1_pompa_color = 'gray';
-		zbiornik2_pompa_color = 'yellow';
-		if (pompa_zbiornik == 1)
-		{
-			zbiornik2_pompa_color = 'green';
-		}
-	}
-	else
-	{
 		zbiornik1_pompa_color = 'yellow';
 		zbiornik2_pompa_color = 'gray';
 		if (pompa_studnia == 1)
 		{
 			zbiornik1_pompa_color = 'green';
+		}
+	}
+	else
+	{
+		zbiornik1_pompa_color = 'gray';
+		zbiornik2_pompa_color = 'yellow';
+		if (pompa_zbiornik == 1)
+		{
+			zbiornik2_pompa_color = 'green';
 		}
 	}
 
@@ -984,9 +985,10 @@ function draw_canvas()
 		ctx.beginPath();
 		ctx.moveTo(container.x, container.y + container.height);
 		ctx.lineTo(container.x, container.y);
-		ctx.lineTo(container.x + container.width, container.y);
+		ctx.moveTo(container.x + container.width, container.y);
 		ctx.lineTo(container.x + container.width, container.y + container.height);
-		ctx.closePath();
+		ctx.moveTo(container.x, container.y + container.height);
+		ctx.lineTo(container.x + container.width, container.y + container.height);
 		ctx.stroke();
 	}
 
@@ -1011,25 +1013,48 @@ function draw_canvas()
 
 	function draw_dropping_lines()
 	{
-		draw_dropping_line(zbiornik1, zbiornik1_pompa_color);
-		draw_dropping_line(zbiornik2, zbiornik2_pompa_color);
+		draw_dropping_line(zbiornik1, zbiornik1_pompa_color, 'P2');
+		draw_dropping_line(zbiornik2, zbiornik2_pompa_color, 'P1');
 	}
 
-	function draw_dropping_line(container, color)
+	function draw_dropping_line(container, color, text)
 	{
 		ctx.strokeStyle = 'black';
 		ctx.beginPath();
-		const midX = container.x + container.width / 2;
-		const topLineY = zbiornik1.y - linia_gora_odstep;
-		const circleY = container.y + container.height - 20;
-		ctx.moveTo(midX, topLineY);
-		ctx.lineTo(midX, circleY);
+		const mid_x = container.x + container.width / 2;
+		const top_line_y = zbiornik1.y - linia_gora_odstep;
+		const circle_y = container.y + container.height - 20;
+		ctx.moveTo(mid_x, top_line_y);
+		ctx.lineTo(mid_x, circle_y);
 		ctx.stroke();
 		
 		ctx.fillStyle = color;
 		ctx.beginPath();
-		ctx.arc(midX, circleY, 15, 0, Math.PI * 2);
+		ctx.arc(mid_x, circle_y, 15, 0, Math.PI * 2);
 		ctx.fill();
+
+		ctx.fillStyle = 'black';
+		ctx.font = '14px Arial';
+		ctx.fillText(text, mid_x - 8, circle_y + 4);
+	}
+
+	function draw_labels(container, label_count)
+	{
+		ctx.fillStyle = 'black';
+		ctx.font = '14px Arial';
+		
+		switch (label_count)
+		{
+			case 2:
+				ctx.fillText('min', container.x + 5, container.y + container.height - 5);
+				ctx.fillText('max', container.x + 5, container.y + 15);
+				break;
+			case 3:
+				ctx.fillText('min', container.x + 5, container.y + container.height - 5);
+				ctx.fillText('med', container.x + 5, container.y + container.height / 2 + 5);
+				ctx.fillText('max', container.x + 5, container.y + 15);
+				break;
+		}
 	}
 
 	draw_top_line();
@@ -1038,6 +1063,8 @@ function draw_canvas()
 	fill_container(zbiornik1, zbiornik1_wypelnienie, '#a2bffe');
 	fill_container(zbiornik2, zbiornik2_wypelnienie, '#a2bffe');
 	draw_dropping_lines();
+	draw_labels(zbiornik1, 3);
+	draw_labels(zbiornik2, 2);
 }
 
 window.onload = function()
