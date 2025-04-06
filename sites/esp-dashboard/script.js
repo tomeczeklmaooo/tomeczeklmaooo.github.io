@@ -209,6 +209,9 @@ function thingspeak_fields()
 						case 28:
 							piec_status = "CWU: Blokada palnika";
 							break;
+						case 31:
+							piec_status = "Tryb letni";
+							break;
 						default:
 							piec_status = "Nieznany status"
 							break;
