@@ -938,22 +938,30 @@ function draw_canvas()
 	// poziom wypelnienia
 	var zbiornik1_wypelnienie, zbiornik2_wypelnienie;
 
-	if (min_zbiornik == 1 && med_zbiornik == 0 && max_zbiornik == 0)
+	if (min_zbiornik == 0 && med_zbiornik == 0 && max_zbiornik == 0)
 	{
-		zbiornik1_wypelnienie = 0.2;
+		zbiornik1_wypelnienie = 0.0;
+	}
+else if (min_zbiornik == 1 && med_zbiornik == 0 && max_zbiornik == 0)
+	{
+		zbiornik1_wypelnienie = 0.3;
 	}
 	else if (min_zbiornik == 1 && med_zbiornik == 1 && max_zbiornik == 0)
 	{
-		zbiornik1_wypelnienie = 0.5;
+		zbiornik1_wypelnienie = 0.6;
 	}
 	else if (min_zbiornik == 1 && med_zbiornik == 1 && max_zbiornik == 1)
 	{
 		zbiornik1_wypelnienie = 1.0;
 	}
 
-	if (min_studnia == 1 && max_studnia == 0)
+if (min_studnia == 0 && max_studnia == 0)
 	{
-		zbiornik2_wypelnienie = 0.2;
+		zbiornik2_wypelnienie = 0.0;
+	}
+	else if (min_studnia == 1 && max_studnia == 0)
+	{
+		zbiornik2_wypelnienie = 0.5;
 	}
 	else if (min_studnia == 1 && max_studnia == 1)
 	{
