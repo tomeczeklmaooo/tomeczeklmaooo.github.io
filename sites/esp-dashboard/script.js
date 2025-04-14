@@ -966,7 +966,7 @@ function draw_canvas()
 	{
 		zbiornik1_pompa_color = 'yellow';
 		zbiornik2_pompa_color = 'gray';
-		if (pompa_studnia == 0)
+		if (pompa_zbiornik == 1)
 		{
 			zbiornik1_pompa_color = 'lime';
 		}
@@ -975,7 +975,7 @@ function draw_canvas()
 	{
 		zbiornik1_pompa_color = 'gray';
 		zbiornik2_pompa_color = 'yellow';
-		if (pompa_zbiornik == 0)
+		if (pompa_studnia == 1)
 		{
 			zbiornik2_pompa_color = 'lime';
 		}
