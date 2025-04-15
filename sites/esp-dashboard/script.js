@@ -126,7 +126,7 @@ function thingspeak_fields()
 					okno_salon             = bitRead(zakodowany_boolean, 3);
 					smart_plug             = bitRead(zakodowany_boolean, 4);
 					zawor_wod_dom          = bitRead(zakodowany_boolean, 5);
-					nawodnienie_aktywne                = bitRead(zakodowany_boolean, 6);
+					nawodnienie_aktywne    = bitRead(zakodowany_boolean, 6);
 					empty_1                = bitRead(zakodowany_boolean, 7);
 					swiatlo_lazienka       = bitRead(zakodowany_boolean, 8);
 					swiatlo_garaz          = bitRead(zakodowany_boolean, 9);
@@ -416,17 +416,17 @@ function generate_squares()
 			</div>
 			<div class="card-content-wrapper">
 				<div class="card-content">
-					<!--<table>
+					<table>
 						<tr>
-							<td><i class="fa-brands fa-windows"></i></td>
+							<td><i class="fa-solid fa-cloud-showers-heavy"></i></td>
 							<td>
 								<label class="switch">
-									<input type="checkbox" ${(okno_salon == 1) ? `checked` : ``} disabled>
+									<input type="checkbox" ${(nawodnienie_aktywne == 1) ? `checked` : ``} disabled>
 									<span class="slider round"></span>
 								</label>
 							</td>
 						</tr>
-					</table>-->
+					</table>
 					<canvas id="canvas"></canvas>
 				</div>
 			</div>
@@ -943,7 +943,7 @@ function draw_canvas()
 	{
 		zbiornik1_wypelnienie = 0.0;
 	}
-else if (min_zbiornik == 1 && med_zbiornik == 0 && max_zbiornik == 0)
+	else if (min_zbiornik == 1 && med_zbiornik == 0 && max_zbiornik == 0)
 	{
 		zbiornik1_wypelnienie = 0.3;
 	}
@@ -956,7 +956,7 @@ else if (min_zbiornik == 1 && med_zbiornik == 0 && max_zbiornik == 0)
 		zbiornik1_wypelnienie = 1.0;
 	}
 
-if (min_studnia == 0 && max_studnia == 0)
+	if (min_studnia == 0 && max_studnia == 0)
 	{
 		zbiornik2_wypelnienie = 0.0;
 	}
@@ -1067,6 +1067,9 @@ if (min_studnia == 0 && max_studnia == 0)
 				ctx.fillText('max', container.x + 5, container.y + 15);
 				break;
 		}
+				
+		ctx.font = '18px Arial';
+		ctx.fillText(`Wydano ${ilosc_woda_ogrod} l`, 200, 350);
 	}
 
 	draw_top_line();
