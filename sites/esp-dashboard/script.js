@@ -365,7 +365,7 @@ function generate_squares()
 						<table>
 							<tr>
 								<td><i class="fa-solid fa-bolt"></i><sub>DC power</sub></td>
-								<td>${pv_power} W</td>
+								<td>${pv_power} kW</td>
 							</tr>
 							<tr>
 								<td><i class="fa-solid fa-bolt"></i><sub>prod.</sub></td>
