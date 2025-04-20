@@ -930,7 +930,7 @@ function draw_canvas()
 	var zbiornik2_width = 90;
 	var zbiornik2_height = 400;
 	var zbiornik1_width = 150;
-	var zbiornik1_height = 200;
+	var zbiornik1_height = 180;
 	var total_width = zbiornik2_width + zbiornik1_width + zbiorniki_odstep;
 	var start_x = (canvas.width - total_width) / 2
 	var zbiornik2 = { x: start_x, y: 100, width: zbiornik2_width, height: zbiornik2_height }; // zbiornik cienki
