@@ -24,7 +24,7 @@ var drzwi_gosp, brama_wjazd, brama_garaz, okno_salon;
 var smart_plug;
 var zawor_wod_dom;
 var nawodnienie_aktywne;
-var empty_1;
+var grzalka_aktywna;
 var swiatlo_lazienka, swiatlo_garaz, swiatlo_pom_gosp, swiatlo_strych;
 var pralka, zmywarka;
 var fox_online;
@@ -127,7 +127,7 @@ function thingspeak_fields()
 					smart_plug             = bitRead(zakodowany_boolean, 4);
 					zawor_wod_dom          = bitRead(zakodowany_boolean, 5);
 					nawodnienie_aktywne    = bitRead(zakodowany_boolean, 6);
-					empty_1                = bitRead(zakodowany_boolean, 7);
+					grzalka_aktywna        = bitRead(zakodowany_boolean, 7);
 					swiatlo_lazienka       = bitRead(zakodowany_boolean, 8);
 					swiatlo_garaz          = bitRead(zakodowany_boolean, 9);
 					swiatlo_pom_gosp       = bitRead(zakodowany_boolean, 10);
@@ -441,7 +441,8 @@ function generate_squares()
 				<div class="card-content">
 					<table>
 						<tr>
-							<td colspan="4" style="text-align: center;">${piec_status}</td>
+							<td colspan="2" style="text-align: right;">Status pieca:</td>
+							<td colspan="2" style="text-align: left;">${piec_status}</td>
 						</tr>
 						<tr>
 							<td><i class="fa-solid fa-gauge-high"></i> ${parseFloat(cis_wody).toFixed(2)}&nbsp;bar</td>
@@ -472,6 +473,15 @@ function generate_squares()
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(pompa_grzej == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="text-align: right;">Grzałka</td>
+							<td colspan="2" style="text-align: left;">
+								<label class="switch">
+									<input type="checkbox" ${(grzalka_aktywna == 1) ? `checked` : ``} disabled>
 									<span class="slider round"></span>
 								</label>
 							</td>
@@ -928,7 +938,7 @@ function draw_canvas()
 	var ctx = canvas.getContext('2d');
 	var zbiorniki_odstep = 35, linia_gora_odstep = 35;
 	var zbiornik2_width = 90;
-	var zbiornik2_height = 400;
+	var zbiornik2_height = 360;
 	var zbiornik1_width = 150;
 	var zbiornik1_height = 180;
 	var total_width = zbiornik2_width + zbiornik1_width + zbiorniki_odstep;
