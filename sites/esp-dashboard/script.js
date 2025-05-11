@@ -395,15 +395,6 @@ function generate_squares()
 								<td><i class="fa-solid fa-sack-dollar red"></i></td>
 								<td>${pv_cena_zakupu} PLN</td>
 							</tr>
-							<tr>
-								<td><i class="fa-solid fa-fire-flame-curved"></i><sub>CWU</sub></td>
-								<td>
-									<label class="switch">
-										<input type="checkbox" ${(grzalka_cwu == 1) ? `checked` : ``} disabled>
-										<span class="slider round"></span>
-									</label>
-								</td>
-							</tr>
 						</table>
 					</div>
 				</div>
@@ -478,10 +469,18 @@ function generate_squares()
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" style="text-align: right;">Grzałka</td>
-							<td colspan="2" style="text-align: left;">
+							<td>Grzałka</td>
+							<td>
+								Aktywna
 								<label class="switch">
 									<input type="checkbox" ${(grzalka_aktywna == 1) ? `checked` : ``} disabled>
+									<span class="slider round"></span>
+								</label>
+							</td>
+							<td>Załączona</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" ${(grzalka_cwu == 1) ? `checked` : ``} disabled>
 									<span class="slider round"></span>
 								</label>
 							</td>
@@ -926,7 +925,13 @@ function loadXMLDoc(_cmdstr)
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function()
 	{
-		if (this.readyState == 4 && this.status == 200) document.getElementById("result").innerHTML = this.responseText;
+		if (this.readyState == 4 && this.status == 200)
+		{
+			fetch('https://api.thingspeak.com/talkbacks/32600/commands.json?api_key=XBAUGXOD6LHDGDE0').then((res) => res.text()).then((command_list) => {
+				command_list = JSON.parse(command_list);
+				document.getElementById("result").innerHTML = command_list;
+			}).catch((e) => console.error(e));
+		}
 	};
 	xhttp.open('POST', `https://api.thingspeak.com/talkbacks/32600/commands?api_key=XBAUGXOD6LHDGDE0&command_string=${_cmdstr}`, true);
 	xhttp.send();
