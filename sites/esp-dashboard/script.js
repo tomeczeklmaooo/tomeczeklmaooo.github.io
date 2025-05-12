@@ -469,7 +469,7 @@ function generate_squares()
 							</td>
 						</tr>
 						<tr>
-							<td>Grzałka: Akt.</td>
+							<td>Grzał.: Akt.</td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(grzalka_aktywna == 1) ? `checked` : ``} disabled>
