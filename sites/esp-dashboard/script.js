@@ -871,8 +871,8 @@ function remote_control()
 	buf += `<td><button type="button" onclick="loadXMLDoc(1004)">NAWO OFF</button></td>`;
 	buf += `</tr>`;
 	buf += `<tr>`;
-	buf += `<td><button type="button" onclick="loadXMLDoc(1005)">COS ON</button></td>`;
-	buf += `<td><button type="button" onclick="loadXMLDoc(1006)">COS OFF</button></td>`;
+	buf += `<td><button type="button" onclick="loadXMLDoc(1005)">GRZEJNIK ON</button></td>`;
+	buf += `<td><button type="button" onclick="loadXMLDoc(1006)">GRZEJNIK OFF</button></td>`;
 	buf += `</tr>`;
 	buf += `</table>`;
 	buf += `<div id="result"></div>`;
