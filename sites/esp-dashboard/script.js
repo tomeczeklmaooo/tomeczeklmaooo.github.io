@@ -928,7 +928,15 @@ function loadXMLDoc(_cmdstr)
 		{
 			fetch('https://api.thingspeak.com/talkbacks/32600/commands.json?api_key=XBAUGXOD6LHDGDE0').then((res) => res.text()).then((command_list) => {
 				command_list = JSON.parse(command_list);
-				document.getElementById("result").innerHTML = command_list;
+				let command_table = `<table><tr><th>Pozycja</th><th>ID</th><th>Command string</th></tr>`;
+				for (let i = 0; i < command_list.length; i++)
+				{
+					command_table += `<tr><td>${command_list[i]['position']}</td>`;
+					command_table += `<td>${command_list[i]['id']}</td>`;
+					command_table += `<td>${command_list[i]['command_string']}</td></tr>`;
+				}
+				command_table += "</table>"
+				document.getElementById("result").innerHTML = command_table;
 			}).catch((e) => console.error(e));
 		}
 	};
