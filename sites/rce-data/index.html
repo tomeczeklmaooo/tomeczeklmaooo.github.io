@@ -97,7 +97,7 @@ permalink: /sites/rce-data/
 		});
 
 		// FETCHING DATA AND DISPLAYING IN A TABLE AND CHARTS
-		var baseUrlRCE = 'https://api.raporty.pse.pl/api/rce-pln?$filter=doba%20ge%20'; // %20 = spacja, %27 = '
+		var baseUrlRCE = 'https://apimpdv2-bmgdhhajexe8aade.a01.azurefd.net/api/rce-pln?$filter=business_date%20ge%20'; // %20 = spacja, %27 = '
 		var baseUrlRDN = 'https://energy-instrat-api.azurewebsites.net/api/prices/energy_price_rdn_hourly?date_from=';
 
 		// randomint (min included, max included)
@@ -168,11 +168,11 @@ permalink: /sites/rce-data/
 			var second = lt10(date.getSeconds());
 			var randomMinute = lt10(randomint(2, 58));
 
-			linfo(`RCE price source: PSE API (api.raporty.pse.pl/api/rce-pln)`);
+			linfo(`RCE price source: PSE API (apimpdv2-bmgdhhajexe8aade.a01.azurefd.net/api/rce-pln)`);
 			linfo(`RDN price source: ThingSpeak (api.thingspeak.com/channels/783677/status)`);
 
 			var fulldateRCE = year + '-' + month + '-' + day;
-			var fetchUrlRCE = baseUrlRCE + '%27' +  fulldateRCE + '%27' + '&$first=192&$select=udtczas_oreb,rce_pln';
+			var fetchUrlRCE = baseUrlRCE + '%27' +  fulldateRCE + '%27' + '&$first=192&$select=period,rce_pln';
 			var fetchUrlTS = 'https://api.thingspeak.com/channels/783677/status.json?results=128';
 			llog(`fulldateRCE: ${fulldateRCE}`);
 			llog(`fetchUrlRCE: ${fetchUrlRCE}`);
@@ -211,9 +211,9 @@ permalink: /sites/rce-data/
 					{
 						for (var i = 0; i < rce_len; i++)
 						{
-							if (rce_response["value"][i]["udtczas_oreb"].substring(3, 5) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+							if (rce_response["value"][i]["period"].substring(3, 5) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 							{
-								table += `<tr><td>${rce_response["value"][i]["udtczas_oreb"].substring(0, 5).replace("45", "00")}</td>`;
+								table += `<tr><td>${rce_response["value"][i]["period"].substring(0, 5).replace("45", "00")}</td>`;
 								
 								// DZISIAJ SPRZEDAŻ
 								if (rce_response["value"][i]["rce_pln"] <= 0)
@@ -296,9 +296,9 @@ permalink: /sites/rce-data/
 
 						for (var i = 0; i < rce_len; i++)
 						{
-							if (rce_response["value"][i]["udtczas_oreb"].substring(3, 5) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+							if (rce_response["value"][i]["period"].substring(3, 5) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 							{
-								table += `<tr><td>${rce_response["value"][i]["udtczas_oreb"].substring(0, 5).replace("45", "00")}</td>`;
+								table += `<tr><td>${rce_response["value"][i]["period"].substring(0, 5).replace("45", "00")}</td>`;
 								
 								// DZISIAJ SPRZEDAŻ
 								if (rce_response["value"][i]["rce_pln"] <= 0)
@@ -368,9 +368,9 @@ permalink: /sites/rce-data/
 
 						for (var i = 0; i < rce_len; i++)
 						{
-							if (rce_response["value"][i]["udtczas_oreb"].substring(3, 5) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
+							if (rce_response["value"][i]["period"].substring(3, 5) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 							{
-								table += `<tr><td>${rce_response["value"][i]["udtczas_oreb"].substring(0, 5).replace("45", "00")}</td>`;
+								table += `<tr><td>${rce_response["value"][i]["period"].substring(0, 5).replace("45", "00")}</td>`;
 								
 								// DZISIAJ SPRZEDAŻ
 								if (rce_response["value"][i]["rce_pln"] <= 0)
