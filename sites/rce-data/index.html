@@ -92,7 +92,7 @@ permalink: /sites/rce-data/
 		});
 
 		// FETCHING DATA AND DISPLAYING IN A TABLE AND CHARTS
-		var base_url_rce = 'https://apimpdv2-bmgdhhajexe8aade.a01.azurefd.net/api/rce-pln?$filter=business_date%20ge%20'; // %20 = spacja, %27 = '
+		const base_url_rce = 'https://apimpdv2-bmgdhhajexe8aade.a01.azurefd.net/api/rce-pln?$filter=business_date%20ge%20'; // %20 = spacja, %27 = '
 
 		// lessthan10
 		function lt10(n) { if (n < 10) { n = '0' + n; } return n; }
@@ -141,38 +141,38 @@ permalink: /sites/rce-data/
 			credits: chart_opt.credits
 		});
 
-		var table = "";
+		let table = "";
 
-		var x_axis_categories = [
+		const x_axis_categories = [
 			'00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
 			'06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
 			'12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
 			'18:00', '19:00', '20:00', '21:00', '22:00', '23:00'
 		];
 
-		var data_prices_today_sell = [];
-		var data_prices_today_buy = [];
-		var data_prices_tomorrow_sell = [];
-		var data_prices_tomorrow_buy = [];
-		var data_buf = []; // buffer array
+		let data_prices_today_sell = [];
+		let data_prices_today_buy = [];
+		let data_prices_tomorrow_sell = [];
+		let data_prices_tomorrow_buy = [];
+		let data_buf = []; // buffer array
 
 		function api_get_price_data()
 		{
 			// dzisiejsza data, od razu sprawdzenie czy mniejsze od 10 przez funkcję lt10()
-			var date = new Date();
-			var year = lt10(date.getFullYear());
-			var month = lt10(date.getMonth() + 1);
-			var day = lt10(date.getDate());
-			var hour = lt10(date.getHours());
-			var minute = lt10(date.getMinutes());
-			var second = lt10(date.getSeconds());
+			const date = new Date();
+			const year = lt10(date.getFullYear());
+			const month = lt10(date.getMonth() + 1);
+			const day = lt10(date.getDate());
+			const hour = lt10(date.getHours());
+			const minute = lt10(date.getMinutes());
+			const second = lt10(date.getSeconds());
 
 			console.info(`RCE price source: PSE API (apimpdv2-bmgdhhajexe8aade.a01.azurefd.net/api/rce-pln)`);
 			console.info(`RDN price source: ThingSpeak (api.thingspeak.com/channels/783677/status)`);
 
-			var fulldate_rce = year + '-' + month + '-' + day;
-			var fetch_url_rce = base_url_rce + '%27' +  fulldate_rce + '%27' + '&$first=192&$select=period,rce_pln';
-			var fetch_url_ts = 'https://api.thingspeak.com/channels/783677/status.json?results=128';
+			const fulldate_rce = year + '-' + month + '-' + day;
+			const fetch_url_rce = base_url_rce + '%27' +  fulldate_rce + '%27' + '&$first=192&$select=period,rce_pln';
+			const fetch_url_ts = 'https://api.thingspeak.com/channels/783677/status.json?results=128';
 			console.log(`fulldate_rce: ${fulldate_rce}`);
 			console.log(`fetch_url_rce: ${fetch_url_rce}`);
 			console.log(`fetch_url_ts: ${fetch_url_ts}`);
@@ -183,7 +183,7 @@ permalink: /sites/rce-data/
 					thingspeak_response = JSON.parse(thingspeak_response);
 					// var text_readable = JSON.stringify(thingspeak_response, undefined, 4);
 					// document.body.appendChild(document.createElement('pre')).innerHTML = text_readable;
-					var loop_limiter = 0;
+					let loop_limiter = 0;
 
 					document.getElementById("header").innerHTML += `Dane pobrane: ${day}.${month}.${year} ${hour}:${minute}:${second}`;
 					table += `<thead>`;
@@ -192,13 +192,13 @@ permalink: /sites/rce-data/
 					table += `</thead>`;
 					table += `<tbody>`;
 
-					var rce_len = rce_response["value"].length;
-					var ts_len = thingspeak_response["feeds"].length;
+					let rce_len = rce_response["value"].length;
+					let ts_len = thingspeak_response["feeds"].length;
 					console.log(`Received JSON objects in rce_response equal to ${rce_len}`);
 					console.log(`Received JSON objects in thingspeak_response equal to ${ts_len}`);
 
 					// check if "status" field is null, if yes then continue, else put it in the array 'data_buf'
-					for (var i = 0; i < ts_len; i++)
+					for (let i = 0; i < ts_len; i++)
 					{
 						if (thingspeak_response["feeds"][i]["status"] == null) { continue; }
 						else
@@ -211,7 +211,7 @@ permalink: /sites/rce-data/
 					// jeżeli w zwróconym JSON będzie więcej niż 96 elementów to 3 kolumny
 					if (rce_len > 96 && data_buf.length > 24)
 					{
-						for (var i = 0; i < rce_len; i++)
+						for (let i = 0; i < rce_len; i++)
 						{
 							if (rce_response["value"][i]["period"].substring(3, 5) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 							{
@@ -296,7 +296,7 @@ permalink: /sites/rce-data/
 					{
 						console.warn(`Buy prices for tomorrow were not published yet.`);
 
-						for (var i = 0; i < rce_len; i++)
+						for (let i = 0; i < rce_len; i++)
 						{
 							if (rce_response["value"][i]["period"].substring(3, 5) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 							{
@@ -368,7 +368,7 @@ permalink: /sites/rce-data/
 					{
 						console.warn(`Sell and buy prices for tomorrow were not published yet.`);
 
-						for (var i = 0; i < rce_len; i++)
+						for (let i = 0; i < rce_len; i++)
 						{
 							if (rce_response["value"][i]["period"].substring(3, 5) == '45') // wypisywanie danych o cenie tylko raz z każdej godziny bo ta sama jest co 15 minut
 							{
