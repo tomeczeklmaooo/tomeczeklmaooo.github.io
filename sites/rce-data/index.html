@@ -231,10 +231,6 @@ permalink: /sites/rce-data/
 
 		const chart_opt = {
 			chart: { type: 'line' },
-			title: {
-				today: { text: 'Dzisiaj' },
-				tomorrow: { text: 'Jutro' }
-			},
 			xAxis: { categories: [] },
 			yAxis: { title: { text: undefined }, labels: { enabled: false } },
 			plotOptions: {
@@ -250,28 +246,23 @@ permalink: /sites/rce-data/
 			credits: { enabled: false }
 		};
 
-		const chart_today = Highcharts.chart('chart_today', {
-			chart: chart_opt.chart,
-			title: chart_opt.title.today,
-			xAxis: chart_opt.xAxis,
-			yAxis: chart_opt.yAxis,
-			plotOptions: chart_opt.plotOptions,
-			tooltip: chart_opt.tooltip,
-			series: chart_opt.series,
-			accessibility: chart_opt.accessibility,
-			credits: chart_opt.credits
-		});
-		const chart_tomorrow = Highcharts.chart('chart_tomorrow', {
-			chart: chart_opt.chart,
-			title: chart_opt.title.tomorrow,
-			xAxis: chart_opt.xAxis,
-			yAxis: chart_opt.yAxis,
-			plotOptions: chart_opt.plotOptions,
-			tooltip: chart_opt.tooltip,
-			series: chart_opt.series,
-			accessibility: chart_opt.accessibility,
-			credits: chart_opt.credits
-		});
+		function create_chart_object(container, options, title)
+		{
+			return Highcharts.chart(container, {
+				chart: options.chart,
+				title: { text: title },
+				xAxis: options.xAxis,
+				yAxis: options.yAxis,
+				plotOptions: options.plotOptions,
+				tooltip: options.tooltip,
+				series: options.series,
+				accessibility: options.accessibility,
+				credits: options.credits
+			});
+		}
+
+		const chart_today = create_chart_object('chart_today', chart_opt, 'Dzisiaj');
+		const chart_tomorrow = create_chart_object('chart_tomorrow', chart_opt, 'Jutro');
 
 		let table = "";
 
