@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+body
+{
+	font-family: 'IBM Plex Sans', sans-serif;
+	margin: 0;
+}
+
+#container
+{
+	display: none;
+	flex-direction: row;
+}
+
+.charts
+{
+	display: flex;
+	flex-direction: column;
+	width: 66%;
+}
+
+#header
+{
+	margin-bottom: 15px;
+	user-select: none;
+}
+
+table
+{
+	border-collapse: collapse;
+	width: 33%;
+}
+
+th, td
+{
+	padding: 3px 15px;
+	text-align: center;
+}
+
+th
+{
+	background-color: grey;
+	color: #ffffff;
+	font-weight: 500;
+}
+
+tr:nth-child(even)
+{
+	background-color: #f5f5f5;
+}
+
+td:nth-child(1)
+{
+	border-right: 1px #000000 dashed;
+}
+
+thead tr:nth-child(2)
+{
+	border-bottom: 1px #000000 solid;
+}
+
+.hoverable
+{
+	transition: 0.15s ease;
+}
+.hoverable:hover
+{
+	box-shadow: 0px 0px 10px 0px rgba(66, 68, 90, 1);
+}
+
+.negative-price
+{
+	color: red;
+}
+
+.negative-price-rcn
+{
+	color: green;
+}
+
+.empty-field
+{
+	color: #00000030;
+	user-select: none;
+}
+
+#loader
+{
+	background-color: #ffffff;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 2vw;
+}
+
+.loader
+{
+	width: 36px;
+	height: 36px;
+	border: 2px solid #000000;
+	border-bottom-color: transparent;
+	border-radius: 50%;
+	display: inline-block;
+	box-sizing: border-box;
+	animation: loader 1s linear infinite;
+}
+
+@keyframes loader
+{
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 700px)
+{
+	body
+	{
+		margin: 4px;
+	}
+
+	div#header
+	{
+		text-align: center;
+		margin-top: 4px;
+	}
+
+	div#container
+	{
+		flex-direction: column;
+	}
+
+	div.charts
+	{
+		flex-direction: column;
+		width: 100%;
+	}
+
+	div.chart
+	{
+		width: 100%;
+	}
+
+	table
+	{
+		width: 100%;
+	}
+
+	td:nth-child(1)
+	{
+		width: 10%;
+	}
+
+	th, td
+	{
+		padding: 3px 3px;
+	}
+
+	div#loader
+	{
+		font-size: 5vw;
+	}
+
+	span.loader
+	{
+		width: 20px;
+		height: 20px;
+		border: 2px solid #000000;
+		border-bottom-color: transparent;
+	}
+}
