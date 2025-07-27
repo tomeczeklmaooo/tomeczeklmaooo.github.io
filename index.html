@@ -9,50 +9,126 @@
 	<title>tomeczeklmaooo</title>
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="style.css">
-	<link href="https://iosevka-webfonts.github.io/iosevka/iosevka.css" rel="stylesheet" />
 	<script src="https://kit.fontawesome.com/4140c3b052.js" crossorigin="anonymous"></script>
 </head>
-<body onload="init_functions()">
-	<x-container>
-		<x-banner>
-			[banner image here]
-		</x-banner>
-		<x-tech-stack>
-			<x-title>&lt;tech stack/&gt;</x-title>
-			<x-icons>
-				<img src="https://skillicons.dev/icons?i=c" height="40" alt="c" draggable="false">
-				<img src="https://skillicons.dev/icons?i=cpp" height="40" alt="cplusplus" draggable="false">
-				<img src="https://skillicons.dev/icons?i=js" height="40" alt="javascript" draggable="false">
-				<img src="https://skillicons.dev/icons?i=html" height="40" alt="html5" draggable="false">
-				<img src="https://skillicons.dev/icons?i=css" height="40" alt="css3" draggable="false">
-				<img src="https://skillicons.dev/icons?i=mysql" height="40" alt="mysql" draggable="false">
-				<img src="https://skillicons.dev/icons?i=linux" height="40" alt="linux" draggable="false">
-				<img src="https://skillicons.dev/icons?i=bash" height="40" alt="bash" draggable="false">
-				<img src="https://skillicons.dev/icons?i=ps" height="40" alt="photoshop" draggable="false">
-				<img src="https://skillicons.dev/icons?i=pr" height="40" alt="premierepro" draggable="false">
-			</x-icons>
-		</x-tech-stack>
-		<x-about-me>
-			<x-title>&lt;about me/&gt;</x-title>
-			<x-text>
-				<p>4th grade IT student from Poland, kind of a nerd when it comes to computers.</p>
-				<p>Writing some buggy software in my free time, and making websites for fun just because I can.</p>
-				<br>
-				<p class="lower">And I use Arch btw.</p>
-			</x-text>
-		</x-about-me>
-		<x-projects>
-			<x-title>&lt;projects/&gt;</x-title>
-			<x-projects-container>
-				<x-project>
-					<x-project-link>pocket</x-project-link>
-					<x-project-description>
-						a simple terminal program to track all your finances
-					</x-project-description>
-				</x-project>
-			</x-projects-container>
-		</x-projects>
-	</x-container>
+<body>
+	<header>
+		<div class="header-inner-wrapper glass-card">
+			<span class="title">tomeczeklmaooo</span>
+			<span class="sidetext">an 18 year old software/web developer</span>
+		</div>
+	</header>
+
+	<main>
+		<div class="section-row">
+			<section class="glass-card">
+				<h1>About me</h1>
+				<p>5th grade IT student from Poland, kind of a nerd when it comes to computers. Want to go either into cybersecurity or software engineering. I write buggy software in my free time, as well as make websites for fun.</p>
+				<p style="position: absolute; bottom: 8px; right: 16px; opacity: 0.3;">I also use Arch Linux btw (because Windows sucks).</p>
+			</section>
+
+			<section class="glass-card">
+				<h1>Education</h1>
+				<table>
+					<tr>
+						<td>09/2021 &mdash; now</td>
+						<td>Zespół Szkół Technicznych Tarnowo Podgórne</td>
+					</tr>
+				</table>
+			</section>
+		</div>
+
+		<div class="section-row">
+			<section class="glass-card">
+				<h1>Skills</h1>
+				<p>My skills include, but are not limited to:</p>
+				<ul>
+					<li>
+						<img src="https://skillicons.dev/icons?i=c" height="32" alt="c" draggable="false">
+						C
+						<img src="https://skillicons.dev/icons?i=js" height="32" alt="javascript" draggable="false">
+						JavaScript
+						<img src="https://skillicons.dev/icons?i=html" height="32" alt="html5" draggable="false">
+						HTML
+						<img src="https://skillicons.dev/icons?i=css" height="32" alt="css3" draggable="false">
+						CSS
+						<img src="https://skillicons.dev/icons?i=mysql" height="32" alt="mysql" draggable="false">
+						MySQL
+						
+					</li>
+					<li>
+						<img src="https://skillicons.dev/icons?i=linux" height="32" alt="linux" draggable="false">
+						Linux
+						<img src="https://skillicons.dev/icons?i=ps" height="32" alt="photoshop" draggable="false">
+						Photoshop
+						<img src="https://skillicons.dev/icons?i=pr" height="32" alt="premierepro" draggable="false">
+						Premiere Pro
+					</li>
+				</ul>
+			</section>
+
+			<section class="glass-card">
+				<h1>Projects</h1>
+				<p>Here are some of my projects, finished or not:</p>
+				<ul>
+					<li>
+						pocket &ndash; a simple Linux terminal finance tracker
+					</li>
+					<li>
+						spark &ndash; a simple shell alias manager (in development)
+					</li>
+					<li>
+						sparklecss &ndash; CSS styles for personal use (planned)
+					</li>
+					<li>
+						toasthud &ndash; CS2 observer HUD (private, in development)
+					</li>
+				</ul>
+			</section>
+		</div>
+
+		<section class="glass-card experience">
+			<h1>Experience</h1>
+			<p>My yet to be expanded experience is here:</p>
+			<ul>
+				<li><span class="exp-title">NOEMIS (internship)</span>
+					<span class="exp-range">02/2024 &mdash; 03/2024</span>
+					&Gt; setting up Windows PCs<br>
+					&Gt; connecting said Windows PCs to Active Directory
+				</li>
+				<li><span class="exp-title">Hex s.c. Automatyka Przemysłowa (internship)</span>
+					<span class="exp-range">02/2025 &mdash; 03/2025</span>
+					&Gt; did Ethernet cables in production hall<br>
+					&Gt; fixed a heater
+				</li>
+				<li><span class="exp-title">Agregaty Polska</span>
+					<span class="exp-range">06/2025 &mdash; 07/2025</span>
+					&Gt; connected and tested power analyzers<br>
+					&Gt; modified a trailer to be capable of transporting generators<br>
+					&Gt; did wiring in multiple generators<br>
+					&Gt; designed and created multiple websites<br>
+					&Gt; helped ensuring generators were working ready to be shipped
+				</li>
+				<li><span class="exp-title">Falcon League (board member)</span>
+					<span class="exp-range">10/2024 &mdash; now</span>
+					&Gt; broadcasted multiple CS2 matches<br>
+					&Gt; designed a break scene overlay<br>
+					&Gt; designed a custom observer HUD (toasthud)<br>
+					&Gt; designed motion graphics for broadcasts<br>
+				</li>
+			</ul>
+		</section>
+
+		<section class="glass-card contact">
+			<h1>Contact</h1>
+			<p>Why would you even want to contact me?</p>
+		</section>
+	</main>
+
+	<footer>
+		<p>Made with &hearts; by tomeczeklmaooo</p>
+	</footer>
+
 	<script src="script.js"></script>
 </body>
 </html>
