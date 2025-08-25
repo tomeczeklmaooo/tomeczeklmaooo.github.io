@@ -48,7 +48,11 @@ function lt10(n) { if (n < 10) { n = '0' + n; } return n; }
 const chart_opt = {
 	chart: { type: 'line' },
 	xAxis: { categories: [] },
-	yAxis: { title: { text: undefined }, labels: { enabled: false } },
+	yAxis: {
+		title: { text: undefined },
+		labels: { enabled: false },
+		plotLines: [{ value: 0, width: 2, color: '#1e202394', zIndex: 5 }]
+	},
 	plotOptions: {
 		line: { dataLabels: { enabled: true }, enableMouseTracking: true },
 		series: { animation: { duration: 1200 } }
