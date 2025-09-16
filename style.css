@@ -1,200 +1,162 @@
-@import url('https://fonts.googleapis.com/css2?family=Liter&family=Outfit:wght@100..900&display=swap');
-
-*
+:root
 {
-	margin: 0;
-	padding: 0;
-}
-
-html, body
-{
-	width: 100dvw;
+	--font-family: "Verdana", sans-serif;
+	--font-size: x-small;
+	--sidebar-border: 1px solid #E6E6C3;
+	--link-color: blue;
+	--bg-color: white;
+	--text-color: black;
+	--sidebar-bg: transparent;
+	--content-bg: transparent;
+	--content-padding: 0;
+	--background-image: none; 
+	/* for bg image, above would be url('site.com/image.jpg'); */
 }
 
 body
 {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	background-image: url('bg.png');
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	font-family: 'Liter', sans-serif;
-	background-color: #001122;
-	color: #eeedf0;
+	font-family: var(--font-family);
+	font-size: var(--font-size);
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	background-image: var(--bg-image);
 }
 
-header
+body a
 {
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	position: sticky;
-	top: 0;
-	box-sizing: border-box;
-	padding: 8px;
-	z-index: 10;
+	color: var(--link-color);
 }
 
-.glass-card
+.left
 {
-	box-sizing: border-box;
-	backdrop-filter: blur(16px) saturate(180%);
-	-webkit-backdrop-filter: blur(16px) saturate(180%);
-	background-color: rgba(17, 25, 40, 0.5);
-	border-radius: 12px;
-	border: 1px solid rgba(255, 255, 255, 0.125);
-	padding: 8px 16px;
-}
-
-.header-inner-wrapper
-{
-	width: fit-content;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	font-family: 'Outfit', sans-serif;
-	gap: 32px;
-}
-
-.header-inner-wrapper .title
-{
-	font-size: 24pt;
-	font-weight: 700;
-}
-
-.header-inner-wrapper .sidetext
-{
-	font-size: 14pt;
-	font-style: italic;
-}
-
-main
-{
-	width: 100%;
-	/* height: 100%; */
+	width: 200px;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
-	align-items: center;
-	gap: 8px;
 }
 
-.section-row
+.box
 {
-	width: 60%;
-	height: 100%;
-	display: flex;
-	gap: 8px;
+	width: 200px;
+	border: var(--sidebar-border);
+	margin-bottom: 15px;
+	padding-bottom: 10px;
+	background-color: var(--sidebar-bg);
+	height: fit-content;
 }
 
-.section-row section
-{
-	width: 50%;
-}
-
-section
-{
-	width: 60%;
-	min-height: 200px;
-	box-sizing: border-box;
-	font-size: 14pt;
-	text-align: justify;
-}
-
-section h1
-{
-	font-size: 18pt;
-	font-family: 'Outfit', sans-serif;
-}
-
-table
-{
-	border-collapse: collapse;
-	width: 100%;
-}
-
-td
-{
-	box-sizing: border-box;
-	text-align: center;
-}
-
-td:nth-child(1)
-{
-	text-align: left;
-	width: 25%;
-}
-td:nth-child(2)
-{
-	text-align: center;
-}
-td:nth-child(3)
-{
-	text-align: right;
-	width: 25%;
-}
-
-ul
-{
-	list-style-type: none;
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-	box-sizing: border-box;
-	margin: 16px 16px 0;
-}
-
-ul li
+.flex
 {
 	display: flex;
-	align-items: center;
-	gap: 8px;
 }
 
-.experience ul
+.container
 {
-	flex-wrap: wrap;
+	max-width: 700px;
+	margin: 0 auto;
 }
 
-.experience ul li
+.right
 {
-	display: flex;
-	justify-content: center;
-	align-items: flex-start;
-	flex-direction: column;
-	gap: 4px;
+	margin-left: 10px;
+	background-color: var(--content-bg);
+	padding: var(--content-padding);
 }
 
-.exp-title
+.subtitle
 {
-	font-weight: 700;
-	font-family: 'Outfit', sans-serif;
+	font-weight: bold;
+	padding-top: 3px;
+	margin-bottom: 5px;
 }
 
-.exp-range
+.boxwrap
 {
-	opacity: 0.6;
-}
-
-.contact
-{
-	min-height: fit-content;
+	padding-left: 10px;
+	padding-bottom: 5px;
 }
 
 footer
 {
-	width: 100%;
+	text-align: center;
+}
+
+header
+{
 	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	box-sizing: border-box;
-	padding: 8px;
-	opacity: 0.5;
+	width: 100%;
+	justify-content: space-between;
+	padding-bottom: 10px;
+}
+
+header a
+{
+	font-weight: bold;
+}
+
+content
+{
+	display: flex;
+	margin: 0 auto;
+	width: 700px;
+}
+
+.post .title
+{
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	padding-left: 10px;
+}
+
+.date
+{
+	margin-bottom: 10px;
+}
+
+.entry
+{
+	padding-left: 10px;
+}
+
+.post-footer
+{
+	padding-top: 10px;
+	padding-left: 10px;
+}
+
+.blogring
+{
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.boxwrap img
+{
+	width: 130px;
+	display: block;
+}
+
+@media only screen and (max-width: 730px)
+{
+	.flex
+	{
+		flex-wrap: wrap;
+	}
+
+	.right
+	{
+		width: 100%;
+		order: 1;
+	}
+
+	.left
+	{
+		width: 100%;
+		order: 2;
+		display: flex;
+		flex-wrap: wrap;
+		align-self: center;
+		justify-content: center;
+		margin-top: 20px;
+	}
 }

@@ -9,125 +9,101 @@
 	<title>tomeczeklmaooo</title>
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="style.css">
-	<script src="https://kit.fontawesome.com/4140c3b052.js" crossorigin="anonymous"></script>
 </head>
-<body>
-	<header>
-		<div class="header-inner-wrapper glass-card">
-			<span class="title">tomeczeklmaooo</span>
-			<span class="sidetext">an 18 year old software/web developer</span>
+<body onload="get_date()">
+	<div class="container">
+		<!-- main content -->
+		<div class="flex">
+			<!-- sidebar -->
+			<div class="left">
+				<div class="box">
+					<div class="boxwrap">
+						<div class="subtitle"><strong>tomeczeklmaooo</strong></div>
+						<strong>Age: </strong>18<br>
+						<strong>Mail: </strong>tomeczeklmao@proton.me<br>
+					</div>
+				</div>
+				<div class="box">
+					<div class="boxwrap">
+						<div class="subtitle"><strong>Summary</strong></div>
+						18 year old front-end web developer and amateur software developer. Developing buggy software for Linux in my free time.
+					</div>
+				</div>
+				<div class="box">
+					<div class="boxwrap">
+						<div class="subtitle"><strong>Quick Links</strong></div>
+						<p>Here are links to my things:</p>
+						<p><a href="#githublink">GitHub</a></p>
+						<p>... and that's about it :)</p>
+					</div>
+				</div>
+			</div>
+			<!-- content -->
+			<div class="right">
+				<div class="date">Today is: Weekday, Month Day, Year</div>
+				<div class="post">
+					<div class="title">About</div>
+					<div class="entry">
+						<p>Hi there! I am an 18 year old IT student, currently during my 5th year in technical high school.</p>
+						<p>In my free time I design simple websites, either as a part of my studies or to mess around and learn something new, as well as I tinker a bit with software engineering. I have finished 2 projects (fully described in the <em>projects</em> section) already, and currently looking for some ideas for another one.</p>
+						<p>One (maybe) interesting piece of information about me is that unlike many people my age (and even older folks!), I strive to reduce my exposure to social media, and the services provided by big tech companies, namely Google and Facebook (or Meta as they call it now). Along with that I am actively attempting to live a life with as little digital distractions as possible (digital minimalism, some would call it differently), and part of it is why this website looks the way it does. I kind of reject the modern design principles, which make every single website look basically the same, apart from different color palettes. This kind of design feels like it has personality, looks timeless.</p>
+						<p>I went a little off the tracks in the previous paragraph, but the premise is that I live with as little social media as possible, and exclusively listen to music from radio (I am not willing to pay for Spotify or other music streaming services).</p>
+						<p>Also, just one more thing I want to add: I do actually use Arch Linux (by the way).</p>
+					</div>
+				</div>
+				<div class="post">
+					<div class="title">Experience</div>
+					<div class="entry">
+						<p>When it comes to the experience I have, currently I have only a couple of months of mandatory internship to showcase and a singular month of work I took up myself:</p>
+						<p>
+							<strong>NOEMIS (internship)</strong> [<em>02/2024 &mdash; 03/2024</em>]<br>
+							What I did here was pretty simple, it all was setting up Windows PCs at a local school, then connecting these PCs to Active Directory. I also moved many computers between classrooms.
+						</p>
+						<p>
+							<strong>Arcan Studios (internship/erasmus+)</strong> [<em>09/2024 &mdash; 10/2024</em>]<br>
+							This one was more of a course than an internship, but it was during Erasmus+ in Spain in which I took part. The whole thing was about both game development in Unreal Engine 5 and programming Arduino boards (and making some funky games on it). That was basically it.
+						</p>
+						<p>
+							<strong>Hex s.c. Automatyka Przemysłowa (internship)</strong> [<em>02/2025 &mdash; 03/2025</em>]<br>
+							As for this internship, my tasks included reconnecting UTP cables to their respective ports on a switch, installing new Ethernet sockets on multiple production machines, installing a switch nearby, and connecting the sockets to said switch. One more thing I did, that's not very IT related, was fixing a heater. I don't know if the heater I fixed has been used or is still sitting on a shelf somewhere.
+						</p>
+						<p>
+							<strong>Agregaty Polska</strong> [<em>06/2025 &mdash; 07/2025</em>]<br>
+							I have had a few responsibilities during my time there, and these include connecting and testing power analyzers, modifying trailers to support power generators, connect parts of generators with one another (wires, wires, and more wires), designed a couple of websites and at last helped ensuring power generators were working and ready to be sold to customers.
+						</p>
+						<p>
+							<strong>Falcon League (board member)</strong> [<em>10/2024 &mdash; now</em>]<br>
+							During my time here, I was (and still am) responsible for broadcasting Counter-Strike 2 matches. In addition to that I have been developing a custom observer HUD in my free time for an upcoming edition of the tournament, as well as drafting a style-guide for the other board members, so the graphics are consistent all across the broadcasts and promotional material.
+						</p>
+					</div>
+				</div>
+				<div class="post">
+					<div class="title">Education</div>
+					<div class="entry">
+						<p>The only thing I currently can say here, is that I currently attend <em>Zespół Szkół Technicznych in Tarnowo Podgórne</em>, and will finish it with INF.02 and INF.03 qualifications.</p>
+					</div>
+				</div>
+				<div class="post">
+					<div class="title">Projects</div>
+					<div class="entry">
+						<p>I have only a couple projects to show off here, this list will certainly be expanded later :)</p>
+						<p>
+							<strong><a href="#pocketlink">pocket</a></strong><br>
+							This simple terminal-only program was developed as a project to learn mainly, and what it essentially does is manage your finances. User inputs where they spent money and how much, the program saves it to a file, and all the operations can be listed later. It also features pretty coloring. That's it. Buggy.
+						</p>
+						<p>
+							<strong><a href="#sparklink">spark</a></strong><br>
+							This program, unlike the previous one, has most likely higher quality code (as I put more compiler flags to force me to write better code), and with potentially less bugs. This one is an alias manager, user can add an alias, remove an alias and execute an alias. That's basically it. I also planned a feature to import aliases from <code>.bashrc</code>, but I scrapped it.
+						</p>
+					</div>
+				</div>
+			</div>
 		</div>
-	</header>
-
-	<main>
-		<div class="section-row">
-			<section class="glass-card">
-				<h1>About me</h1>
-				<p>5th grade IT student from Poland, kind of a nerd when it comes to computers. Want to go either into cybersecurity or software engineering. I write buggy software in my free time, as well as make websites for fun.</p>
-				<p style="position: absolute; bottom: 8px; right: 16px; opacity: 0.3;">I also use Arch Linux btw (because Windows sucks).</p>
-			</section>
-
-			<section class="glass-card">
-				<h1>Education</h1>
-				<table>
-					<tr>
-						<td>09/2021 &mdash; now</td>
-						<td>Zespół Szkół Technicznych Tarnowo Podgórne</td>
-					</tr>
-				</table>
-			</section>
-		</div>
-
-		<div class="section-row">
-			<section class="glass-card">
-				<h1>Skills</h1>
-				<p>My skills include, but are not limited to:</p>
-				<ul>
-					<li>
-						<img src="https://skillicons.dev/icons?i=c" height="32" alt="c" draggable="false">
-						C
-						<img src="https://skillicons.dev/icons?i=js" height="32" alt="javascript" draggable="false">
-						JavaScript
-						<img src="https://skillicons.dev/icons?i=html" height="32" alt="html5" draggable="false">
-						HTML
-						<img src="https://skillicons.dev/icons?i=css" height="32" alt="css3" draggable="false">
-						CSS
-						<img src="https://skillicons.dev/icons?i=mysql" height="32" alt="mysql" draggable="false">
-						MySQL
-						
-					</li>
-					<li>
-						<img src="https://skillicons.dev/icons?i=linux" height="32" alt="linux" draggable="false">
-						Linux
-						<img src="https://skillicons.dev/icons?i=ps" height="32" alt="photoshop" draggable="false">
-						Photoshop
-						<img src="https://skillicons.dev/icons?i=pr" height="32" alt="premierepro" draggable="false">
-						Premiere Pro
-					</li>
-				</ul>
-			</section>
-
-			<section class="glass-card">
-				<h1>Projects</h1>
-				<p>Here are some of my projects, finished or not:</p>
-				<ul>
-					<li>
-						pocket &ndash; a simple Linux terminal finance tracker
-					</li>
-					<li>
-						spark &ndash; a simple shell alias manager (in development)
-					</li>
-					<li>
-						sparklecss &ndash; CSS styles for personal use (planned)
-					</li>
-					<li>
-						toasthud &ndash; CS2 observer HUD (private, in development)
-					</li>
-				</ul>
-			</section>
-		</div>
-
-		<section class="glass-card experience">
-			<h1>Experience</h1>
-			<p>My yet to be expanded experience is here:</p>
-			<ul>
-				<li><span class="exp-title">NOEMIS (internship)</span>
-					<span class="exp-range">02/2024 &mdash; 03/2024</span>
-					&Gt; setting up Windows PCs<br>
-					&Gt; connecting said Windows PCs to Active Directory
-				</li>
-				<li><span class="exp-title">Hex s.c. Automatyka Przemysłowa (internship)</span>
-					<span class="exp-range">02/2025 &mdash; 03/2025</span>
-					&Gt; did Ethernet cables in production hall<br>
-					&Gt; fixed a heater
-				</li>
-				<li><span class="exp-title">Agregaty Polska</span>
-					<span class="exp-range">06/2025 &mdash; 07/2025</span>
-					&Gt; connected and tested power analyzers<br>
-					&Gt; modified a trailer to be capable of transporting generators<br>
-					&Gt; did wiring in multiple generators<br>
-					&Gt; designed and created multiple websites<br>
-					&Gt; helped ensuring generators were working ready to be shipped
-				</li>
-				<li><span class="exp-title">Falcon League (board member)</span>
-					<span class="exp-range">10/2024 &mdash; now</span>
-					&Gt; broadcasted multiple CS2 matches<br>
-					&Gt; designed a break scene overlay<br>
-					&Gt; designed a custom observer HUD (toasthud)<br>
-					&Gt; designed motion graphics for broadcasts<br>
-				</li>
-			</ul>
-		</section>
-
-		<section class="glass-card contact">
-			<h1>Contact</h1>
-			<p>Why would you even want to contact me?</p>
-		</section>
-	</main>
-
-	<footer>
-		<p>Made with &hearts; by tomeczeklmaooo</p>
-	</footer>
+		<!-- footer -->
+		<footer>
+			This website was written with &hearts; by <em>tomeczeklmaooo</em>
+		</footer>
+	</div>
 
 	<script src="script.js"></script>
 </body>
