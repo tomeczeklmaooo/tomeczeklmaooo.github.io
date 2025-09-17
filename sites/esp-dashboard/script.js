@@ -38,9 +38,9 @@ var pompa_grzej, pompa_podloga, pompa_pieca, grzalka_cwu, pompa_cwu, pompa_sciek
 function thingspeak_fields()
 {
 	fetch('https://api.thingspeak.com/channels/432818/status.json?results=1').then((res) => res.text()).then((main_response) => {
-		fetch('https://api.thingspeak.com/channels/864444/feeds.json?results=480').then((res) => res.text()).then((media_response_a) => {
-			fetch('https://api.thingspeak.com/channels/432818/fields/4.json?results=240').then((res) => res.text()).then((media_response_b) => {
-				fetch('https://api.thingspeak.com/channels/783677/fields/1.json?days=1').then((res) => res.text()).then((media_response_c) => {
+		fetch('https://api.thingspeak.com/channels/864444/feeds.json?results=480&timezone=Europe%2FWarsaw').then((res) => res.text()).then((media_response_a) => {
+			fetch('https://api.thingspeak.com/channels/432818/fields/4.json?results=240&timezone=Europe%2FWarsaw').then((res) => res.text()).then((media_response_b) => {
+				fetch('https://api.thingspeak.com/channels/783677/fields/1.json?days=1&timezone=Europe%2FWarsaw').then((res) => res.text()).then((media_response_c) => {
 					g_ts_response = JSON.parse(main_response);
 					g_ts_media_response_a = JSON.parse(media_response_a);
 					g_ts_media_response_b = JSON.parse(media_response_b);
