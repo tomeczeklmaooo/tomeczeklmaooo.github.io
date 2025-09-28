@@ -241,7 +241,7 @@ function generate_squares()
 	var buf = "";
 	// === KARTY ===
 	var card_pogoda = `
-			<div class="card card-2x1" onclick="show_chart(0)">
+			<div class="card card-2x1 clickable" onclick="show_chart(0)">
 				<div class="card-header">
 					<span><i class="fa-solid fa-cloud-sun-rain"></i> Pogoda</span>
 				</div>
@@ -574,7 +574,7 @@ function generate_squares()
 		</div>
 	`;
 	var card_media = `
-		<div class="card card-1x1" onclick="show_chart(1)">
+		<div class="card card-1x1 clickable" onclick="show_chart(1)">
 			<div class="card-header">
 				<span><i class="fa-solid fa-industry"></i> Media</span>
 			</div>
