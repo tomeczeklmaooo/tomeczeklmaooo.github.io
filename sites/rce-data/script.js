@@ -127,10 +127,29 @@ function api_get_price_data()
 			console.log(`Received JSON objects in rce_response equal to ${rce_len}`);
 			console.log(`Received JSON objects in thingspeak_response equal to ${ts_len}`);
 
+			// calculate average price for each hour
+			let hourly_prices = [];
+			for (let i = 0; i < rce_len; i += 4)
+			{
+				let sum = 0;
+				let count = 0;
+				for (let j = i; j < i + 4 && j < rce_len; j++)
+				{
+					let price = parseFloat(rce_response["value"][j]["rce_pln"]);
+					if (price < 0) price = 0;
+					sum += price;
+					count++;
+				}
+				let avg = sum / count;
+				hourly_prices.push(parseFloat(avg.toFixed(2)));
+			}
+			console.log(`Hourly averages for RCE: ${hourly_prices}`);
+			console.log(`Hourly averages for RCE (count): ${hourly_prices.length}`);
+
 			// check if "status" field is null, if yes then continue, else put it in the array 'data_buf'
 			for (let i = 0; i < ts_len; i++)
 			{
-				if (thingspeak_response["feeds"][i]["status"] == null) { continue; }
+				if (thingspeak_response["feeds"][i]["status"] == null || thingspeak_response["feeds"][i]["status"] == "Brak danych") { continue; }
 				else
 				{
 					data_buf = thingspeak_response["feeds"][i]["status"].split(",");
@@ -148,14 +167,15 @@ function api_get_price_data()
 						table += `<tr><td>${rce_response["value"][i]["period"].substring(0, 5).replace("45", "00")}</td>`;
 						
 						// DZISIAJ SPRZEDAŻ
-						if (rce_response["value"][i]["rce_pln"] <= 0)
-						{
-							table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
-						}
-						else
-						{
-							table += `<td>${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
-						}
+						table += `<td>${hourly_prices[loop_limiter]}</td>`;
+						// if (rce_response["value"][i]["rce_pln"] <= 0)
+						// {
+						// 	table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
+						// }
+						// else
+						// {
+						// 	table += `<td>${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
+						// }
 
 						// DZISIAJ ZAKUP
 						if (data_buf[loop_limiter] <= 0)
@@ -168,14 +188,15 @@ function api_get_price_data()
 						}
 						
 						// JUTRO SPRZEDAŻ
-						if (rce_response["value"][i + 96]["rce_pln"] <= 0)
-						{
-							table += `<td class="negative-price">${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
-						}
-						else
-						{
-							table += `<td>${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
-						}
+						table += `<td>${hourly_prices[loop_limiter + 24]}</td>`;
+						// if (rce_response["value"][i + 96]["rce_pln"] <= 0)
+						// {
+						// 	table += `<td class="negative-price">${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
+						// }
+						// else
+						// {
+						// 	table += `<td>${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
+						// }
 
 						// JUTRO ZAKUP
 						if (data_buf[loop_limiter + 24] <= 0)
@@ -189,9 +210,11 @@ function api_get_price_data()
 						
 						table += `</tr>`;
 
-						data_prices_today_sell.push(parseFloat(rce_response["value"][i]["rce_pln"]));
+						// data_prices_today_sell.push(parseFloat(rce_response["value"][i]["rce_pln"]));
+						data_prices_today_sell.push(parseFloat(hourly_prices[loop_limiter]));
 						data_prices_today_buy.push(parseFloat(data_buf[loop_limiter]));
-						data_prices_tomorrow_sell.push(parseFloat(rce_response["value"][i + 96]["rce_pln"]));
+						// data_prices_tomorrow_sell.push(parseFloat(rce_response["value"][i + 96]["rce_pln"]));
+						data_prices_tomorrow_sell.push(parseFloat(hourly_prices[loop_limiter + 24]));
 						data_prices_tomorrow_buy.push(parseFloat(data_buf[loop_limiter + 24]));
 						
 						// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
@@ -233,14 +256,15 @@ function api_get_price_data()
 						table += `<tr><td>${rce_response["value"][i]["period"].substring(0, 5).replace("45", "00")}</td>`;
 						
 						// DZISIAJ SPRZEDAŻ
-						if (rce_response["value"][i]["rce_pln"] <= 0)
-						{
-							table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
-						}
-						else
-						{
-							table += `<td>${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
-						}
+						table += `<td>${hourly_prices[loop_limiter]}</td>`;
+						// if (rce_response["value"][i]["rce_pln"] <= 0)
+						// {
+						// 	table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
+						// }
+						// else
+						// {
+						// 	table += `<td>${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
+						// }
 
 						// DZISIAJ ZAKUP
 						if (data_buf[loop_limiter] <= 0)
@@ -253,20 +277,23 @@ function api_get_price_data()
 						}
 
 						// JUTRO SPRZEDAŻ
-						if (rce_response["value"][i + 96]["rce_pln"] <= 0)
-						{
-							table += `<td class="negative-price">${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
-						}
-						else
-						{
-							table += `<td>${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
-						}
+						table += `<td>${hourly_prices[loop_limiter + 24]}</td>`;
+						// if (rce_response["value"][i + 96]["rce_pln"] <= 0)
+						// {
+						// 	table += `<td class="negative-price">${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
+						// }
+						// else
+						// {
+						// 	table += `<td>${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
+						// }
 
 						table += `<td class="empty-field">b/d</td></tr>`;
 
-						data_prices_today_sell.push(parseFloat(rce_response["value"][i]["rce_pln"].toFixed(2)));
+						// data_prices_today_sell.push(parseFloat(rce_response["value"][i]["rce_pln"].toFixed(2)));
+						data_prices_today_sell.push(parseFloat(hourly_prices[loop_limiter]));
 						data_prices_today_buy.push(parseFloat(data_buf[loop_limiter]));
-						data_prices_tomorrow_sell.push(parseFloat(rce_response["value"][i + 96]["rce_pln"].toFixed(2)));
+						// data_prices_tomorrow_sell.push(parseFloat(rce_response["value"][i + 96]["rce_pln"].toFixed(2)));
+						data_prices_tomorrow_sell.push(parseFloat(hourly_prices[loop_limiter + 24]));
 						
 						// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
 						loop_limiter += 1;
@@ -305,14 +332,15 @@ function api_get_price_data()
 						table += `<tr><td>${rce_response["value"][i]["period"].substring(0, 5).replace("45", "00")}</td>`;
 						
 						// DZISIAJ SPRZEDAŻ
-						if (rce_response["value"][i]["rce_pln"] <= 0)
-						{
-							table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
-						}
-						else
-						{
-							table += `<td>${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
-						}
+						table += `<td>${hourly_prices[loop_limiter]}</td>`;
+						// if (rce_response["value"][i]["rce_pln"] <= 0)
+						// {
+						// 	table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
+						// }
+						// else
+						// {
+						// 	table += `<td>${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
+						// }
 
 						// DZISIAJ ZAKUP
 						if (data_buf[loop_limiter] <= 0)
@@ -326,7 +354,8 @@ function api_get_price_data()
 
 						table += `<td class="empty-field">b/d</td><td class="empty-field">b/d</td></tr>`;
 
-						data_prices_today_sell.push(parseFloat(rce_response["value"][i]["rce_pln"].toFixed(2)));
+						// data_prices_today_sell.push(parseFloat(rce_response["value"][i]["rce_pln"].toFixed(2)));
+						data_prices_today_sell.push(parseFloat(hourly_prices[loop_limiter]));
 						data_prices_today_buy.push(parseFloat(data_buf[loop_limiter]));
 						
 						// limitowanie ilości pętli, bo jak w linku jest 'ge' to wtedy wyświetla się też północ dnia następnego
