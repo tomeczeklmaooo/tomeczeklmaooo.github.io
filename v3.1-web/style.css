@@ -1,0 +1,162 @@
+:root
+{
+	--font-family: "Verdana", sans-serif;
+	--font-size: x-small;
+	--sidebar-border: 1px solid #E6E6C3;
+	--link-color: blue;
+	--bg-color: white;
+	--text-color: black;
+	--sidebar-bg: transparent;
+	--content-bg: transparent;
+	--content-padding: 0;
+	--background-image: none; 
+	/* for bg image, above would be url('site.com/image.jpg'); */
+}
+
+body
+{
+	font-family: var(--font-family);
+	font-size: var(--font-size);
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	background-image: var(--bg-image);
+}
+
+body a
+{
+	color: var(--link-color);
+}
+
+.left
+{
+	width: 200px;
+	display: flex;
+	flex-direction: column;
+}
+
+.box
+{
+	width: 200px;
+	border: var(--sidebar-border);
+	margin-bottom: 15px;
+	padding-bottom: 10px;
+	background-color: var(--sidebar-bg);
+	height: fit-content;
+}
+
+.flex
+{
+	display: flex;
+}
+
+.container
+{
+	max-width: 700px;
+	margin: 0 auto;
+}
+
+.right
+{
+	margin-left: 10px;
+	background-color: var(--content-bg);
+	padding: var(--content-padding);
+}
+
+.subtitle
+{
+	font-weight: bold;
+	padding-top: 3px;
+	margin-bottom: 5px;
+}
+
+.boxwrap
+{
+	padding-left: 10px;
+	padding-bottom: 5px;
+}
+
+footer
+{
+	text-align: center;
+}
+
+header
+{
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	padding-bottom: 10px;
+}
+
+header a
+{
+	font-weight: bold;
+}
+
+content
+{
+	display: flex;
+	margin: 0 auto;
+	width: 700px;
+}
+
+.post .title
+{
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	padding-left: 10px;
+}
+
+.date
+{
+	margin-bottom: 10px;
+}
+
+.entry
+{
+	padding-left: 10px;
+}
+
+.post-footer
+{
+	padding-top: 10px;
+	padding-left: 10px;
+}
+
+.blogring
+{
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.boxwrap img
+{
+	width: 130px;
+	display: block;
+}
+
+@media only screen and (max-width: 730px)
+{
+	.flex
+	{
+		flex-wrap: wrap;
+	}
+
+	.right
+	{
+		width: 100%;
+		order: 1;
+	}
+
+	.left
+	{
+		width: 100%;
+		order: 2;
+		display: flex;
+		flex-wrap: wrap;
+		align-self: center;
+		justify-content: center;
+		margin-top: 20px;
+	}
+}
