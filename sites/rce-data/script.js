@@ -54,7 +54,7 @@ const chart_opt = {
 		plotLines: [{ value: 0, width: 2, color: '#1e202394', zIndex: 5 }]
 	},
 	plotOptions: {
-		line: { dataLabels: { enabled: true }, enableMouseTracking: true },
+		line: { dataLabels: { enabled: true, format: '{y:.2f}' }, enableMouseTracking: true },
 		series: { animation: { duration: 1200 } }
 	},
 	tooltip: { shared: true, crosshairs: true },
@@ -167,7 +167,7 @@ function api_get_price_data()
 						table += `<tr><td>${rce_response["value"][i]["period"].substring(0, 5).replace("45", "00")}</td>`;
 						
 						// DZISIAJ SPRZEDAŻ
-						table += `<td>${hourly_prices[loop_limiter]}</td>`;
+						table += `<td>${parseFloat(hourly_prices[loop_limiter])}</td>`;
 						// if (rce_response["value"][i]["rce_pln"] <= 0)
 						// {
 						// 	table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
@@ -188,7 +188,7 @@ function api_get_price_data()
 						}
 						
 						// JUTRO SPRZEDAŻ
-						table += `<td>${hourly_prices[loop_limiter + 24]}</td>`;
+						table += `<td>${parseFloat(hourly_prices[loop_limiter + 24])}</td>`;
 						// if (rce_response["value"][i + 96]["rce_pln"] <= 0)
 						// {
 						// 	table += `<td class="negative-price">${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
@@ -256,7 +256,7 @@ function api_get_price_data()
 						table += `<tr><td>${rce_response["value"][i]["period"].substring(0, 5).replace("45", "00")}</td>`;
 						
 						// DZISIAJ SPRZEDAŻ
-						table += `<td>${hourly_prices[loop_limiter]}</td>`;
+						table += `<td>${parseFloat(hourly_prices[loop_limiter])}</td>`;
 						// if (rce_response["value"][i]["rce_pln"] <= 0)
 						// {
 						// 	table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
@@ -277,7 +277,7 @@ function api_get_price_data()
 						}
 
 						// JUTRO SPRZEDAŻ
-						table += `<td>${hourly_prices[loop_limiter + 24]}</td>`;
+						table += `<td>${parseFloat(hourly_prices[loop_limiter + 24])}</td>`;
 						// if (rce_response["value"][i + 96]["rce_pln"] <= 0)
 						// {
 						// 	table += `<td class="negative-price">${rce_response["value"][i + 96]["rce_pln"].toFixed(2)}</td>`;
@@ -332,7 +332,7 @@ function api_get_price_data()
 						table += `<tr><td>${rce_response["value"][i]["period"].substring(0, 5).replace("45", "00")}</td>`;
 						
 						// DZISIAJ SPRZEDAŻ
-						table += `<td>${hourly_prices[loop_limiter]}</td>`;
+						table += `<td>${parseFloat(hourly_prices[loop_limiter]).toFixed(2)}</td>`;
 						// if (rce_response["value"][i]["rce_pln"] <= 0)
 						// {
 						// 	table += `<td class="negative-price">${rce_response["value"][i]["rce_pln"].toFixed(2)}</td>`;
