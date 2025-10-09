@@ -46,7 +46,14 @@ function get_fetch_urls(date_fmt)
 function lt10(n) { if (n < 10) { n = '0' + n; } return n; }
 
 const chart_opt = {
-	chart: { type: 'line' },
+	chart: {
+		type: 'line',
+		backgroundColor: '#f6f6f9',
+		borderColor: '#363949',
+		borderRadius: 12,
+		borderWidth: 0,
+		style: { fontFamily: "IBM Plex Sans" }
+	},
 	xAxis: { categories: [] },
 	yAxis: {
 		title: { text: undefined },
