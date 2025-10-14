@@ -64,7 +64,7 @@
 			key: "XXXXXXXXXXXXXXXX",
 			fieldList: [
 				{ field: 1, axis: "O", suffix: "kWh" },
-				{ field: 8, axis: "T", suffix: "" },
+				{ field: 8, axis: "O", suffix: "m3" },
 				{ field: 2, axis: "O", suffix: "l" },
 				{ field: 3, axis: "T", suffix: "" },
 				{ field: 4, axis: "O", suffix: "l/m2" },
@@ -343,7 +343,7 @@
 							name: channelKeys[channelIndex].fieldList[fieldIndex].name,
 							tooltip: {
 								valueSuffix: " " + channelKeys[channelIndex].fieldList[fieldIndex].suffix,
-								valueDecimals: 2,
+								valueDecimals: 3,
 							},
 						});
 					}
