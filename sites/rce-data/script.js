@@ -126,7 +126,7 @@ async function api_get_price_data()
 
 	async function xslx_fetch_day({ y, m, day })
 	{
-		const url = `https://corsproxy.io/?url=https://tge.pl/pub/TGE/A_SDAC%20${y}/RDN/Raport_RDN_dzie_dostawy_delivery_day_${y}_${m}_${day}.xlsx`;
+		const url = `https://corsproxy.io/?url=https://tge.pl/pub/TGE/A_SDAC%20${y}/RDN/Raport_RDN_dzie_dostawy_delivery_day_${y}_${m}_${day}_2.xlsx`;
 		try
 		{
 			const res = await fetch(url);
