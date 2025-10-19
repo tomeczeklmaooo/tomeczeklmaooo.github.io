@@ -243,21 +243,21 @@ function generate_squares()
 	var card_pogoda = `
 			<div class="card card-2x1 clickable" onclick="show_chart(0)">
 				<div class="card-header">
-					<span><i class="fa-solid fa-cloud-sun-rain"></i> Pogoda</span>
+					<span><span class="material-symbols-rounded">partly_cloudy_day</span> Pogoda</span>
 				</div>
 				<div class="card-content-wrapper">
 					<div class="card-content">
 						<table>
 							<tr>
-								<td><i class="fa-solid fa-temperature-half"></i></td>
+								<td><span class="material-symbols-rounded">device_thermostat</span></td>
 								<td>${temp_zew_vilant}&deg;C</td>
 							</tr>
 							<tr>
-								<td><i class="fa-solid fa-droplet blue"></i></td>
+								<td><span class="material-symbols-rounded blue">humidity_high</span></td>
 								<td>${wilg_zew}%</td>
 							</tr>
 							<tr>
-								<td><i class="fa-solid fa-gauge"></i></td>
+								<td><span class="material-symbols-rounded">swap_driving_apps_wheel</span></td>
 								<td>${cisnienie} hPa</td>
 							</tr>
 						</table>
@@ -265,15 +265,15 @@ function generate_squares()
 					<div class="card-content">
 						<table>
 							<tr>
-								<td class="l-align"><i class="fa-solid fa-cloud-rain blue"></i></td>
+								<td class="l-align"><span class="material-symbols-rounded blue">rainy</span></td>
 								<td>${opady_dzis} l/m<sup>2</sup></td>
 							</tr>
 							<tr>
-								<td><i class="fa-regular fa-sun yellow"></i>&uarr;</td>
+								<td><span class="material-symbols-rounded yellow">sunny</span>&uarr;</td>
 								<td>${sunrise}</td>
 							</tr>
 							<tr>
-								<td><i class="fa-solid fa-sun yellow"></i>&darr;</td>
+								<td><span class="material-symbols-rounded yellow">sunny</span>&darr;</td>
 								<td>${sunset}</td>
 							</tr>
 						</table>
@@ -284,17 +284,17 @@ function generate_squares()
 	var card_lazienka = `
 			<div class="card card-1x1">
 				<div class="card-header">
-					<span><i class="fa-solid fa-shower"></i> Łazienka</span>
+					<span><span class="material-symbols-rounded">shower</span> Łazienka</span>
 				</div>
 				<div class="card-content-wrapper">
 					<div class="card-content">
 						<table>
 							<tr>
-								<td><i class="fa-solid fa-temperature-half"></i></td>
+								<td><span class="material-symbols-rounded">device_thermostat</span></td>
 								<td>${temp_lazienka}&deg;C</td>
 							</tr>
 							<tr>
-								<td><i class="${(swiatlo_lazienka == 1) ? `fa-solid yellow` : `fa-regular`} fa-lightbulb"></i></td>
+								<td><span class="${(swiatlo_lazienka == 1) ? `yellow` : ``} material-symbols-rounded">lightbulb</span></td>
 								<td>
 									<label class="switch">
 										<input type="checkbox" ${(swiatlo_lazienka == 1) ? `checked` : ``} disabled>
@@ -303,7 +303,7 @@ function generate_squares()
 								</td>
 							</tr>
 							<tr>
-								<td><i class="fa-solid fa-shirt"></i><sub>pralka</sub></td>
+								<td><span class="material-symbols-rounded">laundry</span><sub>pralka</sub></td>
 								<td>
 									<label class="switch">
 										<input type="checkbox" ${(pralka == 1) ? `checked` : ``} disabled>
@@ -312,7 +312,7 @@ function generate_squares()
 								</td>
 							</tr>
 							<tr>
-								<td><i class="${(smart_plug == 1) ? `fa-solid fa-plug-circle-check` : `fa-solid fa-plug`}"></i><sub>grzejnik</sub></td>
+								<td><span class="material-symbols-rounded">power</span><sub>grzejnik</sub></td>
 								<td>
 									<label class="switch">
 										<input type="checkbox" ${(smart_plug == 1) ? `checked` : ``} disabled>
@@ -328,21 +328,21 @@ function generate_squares()
 	var card_salon = `
 			<div class="card card-1x1">
 				<div class="card-header">
-					<span><i class="fa-solid fa-couch"></i> Salon</span>
+					<span><span class="material-symbols-rounded">chair</span> Salon</span>
 				</div>
 				<div class="card-content-wrapper">
 					<div class="card-content">
 						<table>
 							<tr>
-								<td><i class="fa-solid fa-temperature-half"></i></td>
+								<td><span class="material-symbols-rounded">device_thermostat</span></td>
 								<td>${temp_salon_vilant}&deg;C</td>
 							</tr>
 							<tr>
-								<td><i class="fa-solid fa-droplet blue"></i></td>
+								<td><span class="material-symbols-rounded blue">humidity_high</span></td>
 								<td>${wilg_wew}%</td>
 							</tr>
 							<tr>
-								<td><i class="fa-brands fa-windows"></i></td>
+								<td><span class="material-symbols-rounded">window</span></td>
 								<td>
 									<label class="switch">
 										<input type="checkbox" ${(okno_salon == 1) ? `checked` : ``} disabled>
@@ -358,41 +358,41 @@ function generate_squares()
 	var card_fotowoltaika = `
 			<div class="card card-1x2">
 				<div class="card-header">
-					<span><i class="fa-solid fa-solar-panel"></i> Fotowoltaika</span>
+					<span><span class="material-symbols-rounded">solar_power</span> Fotowoltaika</span>
 				</div>
 				<div class="card-content-wrapper">
 					<div class="card-content">
 						<table>
 							<tr>
-								<td><i class="fa-solid fa-bolt"></i><sub>DC power</sub></td>
+								<td><span class="material-symbols-rounded">bolt</span><sub>DC power</sub></td>
 								<td>${pv_power} kW</td>
 							</tr>
 							<tr>
-								<td><i class="fa-solid fa-bolt"></i><sub>prod.</sub></td>
+								<td><span class="material-symbols-rounded">bolt</span><sub>prod.</sub></td>
 								<td>${pv_produkcja_dzis} kWh</td>
 							</tr>
 							<tr>
-								<td><i class="fa-solid fa-bolt"></i><sub>zużycie</sub></td>
+								<td><span class="material-symbols-rounded">bolt</span><sub>zużycie</sub></td>
 								<td>${pv_konsumpcja_dzis} kWh</td>
 							</tr>
 							<tr>
-								<td><i class="fa-solid fa-bolt"></i><sub>auto.</sub></td>
+								<td><span class="material-symbols-rounded">bolt</span><sub>auto.</sub></td>
 								<td>${pv_autokonsumpcja_dzis} kWh</td>
 							</tr>
 							<tr>
-								<td><i class="fa-solid fa-bolt"></i><sub>obciąż.</sub></td>
+								<td><span class="material-symbols-rounded">bolt</span><sub>obciąż.</sub></td>
 								<td>${pv_akt_obciazenie} W</td>
 							</tr>
 							<tr>
-								<td><i class="fa-solid fa-bolt"></i><sub>napięcie</sub></td>
+								<td><span class="material-symbols-rounded">bolt</span><sub>napięcie</sub></td>
 								<td>${pv_napiecie} V</td>
 							</tr>
 							<tr>
-								<td><i class="fa-solid fa-sack-dollar green"></i></td>
+								<td><span class="material-symbols-rounded green">money_bag</span></td>
 								<td>${pv_cena_sprzedazy} PLN</td>
 							</tr>
 							<tr>
-								<td><i class="fa-solid fa-sack-dollar red"></i></td>
+								<td><span class="material-symbols-rounded red">money_bag</span></td>
 								<td>${pv_cena_zakupu} PLN</td>
 							</tr>
 						</table>
@@ -403,13 +403,13 @@ function generate_squares()
 	var card_nawo = `
 		<div class="card card-1x2">
 			<div class="card-header">
-				<span><i class="fa-solid fa-plant-wilt"></i> Nawodnienie</span>
+				<span><span class="material-symbols-rounded">potted_plant</span> Nawodnienie</span>
 			</div>
 			<div class="card-content-wrapper">
 				<div class="card-content">
 					<table>
 						<tr>
-							<td><i class="fa-solid fa-cloud-showers-heavy"></i></td>
+							<td><span class="material-symbols-rounded">rainy</span></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(nawodnienie_aktywne == 1) ? `checked` : ``} disabled>
@@ -423,10 +423,10 @@ function generate_squares()
 			</div>
 		</div>
 	`;
-	var card_vilant = `
+	var card_vaillant = `
 		<div class="card card-2x1">
 			<div class="card-header">
-				<span><i class="fa-solid fa-fire"></i> Vilant</span>
+				<span><span class="material-symbols-rounded">water_heater</span> Vaillant</span>
 			</div>
 			<div class="card-content-wrapper">
 				<div class="card-content">
@@ -436,8 +436,8 @@ function generate_squares()
 							<td colspan="2" style="text-align: left;">${piec_status}</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-gauge-high"></i> ${parseFloat(cis_wody).toFixed(2)}&nbsp;bar</td>
-							<td style="text-align: right"><i class="fa-solid fa-faucet-drip red"></i><sub>CWU</sub></td>
+							<td><span class="material-symbols-rounded">swap_driving_apps_wheel</span> ${parseFloat(cis_wody).toFixed(2)}&nbsp;bar</td>
+							<td style="text-align: right"><span class="material-symbols-rounded red">valve</span><sub>CWU</sub></td>
 							<td>${temp_cwu}&deg;C</td>
 							<td>
 								<label class="switch">
@@ -492,17 +492,17 @@ function generate_squares()
 	var card_garaz = `
 		<div class="card card-1x1">
 			<div class="card-header">
-				<span><i class="fa-solid fa-car"></i> Garaż</span>
+				<span><span class="material-symbols-rounded">directions_car</span> Garaż</span>
 			</div>
 			<div class="card-content-wrapper">
 				<div class="card-content">
 					<table>
 						<tr>
-							<td><i class="fa-solid fa-temperature-half"></i></td>
+							<td><span class="material-symbols-rounded">device_thermostat</span></td>
 							<td>${temp_garaz}&deg;C</td>
 						</tr>
 						<tr>
-							<td><i class="${(swiatlo_garaz == 1) ? `fa-solid yellow` : `fa-regular`} fa-lightbulb"></i></td>
+							<td><span class="${(swiatlo_garaz == 1) ? `yellow` : ``} material-symbols-rounded">lightbulb</span></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(swiatlo_garaz == 1) ? `checked` : ``} disabled>
@@ -511,7 +511,7 @@ function generate_squares()
 							</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-water"></i><sub>zmięk.</sub></td>
+							<td><span class="material-symbols-rounded">water</span><sub>zmięk.</sub></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(zmiekczacz == 1) ? `checked` : ``} disabled>
@@ -520,7 +520,7 @@ function generate_squares()
 							</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-warehouse"></i></td>
+							<td><span class="material-symbols-rounded">garage_home</span></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(brama_garaz == 1) ? `checked` : ``} disabled>
@@ -536,13 +536,13 @@ function generate_squares()
 	var card_drzwi = `
 		<div class="card card-1x1">
 			<div class="card-header">
-				<span><i class="fa-solid fa-door-closed"></i> Drzwi</span>
+				<span><span class="material-symbols-rounded">door_front</span> Drzwi</span>
 			</div>
 			<div class="card-content-wrapper">
 				<div class="card-content">
 					<table>
 						<tr>
-							<td><i class="fa-solid ${drzwi_wej == 1 ? `fa-door-open` : `fa-door-closed`}"></i><sub>&nbsp;wej.</sub></td>
+							<td><span class="material-symbols-rounded">${(drzwi_wej == 1) ? `door_open` : `door_front`}</span><sub>wej.</sub></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(drzwi_wej == 1) ? `checked` : ``} disabled>
@@ -551,7 +551,7 @@ function generate_squares()
 							</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid ${drzwi_gosp == 1 ? `fa-door-open` : `fa-door-closed`}"></i><sub>&nbsp;gosp.</sub></td>
+							<td><span class="material-symbols-rounded">${(drzwi_gosp == 1) ? `door_open` : `door_front`}</span><sub>gosp.</sub></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(drzwi_gosp == 1) ? `checked` : ``} disabled>
@@ -560,7 +560,7 @@ function generate_squares()
 							</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-road-barrier"></i><sub>&nbsp;wjazd</sub></td>
+							<td><span class="material-symbols-rounded">gate</span><sub>wjazd</sub></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(brama_wjazd == 1) ? `checked` : ``} disabled>
@@ -576,13 +576,13 @@ function generate_squares()
 	var card_media = `
 		<div class="card card-1x1 clickable" onclick="show_chart(1)">
 			<div class="card-header">
-				<span><i class="fa-solid fa-industry"></i> Media</span>
+				<span><span class="material-symbols-rounded">plumbing</span> Media</span>
 			</div>
 			<div class="card-content-wrapper">
 				<div class="card-content">
 					<table>
 						<tr>
-							<td><i class="fa-solid fa-faucet-drip blue"></i></td>
+							<td><span class="material-symbols-rounded blue">valve</span></td>
 							<td>
 								<span>${ilosc_woda_dom} l</span>
 								<label class="switch">
@@ -592,15 +592,15 @@ function generate_squares()
 							</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-fire-flame-simple yellow"></i><sub>CO</sub></td>
+							<td><span class="material-symbols-rounded yellow">local_fire_department</span><sub>CO</sub></td>
 							<td>${gaz_co} m<sup>3</sup></td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-fire-flame-simple yellow"></i><sub>CWU</sub></td>
+							<td><span class="material-symbols-rounded yellow">local_fire_department</span><sub>CWU</sub></td>
 							<td>${gaz_cwu} m<sup>3</sup></td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-bolt red"></i></td>
+							<td><span class="material-symbols-rounded red">bolt</span></td>
 							<td>${enea_import} kWh</td>
 						</tr>
 					</table>
@@ -611,21 +611,21 @@ function generate_squares()
 	var card_temperatury = `
 		<div class="card card-1x1">
 			<div class="card-header">
-				<span><i class="fa-solid fa-temperature-full"></i> Temperatury</span>
+				<span><span class="material-symbols-rounded">device_thermostat</span> Temperatury</span>
 			</div>
 			<div class="card-content-wrapper">
 				<div class="card-content">
 					<table>
 						<tr>
-							<td><i class="fa-solid fa-temperature-half"></i><sub>piętro</sub></td>
+							<td><span class="material-symbols-rounded">device_thermostat</span><sub>piętro</sub></td>
 							<td>${temp_pietro}&deg;C</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-temperature-half"></i><sub>strych</sub></td>
+							<td><span class="material-symbols-rounded">device_thermostat</span><sub>strych</sub></td>
 							<td>${temp_strych}&deg;C</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-temperature-half"></i><sub>strych gar.</sub></td>
+							<td><span class="material-symbols-rounded">device_thermostat</span><sub>strych gar.</sub></td>
 							<td>${temp_strych_garaz}&deg;C</td>
 						</tr>
 					</table>
@@ -636,13 +636,13 @@ function generate_squares()
 	var card_inne = `
 		<div class="card card-1x1">
 			<div class="card-header">
-				<span><i class="fa-solid fa-otter"></i> Inne</span>
+				<span><span class="material-symbols-rounded">category</span> Inne</span>
 			</div>
 			<div class="card-content-wrapper">
 				<div class="card-content">
 					<table>
 						<tr>
-							<td><i class="fa-solid fa-biohazard"></i><sub>ścieki</sub></td>
+							<td><span class="material-symbols-rounded">water</span><sub>ścieki</sub></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(pompa_scieki == 1) ? `checked` : ``} disabled>
@@ -651,7 +651,7 @@ function generate_squares()
 							</td>
 						</tr>
 						<tr>
-							<td><i class="fa-solid fa-utensils"></i><sub>&nbsp;&nbsp;zmyw.</sub></td>
+							<td><span class="material-symbols-rounded">dishwasher</span><sub>&nbsp;&nbsp;zmyw.</sub></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(zmywarka == 1) ? `checked` : ``} disabled>
@@ -660,7 +660,7 @@ function generate_squares()
 							</td>
 						</tr>
 						<tr>
-							<td><i class="${(swiatlo_pom_gosp == 1) ? `fa-solid yellow` : `fa-regular`} fa-lightbulb"></i><sub>pom. gosp.</sub></td>
+							<td><span class="${(swiatlo_pom_gosp == 1) ? `yellow` : ``} material-symbols-rounded">lightbulb</span><sub>pom. gosp.</sub></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(swiatlo_pom_gosp == 1) ? `checked` : ``} disabled>
@@ -669,7 +669,7 @@ function generate_squares()
 							</td>
 						</tr>
 						<tr>
-							<td><i class="${(swiatlo_strych == 1) ? `fa-solid yellow` : `fa-regular`} fa-lightbulb"></i><sub>strych</sub></td>
+							<td><span class="${(swiatlo_strych == 1) ? `yellow` : ``} material-symbols-rounded">lightbulb</span><sub>strych</sub></td>
 							<td>
 								<label class="switch">
 									<input type="checkbox" ${(swiatlo_strych == 1) ? `checked` : ``} disabled>
@@ -685,7 +685,7 @@ function generate_squares()
 	var card_undefined = `
 		<div class="card card-1x1">
 			<div class="card-header">
-				<span><i class="fa-solid fa-question"></i> ???</span>
+				<span><span class="material-symbols-rounded">question_mark</span> ???</span>
 			</div>
 			<div class="card-content-wrapper">
 				<div class="card-content">
@@ -696,9 +696,9 @@ function generate_squares()
 		</div>
 	`;
 	var card_invisible = `
-		<div class="card card-1x1" style="opacity: 0;">
+		<div class="card card-1x1" style="visibility: hidden">
 			<div class="card-header">
-				<span><i class="fa-solid fa-question"></i> ???</span>
+				<span><span class="material-symbols-rounded">question_mark</span> ???</span>
 			</div>
 			<div class="card-content-wrapper">
 				<div class="card-content">
@@ -746,7 +746,7 @@ function generate_squares()
 
 	buf += `<div class="row">`;
 	buf += `<div class="outer-row-box">`;
-	buf += card_vilant;
+	buf += card_vaillant;
 	buf += `</div>`;
 	buf += `<div class="outer-row-box">`;
 	buf += card_inne;
@@ -757,7 +757,7 @@ function generate_squares()
 	buf += `<div id="modal-weather" class="chart-modal">`;
 	buf += `<div class="chart-modal-content">`;
 	buf += `<span>Wykres temperatury</span>`;
-	buf += `<span class="close">&times;</span>`;
+	buf += `<span class="close material-symbols-rounded">close</span>`;
 	buf += `<iframe width="100%" height="400" style="border: 0;" src="https://thingspeak.mathworks.com/channels/432818/charts/2?dynamic=true&results=240&export=true&width=auto&height=auto"></iframe>`;
 	buf += `</div>`;
 	buf += `</div>`;
@@ -765,7 +765,7 @@ function generate_squares()
 	buf += `<div id="modal-media" class="chart-modal">`;
 	buf += `<div class="chart-modal-content">`;
 	buf += `<span>Wykresy mediów</span>`;
-	buf += `<span class="close">&times;</span>`;
+	buf += `<span class="close material-symbols-outlined">close</span>`;
 	buf += `<div id="media_chart_container"></div>`;
 	buf += `</div>`;
 	buf += `</div>`;
@@ -1106,6 +1106,9 @@ function draw_canvas()
 
 window.onload = function()
 {
-	check_viewport()
+	const search_params = new URLSearchParams(window.location.search);
+	if (search_params.has('new')) document.getElementById('page_style').href = 'style-2.css';
+
+	check_viewport();
 	thingspeak_fields();
 }
