@@ -3,7 +3,7 @@
 :root
 {
 	--main-height: calc(100vh - 40px);
-	--card-width: calc(100vw / 4.75);
+	--card-width: calc(100vw / 5);
 	--gap: 10px;
 
 	--color-primary: #6C9BCF;
@@ -14,9 +14,11 @@
 	--color-info-dark: #7d8da1;
 	--color-dark: #363949;
 	--color-light: rgba(132, 139, 200, 0.116);
+	--color-light-d: rgba(214, 215, 228, 0.541);
 	--color-dark-variant: #677483;
 	--color-background: #f6f6f9;
 
+	--card-border-thickness: 2px;
 	--card-border-radius: 2rem;
 	--border-radius-1: 0.4rem;
 	--border-radius-2: 1.2rem;
@@ -174,7 +176,7 @@ body
 
 .card
 {
-	background-color: var(--color-light);
+	background-color: var(--color-light-d);
 	border-radius: var(--border-radius-2);
 	display: flex;
 	/* justify-content: center; */
@@ -182,8 +184,8 @@ body
 	flex-direction: column;
 	overflow: hidden;
 	box-shadow: var(--box-shadow);
-	backdrop-filter: blur(3px);
-	border: 2px solid var(--color-light);
+	/* backdrop-filter: blur(3px); */
+	border: var(--card-border-thickness) solid var(--color-light);
 	opacity: 0;
 	animation: card_in 1s ease forwards;
 	animation-delay: 1.5s;
@@ -197,13 +199,13 @@ body
 
 .card-2x1
 {
-	width: calc(var(--card-width) * 2 + var(--gap));
+	width: calc(var(--card-width) * 2 + var(--gap) + (var(--card-border-thickness) * 2));
 	height: var(--card-width);
 }
 .card-1x2
 {
 	width: var(--card-width);
-	height: calc(var(--card-width) * 2 + var(--gap));
+	height: calc(var(--card-width) * 2 + var(--gap) + (var(--card-border-thickness) * 2));
 }
 
 .card-header
@@ -211,6 +213,7 @@ body
 	font-weight: 600;
 	width: 100%;
 	/* height: 25%; */
+	height: 64px;
 	padding: 6px 16px;
     font-size: 150%;
 	display: flex;
@@ -227,26 +230,25 @@ body
 	display: flex;
 	flex-direction: row;
 	width: 100%;
-	height: 75%;
-	gap: var(--gap);
+	/* height: 75%; */
+	/* gap: var(--gap); */
+	/* flex-shrink: 1; */
 	transition: 0.3s ease all;
+	box-sizing: border-box;
+	padding: 16px;
 }
 
 .card-1x1 .card-content-wrapper
 {
-	height: calc(var(--card-width) - 25%);
+	height: calc(var(--card-width) - 64px);
 }
 .card-2x1 .card-content-wrapper
 {
-	height: calc(var(--card-width) - 25%);
+	height: calc(var(--card-width) - 64px);
 }
-/* .card-1x2 .card-header
-{
-	height: 12.25%;
-} */
 .card-1x2 .card-content-wrapper
 {
-	height: calc(var(--card-width) * 2 + var(--gap) - 12.25%);
+	height: calc(var(--card-width) * 2 + var(--gap) - 64px);
 }
 
 .card-content
@@ -485,6 +487,7 @@ button:hover
 	.card-header
 	{
 		font-size: 140%;
+		height: 56px;
 	}
 	.card-content
 	{
@@ -520,6 +523,7 @@ button:hover
 	.card-header
 	{
 		font-size: 110%;
+		height: 48px;
 	}
 	.card-content
 	{
@@ -534,7 +538,7 @@ button:hover
 {
 	.card-header
 	{
-		font-size: 110%;
+		font-size: 100%;
 	}
 	.card-content
 	{
@@ -572,41 +576,43 @@ button:hover
 	}
 	.card-2x1
 	{
-		width: calc((100vw) - var(--gap));
+		width: calc((100vw) - var(--gap) + (var(--card-border-thickness) * 2));
 		height: calc((100vw / 2) - var(--gap));
 	}
 	.card-1x2
 	{
 		width: calc((100vw / 2) - var(--gap));
-		height: calc((100vw) - var(--gap));
+		height: calc((100vw) - var(--gap) + (var(--card-border-thickness) * 2));
 	}
 	.card-header
 	{
 		font-size: 100%;
+		height: 48px;
+		min-height: 48px;
 	}
 	.card-content-wrapper
 	{
-		height: calc((100vw) - var(--gap) - 25%)
+		height: calc((100vw) - 48px);
 	}
 	.card-1x1 .card-content-wrapper
 	{
-		height: calc((100vw) - 25%);
+		height: calc((100vw) - 48px);
 	}
 	.card-2x1 .card-content-wrapper
 	{
-		height: calc((100vw) - 25%);
+		height: calc((100vw) - 48px);
 	}
 	.card-1x2 .card-header
 	{
-		height: 7%;
+		height: 48px;
 	}
 	.card-1x2 .card-content-wrapper
 	{
-		height: calc((100vw) - var(--gap) - 7%)
+		height: calc((100vw) - 48px);
 	}
 	.card-content
 	{
-		font-size: 90%;
+		font-size: 100%;
 	}
 	.switch
 	{
