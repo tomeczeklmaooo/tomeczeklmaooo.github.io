@@ -152,7 +152,7 @@ async function api_get_price_data()
 		}
 		catch (e)
 		{
-			console.error('Error fetching XLSX from TGE (${y}-${m}-${day}): ', e);
+			console.error(`Error fetching XLSX from TGE (${y}-${m}-${day}): `, e);
 			return Array(24).fill(null);
 		}
 	}
