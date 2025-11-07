@@ -157,10 +157,10 @@ function thingspeak_fields()
 					switch (parseInt(stan_pieca))
 					{
 						case 0:
-							piec_status = "Ogrzewanie: Brak zapotrzebowania";
+							piec_status = "Ogrzewanie: Brak zapotrz.";
 							break;
 						case 1:
-							piec_status = "Ogrzewanie: Rozruch wentylator";
+							piec_status = "Ogrzewanie: Rozruch went.";
 							break;
 						case 2:
 							piec_status = "Ogrzewanie: Praca pompy";
@@ -175,7 +175,7 @@ function thingspeak_fields()
 							piec_status = "Ogrzewanie: Wybieg";
 							break;
 						case 6:
-							piec_status = "Ogrzewanie: Wybieg wentylatora";
+							piec_status = "Ogrzewanie: Wybieg went.";
 							break;
 						case 7:
 							piec_status = "Ogrzewanie: Wybieg pompy";
@@ -187,7 +187,7 @@ function thingspeak_fields()
 							piec_status = "CWU: Zapotrzebowanie";
 							break;
 						case 21:
-							piec_status = "CWU: Rozruch wentylator";
+							piec_status = "CWU: Rozruch went.";
 							break;
 						case 22:
 							piec_status = "CWU: Praca pompy";
@@ -202,7 +202,7 @@ function thingspeak_fields()
 							piec_status = "CWU: Wybieg";
 							break;
 						case 26:
-							piec_status = "CWU: Wybieg wentylatora";
+							piec_status = "CWU: Wybieg went.";
 							break;
 						case 27:
 							piec_status = "CWU: Wybieg pompy";
