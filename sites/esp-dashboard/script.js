@@ -432,8 +432,7 @@ function generate_squares()
 				<div class="card-content">
 					<table>
 						<tr>
-							<td colspan="2" style="text-align: right;">Status pieca:</td>
-							<td colspan="2" style="text-align: left;">${piec_status}</td>
+							<td colspan="4" style="text-align: center;">Status pieca: ${piec_status}</td>
 						</tr>
 						<tr>
 							<td><span class="material-symbols-rounded">swap_driving_apps_wheel</span> ${parseFloat(cis_wody).toFixed(2)}&nbsp;bar</td>
