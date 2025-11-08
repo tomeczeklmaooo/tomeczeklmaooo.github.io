@@ -1106,7 +1106,7 @@ function draw_canvas()
 window.onload = function()
 {
 	const search_params = new URLSearchParams(window.location.search);
-	if (search_params.has('new')) document.getElementById('page_style').href = 'style-2.css';
+	if (search_params.has('old')) document.getElementById('page_style').href = 'style-old.css';
 
 	check_viewport();
 	thingspeak_fields();
