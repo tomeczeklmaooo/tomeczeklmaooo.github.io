@@ -118,13 +118,13 @@ async function load_thingspeak_channel(sent_channel_idx, channel_number, key, se
 			field_list[field_idx].data = [];
 			for (let feed_idx = 0; feed_idx < data.feeds.length; feed_idx++)
 			{
-				let p = []; // what is p?
+				let point = [];
 				const field_string = `data.feeds[${feed_idx}].field${field_list[field_idx].field}`;
-				const v = eval(field_string); // what is v?
-				p[0] = get_chart_date(data.feeds[feed_idx].created_at);
-				p[1] = parseFloat(v);
-				if (!isNaN(parseFloat(v)))
-					field_list[field_idx].data.push(p);
+				const value = eval(field_string);
+				point[0] = get_chart_date(data.feeds[feed_idx].created_at);
+				point[1] = parseFloat(value);
+				if (!isNaN(parseFloat(value)))
+					field_list[field_idx].data.push(point);
 			}
 
 			field_list[field_idx].name = eval(`data.channel.field${field_list[field_idx].field}`);
@@ -174,13 +174,13 @@ async function load_channel_history(sent_channel_idx, channel_number, key, sent_
 		{
 			for (let feed_idx = 0; feed_idx < data.feeds.length; feed_idx++)
 			{
-				let p = []; // what is p?
+				let point = [];
 				const field_string = `data.feeds[${feed_idx}].field${field_list[field_idx].field}`;
-				const v = eval(field_string); // what is v?
-				p[0] = get_chart_date(data.feeds[feed_idx].created_at);
-				p[1] = parseFloat(v);
-				if (!isNaN(parseFloat(v)))
-					field_list[field_idx].data.push(p);
+				const value = eval(field_string);
+				point[0] = get_chart_date(data.feeds[feed_idx].created_at);
+				point[1] = parseFloat(value);
+				if (!isNaN(parseFloat(value)))
+					field_list[field_idx].data.push(point);
 			}
 
 			field_list[field_idx].data.sort(
@@ -331,10 +331,10 @@ async function create_chart()
 
 						if (!data || !eval(field_string)) return;
 
-						let p = []; // what is p?
-						const v = eval(field_string); // what is v?
-						p[0] = get_chart_date(data.created_at);
-						p[1] = parseFloat(v);
+						let point = [];
+						const value = eval(field_string); // what is v?
+						point[0] = get_chart_date(data.created_at);
+						point[1] = parseFloat(value);
 
 						if (chart.series[chart_series_idx].data.length <= 0) return;
 
@@ -342,8 +342,8 @@ async function create_chart()
 
 						let shift = false;
 
-						if (!isNaN(parseFloat(v)) && p[0] != last_date)
-							chart.series[chart_series_idx].addPoint(p, true, shift);
+						if (!isNaN(parseFloat(value)) && point[0] != last_date)
+							chart.series[chart_series_idx].addPoint(point, true, shift);
 					}
 				}
 				catch (error)
@@ -351,7 +351,7 @@ async function create_chart()
 					console.error(`Error: ${error}`);
 				}
 			}
-		});
+		}, 15000);
 	};
 
 	for (let channel_idx = 0; channel_idx < channel_keys.length; channel_idx++)
