@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="My personal website">
+	<meta name="keywords" content="tomeczeklmao, tomeczeklmaooo, toaster, toaster000, toaster000_">
+	<title>tomeczeklmaooo</title>
+	<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+	<link rel="manifest" href="/icons/site.webmanifest">
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/c.min.js"></script>
+</head>
+<body>
+	<h1>Code Style Guide</h1>
+
+	<h2>Introduction</h2>
+	<p>This page defines code style guidelines for my projects (some apply to the C programming language only).</p>
+
+	<h2>1. General</h2>
+	<p>* Code must target the C23 standard, but compile without warnings on compilers that support C99 or later.</p>
+	<p>* All source and header files must use UTF-8 encoding, LF line endings, and feature a trailing newline.</p>
+	<p>* A single line of code cannot exceed 100 characters in length.</p>
+	<p>* Use tabs for indentation (preferred width: 4), spaces for alignment only.</p>
+
+	<h2>2. Naming</h2>
+	<p>* Function and variable names should use lower snake case.</p>
+	<p>
+		* Pointer and reference symbols belong next to the variable name, not the type.
+<pre><code>int *pointer = NULL;
+int *reference = &amp;something;
+</code></pre>
+	</p>
+	<p>* Constants and macros should use upper snake case.</p>
+	<p>* Structs and enums should use lower snake case (although pascal case is acceptable as well).</p>
+	<p>* Filenames should use lower snake case.</p>
+	<p>* Function and variable names should describe what the function/variable is, without Hungarian notation (or whatever similar).</p>
+
+	<h2>3. Declaration and initialization of variables</h2>
+	<p>* Declare one variable per line, this helps with debugging and readability.</p>
+	<p>* Initialize as close to first use as possible.</p>
+	<p>* Prefer using <code>const</code> to <code>#define</code> when possible.</p>
+	<p>* Avoid variables with global scope.</p>
+	<p>* Keep the amount of local variables (eg. in a function) below 10.</p>
+
+	<h2>4. Functions</h2>
+	<p>* A function should perform a single task.</p>
+	<p>* Keep functions below 60 lines in length (excluding braces and comments).</p>
+	<p>* Make use of early returns if errors were encountered.</p>
+	<p>* Use modern prototypes with full parameter types.</p>
+	<p>* If there is something that can go wrong in a function, make it return an integer.</p>
+
+	<h2>5. Includes and headers</h2>
+	<p>* All includes should appear at the very top of the source file.</p>
+	<p>* Includes should follow the order: standard headers, external library headers, project headers.</p>
+	<p>
+		* Every header must have include guards.
+<pre><code>#ifndef HEADER_H
+#define HEADER_H
+... definitions go here ...
+#endif
+</code></pre>
+	</p>
+	<p>* Header files should expose only functions and data structures that might be required by other source files.</p>
+
+	<h2>6. Error handling</h2>
+	<p>* Never ignore return values.</p>
+	<p>* Log errors to <code>stderr</code>, use <code>fprintf(stderr, ...)</code> for that.</p>
+	<p>* Exit with nonzero codes on fatal failures.</p>
+	<p>* Avoid using <code>exit()</code> in places where we do not want to end the entire process.</p>
+
+	<h2>7. Formatting</h2>
+	<p>
+		* Opening and closing braces should be on their own lines, nothing else other than comments can be on the same line.
+		<br>An exception to this rule is when the character directly before the opening brace is <code>=</code>:
+<pre><code>char *array[] = {
+	...
+}
+</code></pre>
+	</p>
+	<p>* Use braces at all times, for single lines of code in an <code>if (...)</code> as well.</p>
+	<p>* Function declarations should have a leading blank line.</p>
+	<p>* Avoid putting too many blank lines.</p>
+
+	<h2>8. Comments</h2>
+	<p>* Use <code>//</code> for short comments, <code>/* ... */</code> for longer comments.</p>
+	<p>* Use comments to explain why your code does the task, what you code does should be visible from the code itself.</p>
+	<p>* Document public functions with their purpose, parameters and return values.</p>
+
+	<h2>9. Build and tools</h2>
+	<p>* Use clang to compile.</p>
+	<p>* Use the included <code>Makefile</code> to make your life easier (and to be consistent).</p>
+	<p>* Compiler should not emit any warnings or errors.</p>
+
+	<h2>10. Version control</h2>
+	<p>* Commit messages should be descriptive, not vague like <code>"do stuff"</code>.</p>
+
+	<script>hljs.highlightAll();</script>
+</body>
+</html>

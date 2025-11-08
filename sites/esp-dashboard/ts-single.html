@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ThingSpeak Single-channel</title>
+</head>
+<body>
+	<div class="container">
+		<header id="header" class="header">ThingSpeak Single-channel</header>
+		<main id="chart-container"></main>
+		<section>
+			<label for="channel">channel:</label>
+			<select id="channel">
+				<option disabled>null</option>
+			</select>
+
+			<label for="field">field:</label>
+			<select id="field">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+			</select>
+
+			<label for="type">type:</label>
+			<select id="type">
+				<option value="sum">SUM</option>
+				<option value="average">AVERAGE</option>
+				<option value="median">MEDIAN</option>
+				<option value="min">MIN</option>
+				<option value="max">MAX</option>
+			</select>
+
+			<label for="date_start">date_start:</label>
+			<input type="date" id="date_start">
+			<label for="date_end">date_end:</label>
+			<input type="date" id="date_end">
+		</section>
+	</div>
+</body>
+</html>
