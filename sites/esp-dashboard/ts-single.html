@@ -8,14 +8,12 @@
 <body>
 	<div class="container">
 		<header id="header" class="header">ThingSpeak Single-channel</header>
-		<main id="chart-container"></main>
+		<iframe frameborder="0" width="0" height="0" id="chart-container"></iframe>
 		<section>
-			<label for="channel">channel:</label>
-			<select id="channel">
-				<option disabled>null</option>
-			</select>
+			<label for="channel">kanał:</label>
+			<select id="channel"></select>
 
-			<label for="field">field:</label>
+			<label for="field">pole:</label>
 			<select id="field">
 				<option value="1">1</option>
 				<option value="2">2</option>
@@ -27,7 +25,7 @@
 				<option value="8">8</option>
 			</select>
 
-			<label for="type">type:</label>
+			<label for="type">rodzaj:</label>
 			<select id="type">
 				<option value="sum">SUM</option>
 				<option value="average">AVERAGE</option>
@@ -36,11 +34,18 @@
 				<option value="max">MAX</option>
 			</select>
 
-			<label for="date_start">date_start:</label>
-			<input type="date" id="date_start">
-			<label for="date_end">date_end:</label>
-			<input type="date" id="date_end">
+			<label for="date_start">start:</label>
+			<input type="datetime-local" id="date_start">
+			<label for="date_end">koniec:</label>
+			<input type="datetime-local" id="date_end">
+
+			<label for="min_max_val">min/max wartość (tylko min i max):</label>
+			<input type="number" id="min_max_val" size="4">
+
+			<button id="get_chart">Pobierz wykres</button>
 		</section>
 	</div>
+
+	<script src="ts-single.js"></script>
 </body>
 </html>
