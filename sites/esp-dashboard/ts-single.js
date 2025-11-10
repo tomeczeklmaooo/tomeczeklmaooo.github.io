@@ -2,59 +2,16 @@ const chart_container = document.getElementById('chart-container');
 let channels_loaded = 0;
 let channel_keys = [
 	{
-		channel_number: 432818, name: 'Stacja pogodowa', key: 'XXXXXXXXXXXXXXXX',
-		field_list:
-		[
-			{ field: 1, name: 'Opady Online' },
-			{ field: 2, name: 'Temp zewnątrz' },
-			{ field: 3, name: 'Ciśnienie' },
-			{ field: 4, name: 'H20 Dom' },
-			{ field: 5, name: 'Temp wewnątrz' },
-			{ field: 6, name: 'Wilg zewnątrz' },
-			{ field: 7, name: 'Zbiornik Online' },
-			{ field: 8, name: 'Studnia Online' },
-		]
+		channel_number: 432818, name: null, field_list: null
 	},
 	{
-		channel_number: 864444, name: 'Vaillant EcoTec', key: 'XXXXXXXXXXXXXXXX',
-		field_list:
-		[
-			{ field: 1, name: 'TempSetPodłoga' },
-			{ field: 2, name: 'TempZasPodłoga' },
-			{ field: 3, name: 'TempSetGrzejniki' },
-			{ field: 4, name: 'TempZasGrze' },
-			{ field: 5, name: 'Temp Zasil' },
-			{ field: 6, name: 'Temp_CWU' },
-			{ field: 7, name: 'CO - gaz' },
-			{ field: 8, name: 'CWU - gaz' },
-		]
+		channel_number: 864444, name: null, field_list: null
 	},
 	{
-		channel_number: 897438, name: 'Sum/Avg', key: 'XXXXXXXXXXXXXXXX',
-		field_list:
-		[
-			{ field: 1, name: 'Temp średnia wczoraj' },
-			{ field: 2, name: 'Suma opady-wczoraj' },
-			{ field: 3, name: 'SumaStudnia-wczoraj' },
-			{ field: 4, name: 'Woda Dom-wczoraj' },
-			{ field: 5, name: 'SumaGazCO_wczoraj' },
-			{ field: 7, name: 'Suma opadów-M-c' },
-			{ field: 8, name: 'TempAvg-M-c' },
-		]
+		channel_number: 897438, name: null, field_list: null
 	},
 	{
-		channel_number: 783677, name: 'Sum/Avg', key: 'XXXXXXXXXXXXXXXX',
-		field_list:
-		[
-			{ field: 1, name: 'Prad online' },
-			{ field: 2, name: 'H2O_DomDzis' },
-			{ field: 3, name: 'P-podlogi' },
-			{ field: 4, name: 'Suma Opady Dzis' },
-			{ field: 5, name: 'SumaGazCO_dzis' },
-			{ field: 6, name: 'SumaGazCWU_dzis' },
-			{ field: 7, name: 'Studnia dzisiajTS' },
-			{ field: 8, name: 'KuchniaGaz' },
-		]
+		channel_number: 783677, name: null, field_list: null
 	}
 ];
 
@@ -67,6 +24,47 @@ const url = {
 	range: { start: '2025-10-31 00:00:00', end: '2025-10-31 00:00:00' },
 	operation: { type: 'sum', value: 60 }
 };
+
+async function get_channel_info(channel_number, selected_idx)
+{
+	try
+	{
+		const response = await fetch(`https://api.thingspeak.com/channels/${channel_number}/feed.json?results=0`);
+
+		if (!response.ok)
+		{
+			throw new Error('Failed to fetch channel information');
+		}
+
+		const data = await response.json();
+
+		if (data == '-1')
+		{
+			console.error('Failed to load data from ThingSpeak, returned -1');
+		}
+
+		let channel_object = { channel_number: channel_number, name: data.channel.name, field_list: [] };
+		let fields = [];
+
+		for (let i = 1; i <= 8; i++)
+		{
+			const field_key = `field${i}`;
+			if (data.channel[field_key])
+			{
+				console.log(`field number: ${i} // field name: ${data.channel[field_key]}`);
+				fields.push({ field: i, name: data.channel[field_key]});
+			}
+		}
+
+		channel_object.field_list = fields;
+
+		return channel_object;
+	}
+	catch (error)
+	{
+		console.error(`Error: ${error}`);
+	}
+}
 
 function format_date(type, date)
 {
@@ -90,7 +88,18 @@ let encoded_url = null;
 let iframe_width = `${window.innerWidth}px`;
 let iframe_height = `${window.innerHeight - 150}px`;
 
-document.addEventListener('DOMContentLoaded', () => {
+let selected_idx = 0;
+
+function load_field_names()
+{
+	for (let i = 0; i < channel_keys[selected_idx].field_list.length; i++)
+	{
+		const field_menu_opt = new Option(channel_keys[selected_idx].field_list[i].name, channel_keys[selected_idx].field_list[i].field, (i == 0) ? true : false);
+		field_menu.options.add(field_menu_opt, i);
+	}
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
 	chart_container.style.width = iframe_width;
 	chart_container.style.height = iframe_height;
 
@@ -100,24 +109,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	for (let channel_idx = 0; channel_idx < channel_keys.length; channel_idx++)
 	{
+		channel_keys[channel_idx] = await get_channel_info(channel_keys[channel_idx].channel_number, channel_idx);
 		console.log(`Adding channel '${channel_keys[channel_idx].name}' to dropdown menu`);
-		const channel_menu_opt = new Option(channel_keys[channel_idx].name, channel_idx);
+		const channel_menu_opt = new Option(channel_keys[channel_idx].name, channel_idx, (channel_idx == 0) ? true : false);
 		channel_menu.options.add(channel_menu_opt, channel_idx);
-
-		for (let field_idx = 0; field_idx < channel_keys[channel_idx].field_list.length; field_idx++)
-		{
-			console.log(`\t| has field: ${channel_keys[channel_idx].field_list[field_idx].name}`);
-		}
 	}
+
+	load_field_names();
 });
 
 // wacky stuff
 const en_pl_translations = [];
-en_pl_translations['sum'] = 'suma';
-en_pl_translations['average'] = 'średnia';
-en_pl_translations['median'] = 'mediana';
-en_pl_translations['min'] = 'min';
-en_pl_translations['max'] = 'max';
+en_pl_translations['none'] = 'Brak operacji';
+en_pl_translations['sum'] = 'Suma';
+en_pl_translations['average'] = 'Średnia';
+en_pl_translations['median'] = 'Mediana';
+en_pl_translations['min'] = 'Min';
+en_pl_translations['max'] = 'Max';
 
 const allowed_minute_values = [10, 15, 20, 30, 60, 240, 720, 1440];
 
@@ -125,6 +133,30 @@ function clamp_minutes(val)
 {
 	return allowed_minute_values.reduce((a, b) => Math.abs(b - val) < Math.abs(a - val) ? b : a);
 }
+
+channel_menu.addEventListener('change', async () => {
+	selected_idx = document.getElementById('channel').selectedIndex;
+	field_menu.innerHTML = '';
+	load_field_names();
+});
+
+type_menu.addEventListener('change', () => {
+	if (type_menu.value == 'sum' || type_menu.value == 'average' || type_menu.value == 'median')
+	{
+		document.getElementById('timeframe').style.display = 'inline';
+		document.getElementById('minmax').style.display = 'none';
+	}
+	else if (type_menu.value == 'min' || type_menu.value == 'max')
+	{
+		document.getElementById('timeframe').style.display = 'none';
+		document.getElementById('minmax').style.display = 'inline';
+	}
+	else
+	{
+		document.getElementById('timeframe').style.display = 'none';
+		document.getElementById('minmax').style.display = 'none';
+	}
+});
 
 get_chart_btn.addEventListener('click', () => {
 	let selected_channel = channel_keys[channel_menu.selectedIndex].channel_number;
@@ -149,12 +181,21 @@ get_chart_btn.addEventListener('click', () => {
 	operation_value = clamp_minutes(operation_value);
 	console.log(`Minutes between selected dates: ${operation_value}`);
 
-	if (selected_type == 'min' || selected_type == 'max')
+	if (type_menu.value == 'sum' || type_menu.value == 'average' || type_menu.value == 'median')
+	{
+		operation_value = parseInt(document.getElementById('timeframe_val').value);
+	}
+	else if (selected_type == 'min' || selected_type == 'max')
 	{
 		operation_value = parseInt(document.getElementById('min_max_val').value);
 	}
 
-	encoded_url = `${url.base}${selected_channel}/charts/${selected_field}?bgcolor=${encodeURIComponent(url.colors.bg)}&color=${encodeURIComponent(url.colors.fg)}&start=${encodeURIComponent(selected_date_start)}&end=${encodeURIComponent(selected_date_end)}&${selected_type}=${operation_value}&title=${encodeURIComponent(`${en_pl_translations[selected_type]} z ${selected_channel_name} (${selected_date_start} - ${selected_date_end})`)}&type=${url.type}&width=${iframe_width.substring(0, iframe_width.length - 2)}&height=${iframe_height.substring(0, iframe_height.length - 2)}`;
+	encoded_url = `${url.base}${selected_channel}/charts/${selected_field}?bgcolor=${encodeURIComponent(url.colors.bg)}&color=${encodeURIComponent(url.colors.fg)}&start=${encodeURIComponent(selected_date_start)}&end=${encodeURIComponent(selected_date_end)}&title=${encodeURIComponent(`${en_pl_translations[selected_type]} z ${selected_channel_name} (${selected_date_start} - ${selected_date_end})`)}&type=${url.type}&width=${iframe_width.substring(0, iframe_width.length - 2)}&height=${iframe_height.substring(0, iframe_height.length - 2)}`;
+
+	if (selected_type != 'none')
+	{
+		encoded_url += `&${selected_type}=${operation_value}`;
+	}
 
 	chart_container.src = encoded_url;
 });

@@ -4,29 +4,29 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>ThingSpeak Single-channel</title>
+	<style>
+		html, body
+		{
+			margin: 0;
+		}
+	</style>
 </head>
 <body>
 	<div class="container">
 		<header id="header" class="header">ThingSpeak Single-channel</header>
 		<iframe frameborder="0" width="0" height="0" id="chart-container"></iframe>
 		<section>
+			<button onclick="window.location.href='index.html'">Powrót</button>
+
 			<label for="channel">kanał:</label>
 			<select id="channel"></select>
 
 			<label for="field">pole:</label>
-			<select id="field">
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-			</select>
+			<select id="field"></select>
 
 			<label for="type">rodzaj:</label>
 			<select id="type">
+				<option value="none" selected>&mdash;</option>
 				<option value="sum">SUM</option>
 				<option value="average">AVERAGE</option>
 				<option value="median">MEDIAN</option>
@@ -34,13 +34,31 @@
 				<option value="max">MAX</option>
 			</select>
 
+			<!-- SUM/AVERAGE/MEDIAN -->
+			<div id="timeframe" style="display: none;">
+				<label for="timeframe_val">okres:</label>
+				<select id="timeframe_val">
+					<option value="10">10 minut</option>
+					<option value="15">15 minut</option>
+					<option value="20">20 minut</option>
+					<option value="30">30 minut</option>
+					<option value="60" selected>1 godzina</option>
+					<option value="240">6 godzin</option>
+					<option value="720">12 godzin</option>
+					<option value="1440">1 dzień</option>
+				</select>
+			</div>
+
+			<!-- MIN/MAX -->
+			<div id="minmax" style="display: none;">
+				<label for="min_max_val">min/max wartość:</label>
+				<input type="number" id="min_max_val" size="4">
+			</div>
+
 			<label for="date_start">start:</label>
 			<input type="datetime-local" id="date_start">
 			<label for="date_end">koniec:</label>
 			<input type="datetime-local" id="date_end">
-
-			<label for="min_max_val">min/max wartość (tylko min i max):</label>
-			<input type="number" id="min_max_val" size="4">
 
 			<button id="get_chart">Pobierz wykres</button>
 		</section>
