@@ -81,6 +81,7 @@ const field_menu = document.getElementById('field');
 const type_menu = document.getElementById('type');
 const date_sel_start = document.getElementById('date_start');
 const date_sel_end = document.getElementById('date_end');
+const chart_type_menu = document.getElementById('chart_type');
 const get_chart_btn = document.getElementById('get_chart');
 
 let encoded_url = null;
@@ -190,7 +191,9 @@ get_chart_btn.addEventListener('click', () => {
 		operation_value = parseInt(document.getElementById('min_max_val').value);
 	}
 
-	encoded_url = `${url.base}${selected_channel}/charts/${selected_field}?bgcolor=${encodeURIComponent(url.colors.bg)}&color=${encodeURIComponent(url.colors.fg)}&start=${encodeURIComponent(selected_date_start)}&end=${encodeURIComponent(selected_date_end)}&title=${encodeURIComponent(`${en_pl_translations[selected_type]} z ${selected_channel_name} (${selected_date_start} - ${selected_date_end})`)}&type=${url.type}&width=${iframe_width.substring(0, iframe_width.length - 2)}&height=${iframe_height.substring(0, iframe_height.length - 2)}`;
+	let selected_chart_type = chart_type_menu.value;
+
+	encoded_url = `${url.base}${selected_channel}/charts/${selected_field}?bgcolor=${encodeURIComponent(url.colors.bg)}&color=${encodeURIComponent(url.colors.fg)}&start=${encodeURIComponent(selected_date_start)}&end=${encodeURIComponent(selected_date_end)}&title=${encodeURIComponent(`${en_pl_translations[selected_type]} z ${selected_channel_name} (${selected_date_start} - ${selected_date_end})`)}&type=${selected_chart_type}&width=${iframe_width.substring(0, iframe_width.length - 2)}&height=${iframe_height.substring(0, iframe_height.length - 2)}`;
 
 	if (selected_type != 'none')
 	{

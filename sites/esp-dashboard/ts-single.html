@@ -24,7 +24,7 @@
 			<label for="field">pole:</label>
 			<select id="field"></select>
 
-			<label for="type">rodzaj:</label>
+			<label for="type">operacja:</label>
 			<select id="type">
 				<option value="none" selected>&mdash;</option>
 				<option value="sum">SUM</option>
@@ -59,6 +59,14 @@
 			<input type="datetime-local" id="date_start">
 			<label for="date_end">koniec:</label>
 			<input type="datetime-local" id="date_end">
+
+			<label for="chart_type">rodzaj wykresu:</label>
+			<select id="chart_type">
+				<option value="line" selected>liniowy</option>
+				<option value="column">kolumnowy</option>
+				<option value="bar">kolumnowy boczny</option>
+				<option value="spline">liniowy (ale inny trochę)</option>
+			</select>
 
 			<button id="get_chart">Pobierz wykres</button>
 		</section>
