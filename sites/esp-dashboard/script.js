@@ -764,7 +764,7 @@ function generate_squares()
 	buf += `<div id="modal-media" class="chart-modal">`;
 	buf += `<div class="chart-modal-content">`;
 	buf += `<span>Wykresy mediów</span>`;
-	buf += `<span class="close material-symbols-outlined">close</span>`;
+	buf += `<span class="close material-symbols-rounded">close</span>`;
 	buf += `<div id="media_chart_container"></div>`;
 	buf += `</div>`;
 	buf += `</div>`;
