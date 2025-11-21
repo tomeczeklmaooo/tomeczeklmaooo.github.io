@@ -157,31 +157,31 @@ function thingspeak_fields()
 					switch (parseInt(stan_pieca))
 					{
 						case 0:
-							piec_status = "Ogrzewanie: Brak zapotrz.";
+							piec_status = "Ogrzew.: Brak zapotrz.";
 							break;
 						case 1:
-							piec_status = "Ogrzewanie: Rozruch went.";
+							piec_status = "Ogrzew.: Rozruch went.";
 							break;
 						case 2:
-							piec_status = "Ogrzewanie: Praca pompy";
+							piec_status = "Ogrzew.: Praca pompy";
 							break;
 						case 3:
-							piec_status = "Ogrzewanie: Zapłon";
+							piec_status = "Ogrzew.: Zapłon";
 							break;
 						case 4:
-							piec_status = "Ogrzewanie: Palnik włączony";
+							piec_status = "Ogrzew.: Palnik włączony";
 							break;
 						case 5:
-							piec_status = "Ogrzewanie: Wybieg";
+							piec_status = "Ogrzew.: Wybieg";
 							break;
 						case 6:
-							piec_status = "Ogrzewanie: Wybieg went.";
+							piec_status = "Ogrzew.: Wybieg went.";
 							break;
 						case 7:
-							piec_status = "Ogrzewanie: Wybieg pompy";
+							piec_status = "Ogrzew.: Wybieg pompy";
 							break;
 						case 8:
-							piec_status = "Ogrzewanie: Blokada palnika";
+							piec_status = "Ogrzew.: Blokada palnika";
 							break;
 						case 20:
 							piec_status = "CWU: Zapotrzebowanie";
@@ -364,7 +364,7 @@ function generate_squares()
 					<div class="card-content">
 						<table>
 							<tr>
-								<td><span class="material-symbols-rounded">bolt</span><sub>DC power</sub></td>
+								<td><span class="material-symbols-rounded">bolt</span><sub>DC</sub></td>
 								<td>${pv_power} kW</td>
 							</tr>
 							<tr>
