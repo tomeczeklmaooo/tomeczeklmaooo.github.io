@@ -235,7 +235,7 @@ body
 	/* flex-shrink: 1; */
 	transition: 0.3s ease all;
 	box-sizing: border-box;
-	padding: 16px;
+	padding: 8px;
 }
 
 .card-1x1 .card-content-wrapper
