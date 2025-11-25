@@ -165,7 +165,8 @@ get_chart_btn.addEventListener('click', () => {
 	console.log(`Selected channel: ${selected_channel} -> ${selected_channel_name}`);
 
 	let selected_field = field_menu.value;
-	console.log(`Selected field: ${selected_field}`);
+	let selected_field_name = channel_keys[channel_menu.selectedIndex].field_list[field_menu.selectedIndex].name;
+	console.log(`Selected field: ${selected_field} -> ${selected_field_name}`);
 
 	let selected_type = type_menu.value;
 	console.log(`Selected type: ${selected_type}`);
@@ -193,7 +194,7 @@ get_chart_btn.addEventListener('click', () => {
 
 	let selected_chart_type = chart_type_menu.value;
 
-	encoded_url = `${url.base}${selected_channel}/charts/${selected_field}?bgcolor=${encodeURIComponent(url.colors.bg)}&color=${encodeURIComponent(url.colors.fg)}&start=${encodeURIComponent(selected_date_start)}&end=${encodeURIComponent(selected_date_end)}&title=${encodeURIComponent(`${en_pl_translations[selected_type]} z ${selected_channel_name} (${selected_date_start} - ${selected_date_end})`)}&type=${selected_chart_type}&width=${iframe_width.substring(0, iframe_width.length - 2)}&height=${iframe_height.substring(0, iframe_height.length - 2)}`;
+	encoded_url = `${url.base}${selected_channel}/charts/${selected_field}?bgcolor=${encodeURIComponent(url.colors.bg)}&color=${encodeURIComponent(url.colors.fg)}&start=${encodeURIComponent(selected_date_start)}&end=${encodeURIComponent(selected_date_end)}&title=${encodeURIComponent(`${en_pl_translations[selected_type]} z ${selected_field_name} (${selected_date_start} - ${selected_date_end})`)}&type=${selected_chart_type}&width=${iframe_width.substring(0, iframe_width.length - 2)}&height=${iframe_height.substring(0, iframe_height.length - 2)}`;
 
 	if (selected_type != 'none')
 	{
