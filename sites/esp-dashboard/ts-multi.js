@@ -153,9 +153,19 @@ async function load_channel_history(sent_channel_idx, channel_number, key, sent_
 	const field_list = sent_field_list;
 	const channel_idx = sent_channel_idx;
 
+const date_start = new Date();
+
+		for (let i = 0; i < field_list.length; i++)
+		{
+			if (typeof field_list[i].data[0] != "undefined")
+				date_start.setTime(field_list[i].data[0][0] + 7 * 60 * 60 * 1000);
+		}
+
+		const date_end = date_start.toJSON();
+
 	try
 	{
-		const response = await fetch(`https://api.thingspeak.com/channels/${channel_number}/feed.json?offset=0&start=2013-01-20T00:00:00Z&end=2025-11-08T14:10:00Z&key=${key}`);
+		const response = await fetch(`https://api.thingspeak.com/channels/${channel_number}/feed.json?offset=0&start=2013-01-20T00:00:00Z&end=${date_end.replace('.000Z', 'Z')}&key=${key}`);
 
 		if (!response.ok)
 		{
@@ -196,15 +206,7 @@ async function load_channel_history(sent_channel_idx, channel_number, key, sent_
 		chart.redraw();
 		console.log(`channel_idx: ${channel_idx}`);
 
-		const date_start = new Date();
-
-		for (let i = 0; i < field_list.length; i++)
-		{
-			if (typeof field_list[i].data[0] != "undefined")
-				date_start.setTime(field_list[i].data[0][0] + 7 * 60 * 60 * 1000);
-		}
-
-		const date_end = date_start.toJSON();
+		//
 
 		console.log(`date: ${date_end}`);
 		console.log(`sent_channel_idx: ${channel_idx}`);
