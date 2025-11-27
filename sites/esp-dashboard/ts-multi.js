@@ -98,7 +98,7 @@ async function load_thingspeak_channel(sent_channel_idx, channel_number, key, se
 
 	try
 	{
-		const response = await fetch(`https://api.thingspeak.com/channels/${channel_number}/feed.json?offset=0&results=2500&key=${key}`);
+		const response = await fetch(`https://api.thingspeak.com/channels/${channel_number}/feed.json?offset=0&results=8000&key=${key}`);
 
 		if (!response.ok)
 		{
