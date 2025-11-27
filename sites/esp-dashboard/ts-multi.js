@@ -6,55 +6,55 @@ let channel_keys = [
 		channel_number: 432818, name: 'Stacja pogodowa', key: 'XXXXXXXXXXXXXXXX',
 		field_list:
 		[
-			{ field: 1, axis: 'O', suffix: 'l/m2' },
-			{ field: 2, axis: 'T', suffix: '°C' },
-			{ field: 3, axis: 'C', suffix: 'hPa' },
-			{ field: 4, axis: 'O', suffix: 'l' },
-			{ field: 5, axis: 'T', suffix: '°C' },
-			{ field: 6, axis: 'O', suffix: '%' },
-			{ field: 7, axis: 'O', suffix: 'l' },
-			{ field: 8, axis: 'T', suffix: 'l' },
+			{ field: 1, axis: 'O', suffix: 'l/m2', type: 'sum' },
+			{ field: 2, axis: 'T', suffix: '°C',   type: 'average' },
+			{ field: 3, axis: 'C', suffix: 'hPa',  type: 'average' },
+			{ field: 4, axis: 'O', suffix: 'l',    type: 'sum' },
+			{ field: 5, axis: 'T', suffix: '°C',   type: 'average' },
+			{ field: 6, axis: 'O', suffix: '%',    type: 'average' },
+			{ field: 7, axis: 'O', suffix: 'l',    type: 'sum' },
+			{ field: 8, axis: 'T', suffix: 'l',    type: 'sum' },
 		]
 	},
 	{
 		channel_number: 864444, name: 'Vaillant EcoTec', key: 'XXXXXXXXXXXXXXXX',
 		field_list:
 		[
-			{ field: 1, axis: 'T', suffix: '°C' },
-			{ field: 2, axis: 'T', suffix: '°C' },
-			{ field: 3, axis: 'T', suffix: '°C' },
-			{ field: 4, axis: 'T', suffix: '°C' },
-			{ field: 5, axis: 'T', suffix: '°C' },
-			{ field: 6, axis: 'T', suffix: '°C' },
-			{ field: 7, axis: 'O', suffix: 'm3' },
-			{ field: 8, axis: 'O', suffix: 'm3' },
+			{ field: 1, axis: 'T', suffix: '°C', type: 'average' },
+			{ field: 2, axis: 'T', suffix: '°C', type: 'average' },
+			{ field: 3, axis: 'T', suffix: '°C', type: 'average' },
+			{ field: 4, axis: 'T', suffix: '°C', type: 'average' },
+			{ field: 5, axis: 'T', suffix: '°C', type: 'average' },
+			{ field: 6, axis: 'T', suffix: '°C', type: 'average' },
+			{ field: 7, axis: 'O', suffix: 'm3', type: 'sum' },
+			{ field: 8, axis: 'O', suffix: 'm3', type: 'sum' },
 		]
 	},
 	{
 		channel_number: 897438, name: 'Sum/Avg', key: 'XXXXXXXXXXXXXXXX',
 		field_list:
 		[
-			{ field: 1, axis: 'T', suffix: '°C' },
-			{ field: 2, axis: 'O', suffix: 'l/m2' },
-			{ field: 3, axis: 'O', suffix: 'l' },
-			{ field: 4, axis: 'O', suffix: 'l' },
-			{ field: 5, axis: 'T', suffix: 'm3' },
-			{ field: 7, axis: 'O', suffix: 'l/m2' },
-			{ field: 8, axis: 'T', suffix: '°C' },
+			{ field: 1, axis: 'T', suffix: '°C',   type: 'average' },
+			{ field: 2, axis: 'O', suffix: 'l/m2', type: 'sum' },
+			{ field: 3, axis: 'O', suffix: 'l',    type: 'sum' },
+			{ field: 4, axis: 'O', suffix: 'l',    type: 'sum' },
+			{ field: 5, axis: 'T', suffix: 'm3',   type: 'sum' },
+			{ field: 7, axis: 'O', suffix: 'l/m2', type: 'sum' },
+			{ field: 8, axis: 'T', suffix: '°C',   type: 'average' },
 		]
 	},
 	{
 		channel_number: 783677, name: 'Sum/Avg', key: 'XXXXXXXXXXXXXXXX',
 		field_list:
 		[
-			{ field: 1, axis: 'O', suffix: 'kWh' },
-			{ field: 2, axis: 'O', suffix: 'l' },
-			{ field: 3, axis: 'T', suffix: '' },
-			{ field: 4, axis: 'O', suffix: 'l/m2' },
-			{ field: 5, axis: 'O', suffix: 'm3' },
-			{ field: 6, axis: 'T', suffix: 'm3' },
-			{ field: 7, axis: 'O', suffix: 'l' },
-			{ field: 8, axis: 'O', suffix: 'm3' },
+			{ field: 1, axis: 'O', suffix: 'kWh',  type: 'sum' },
+			{ field: 2, axis: 'O', suffix: 'l',    type: 'sum' },
+			{ field: 3, axis: 'T', suffix: '',     type: 'sum' },
+			{ field: 4, axis: 'O', suffix: 'l/m2', type: 'sum' },
+			{ field: 5, axis: 'O', suffix: 'm3',   type: 'sum' },
+			{ field: 6, axis: 'T', suffix: 'm3',   type: 'sum' },
+			{ field: 7, axis: 'O', suffix: 'l',    type: 'sum' },
+			{ field: 8, axis: 'O', suffix: 'm3',   type: 'sum' },
 		]
 	}
 ];
@@ -153,19 +153,19 @@ async function load_channel_history(sent_channel_idx, channel_number, key, sent_
 	const field_list = sent_field_list;
 	const channel_idx = sent_channel_idx;
 
-const date_start = new Date();
+	const date_start = new Date();
 
-		for (let i = 0; i < field_list.length; i++)
-		{
-			if (typeof field_list[i].data[0] != "undefined")
-				date_start.setTime(field_list[i].data[0][0] + 7 * 60 * 60 * 1000);
-		}
+	for (let i = 0; i < field_list.length; i++)
+	{
+		if (typeof field_list[i].data[0] != "undefined")
+			date_start.setTime(field_list[i].data[0][0] + 7 * 60 * 60 * 1000);
+	}
 
-		const date_end = date_start.toJSON();
+	const date_end = date_start.toJSON().replace('.000Z', 'Z');
 
 	try
 	{
-		const response = await fetch(`https://api.thingspeak.com/channels/${channel_number}/feed.json?offset=0&start=2013-01-20T00:00:00Z&end=${date_end.replace('.000Z', 'Z')}&key=${key}`);
+		const response = await fetch(`https://api.thingspeak.com/channels/${channel_number}/feed.json?offset=0&start=2020-01-01T00:00:00Z&end=${date_end}&key=${key}`);
 
 		if (!response.ok)
 		{
@@ -370,6 +370,11 @@ async function create_chart()
 				{
 					valueSuffix: ` ${channel_keys[channel_idx].field_list[field_idx].suffix}`,
 					valueDecimals: 3
+				},
+				dataGrouping:
+				{
+					enabled: true,
+					approximation: channel_keys[channel_idx].field_list[field_idx].type
 				}
 			});
 		}
