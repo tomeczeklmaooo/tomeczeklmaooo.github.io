@@ -266,7 +266,7 @@ const chart_options = {
 	{
 		type: 'datetime',
 		ordinal: false,
-		// min: Date.UTC(2013, 1, 28),
+		min: Date.UTC(2019, 9, 1),
 		dateTimeLabelFormats: { hour: '%k', minute: '%k:%M' },
 		title: { text: 'test' }
 	},
