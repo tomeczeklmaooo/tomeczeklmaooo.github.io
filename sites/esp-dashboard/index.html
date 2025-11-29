@@ -40,6 +40,18 @@
 	</div> -->
 	<!-- PAGE LOADER END -->
 
-	<script src="script.js"></script>
+	<script id="script"></script>
+	<script>
+		const search_params = new URLSearchParams(window.location.search);
+		if (search_params.has('script-new'))
+		{
+			document.getElementById('script').src = 'dashboard-2.0.js';
+			// alert('WERSJA EKSPERYMENTALNA!!!\nBrakujące funkcje:\n- canvas studni i zbiornika\n- wykresy mediów i temperatury\n- remote\nWymagające poprawy:\n- styl');
+		}
+		else
+		{
+			document.getElementById('script').src = 'dashboard-1.0.js';
+		}
+	</script>
 </body>
 </html>

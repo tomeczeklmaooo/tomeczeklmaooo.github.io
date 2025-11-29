@@ -256,14 +256,32 @@ body
 	flex: 1;
 	height: 100%;
 	display: flex;
-    font-size: 160%;
+	font-size: 160%;
 	font-family: 'Geist', sans-serif;
-	justify-content: center;
-    flex-direction: column;
+	justify-content: space-around;
+	flex-direction: column;
 	align-items: center;
 	transition: 0.3s ease all;
 }
 
+.data-row
+{
+	/* width: 300px; */
+	width: 100%;
+	display: flex;
+	justify-content: flex-start;
+	gap: 8px;
+}
+
+.data-row sub
+{
+	align-self: flex-end;
+}
+
+.invisible
+{
+	visibility: hidden;
+}
 
 .switch
 {
