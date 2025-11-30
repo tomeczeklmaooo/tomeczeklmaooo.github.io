@@ -7,6 +7,10 @@
 	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
 	<link id="page_style" rel="stylesheet" href="style.css">
 	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="./icons/favicon-16x16.png">
+	<link rel="manifest" href="./icons/site.webmanifest">
 </head>
 <body>
 	<div class="container">
@@ -34,15 +38,8 @@
 	<script id="script"></script>
 	<script>
 		const search_params = new URLSearchParams(window.location.search);
-		if (search_params.has('script-new'))
-		{
-			document.getElementById('script').src = 'dashboard-2.0.js';
-			// alert('WERSJA EKSPERYMENTALNA!!!\nBrakujące funkcje:\n- canvas studni i zbiornika\n- wykresy mediów i temperatury\n- remote\nWymagające poprawy:\n- styl');
-		}
-		else
-		{
-			document.getElementById('script').src = 'dashboard-1.0.js';
-		}
+		document.getElementById('script').src = search_params.has('v2.0') ? 'dashboard-2.0.js' : 'dashboard-1.0.js';
+		document.getElementById('page_style').href = search_params.has('old') ? 'style-old.css' : 'style.css';
 	</script>
 </body>
 </html>

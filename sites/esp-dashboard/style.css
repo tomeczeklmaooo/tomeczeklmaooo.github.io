@@ -187,8 +187,8 @@ body
 	/* backdrop-filter: blur(3px); */
 	border: var(--card-border-thickness) solid var(--color-light);
 	opacity: 0;
-	animation: card_in 1s ease forwards;
-	animation-delay: 1.5s;
+	animation: card_in 0.5s ease forwards;
+	animation-delay: 0.5s;
 }
 
 .card-1x1
@@ -208,6 +208,12 @@ body
 	height: calc(var(--card-width) * 2 + var(--gap) + (var(--card-border-thickness) * 2));
 }
 
+.card-chart
+{
+	height: 100%;
+	width: 90%;
+}
+
 .card-header
 {
 	font-weight: 600;
@@ -215,7 +221,7 @@ body
 	/* height: 25%; */
 	height: 64px;
 	padding: 6px 16px;
-    font-size: 150%;
+	font-size: 150%;
 	display: flex;
 	background-color: var(--color-dark);
 	color: var(--color-background);
@@ -400,7 +406,7 @@ td:nth-child(1)
 {
 	height: 660px;
 	backdrop-filter: blur(4px);
-	width: 90%;
+	width: 100%;
 }
 /* THINGSPEAK MULTICHANNEL SPECIFIC STYLES END */
 
@@ -565,6 +571,11 @@ button:hover
 	.card-content
 	{
 		font-size: 100%;
+	}
+	.dot
+	{
+		width: 15px;
+		height: 15px;
 	}
 	.switch
 	{

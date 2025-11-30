@@ -6,12 +6,24 @@
 	<title>ThingSpeak Multi-channel</title>
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/stock/modules/stock.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
 	<link rel="stylesheet" href="style.css">
+	<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="./icons/favicon-16x16.png">
+	<link rel="manifest" href="./icons/site.webmanifest">
 </head>
 <body>
 	<div class="container">
 		<!-- <header id="header" class="header">ThingSpeak Multi-channel</header> -->
-		<main id="chart-container"></main>
+		<div class="card card-chart">
+			<div class="card-header">
+				<span class="material-symbols-rounded">rss_feed</span> ThingSpeak Multichannel
+			</div>
+			<div class="card-content-wrapper">
+				<main id="chart-container"></main>
+			</div>
+		</div>
 		<section>
 			<button onclick="window.location.href='index.html'">Powrót</button>
 			<button onclick="change_chart_type()">Liniowy &lt;&gt; Słupkowy</button>
