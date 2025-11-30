@@ -374,11 +374,18 @@ function check_viewport()
 	height = window.innerHeight;
 }
 
-function generate_card({ title, cols = [], rows = [], size = '1x1', icon = 'default', clickevent = 'return false' })
+function generate_card({
+	title,
+	cols = [],
+	rows = [],
+	size = '1x1',
+	icon = 'default',
+	clickevent = null
+})
 {
 	const card = document.createElement('div');
-	card.className = `card card-${size}`;
-	card.onclick = clickevent;
+	card.className = `card card-${size} ${clickevent ? 'clickable' : ''}`;
+	if (typeof clickevent === 'function') card.onclick = clickevent;
 
 	const card_header = document.createElement('div');
 	card_header.className = 'card-header';
@@ -400,40 +407,56 @@ function generate_card({ title, cols = [], rows = [], size = '1x1', icon = 'defa
 
 			row_items.forEach(item =>
 			{
-				const td = document.createElement('td');
-
-				const icon = item.icon ?? null;
-				const icon_sub = item.icon_sub ?? null;
-				const icon_color = item.icon_color ?? null;
-				const colspan = item.colspan ?? 1;
-				const icon_align = item.icon_align ?? null;
+				const icon        = item.icon ?? null;
+				const icon_sub    = item.icon_sub ?? null;
+				const icon_color  = item.icon_color ?? null;
+				const colspan     = item.colspan ?? 1;
+				const icon_align  = item.icon_align ?? null;
 				const label_align = item.label_align ?? null;
-				const label = item.label ?? '';
+				const label       = item.label ?? null;
 
-				if (icon_align) td.style.textAlign = icon_align;
 				if (icon)
 				{
+					const td_icon = document.createElement('td');
+					if (icon_align) td_icon.style.textAlign = icon_align;
+
 					const icon_span = document.createElement('span');
 					icon_span.className = `material-symbols-rounded ${icon_color}`;
 					icon_span.textContent = icon;
-					td.appendChild(icon_span);
+					td_icon.appendChild(icon_span);
+
+					if (icon_sub)
+					{
+						const sub = document.createElement('sub');
+						sub.innerHTML = icon_sub;
+						td_icon.appendChild(sub);
+					}
+
+					const td_label = document.createElement('td');
+					td_label.colSpan = colspan;
+					if (label_align) td_label.style.textAlign = label_align;
+
+					const label_span = document.createElement('span');
+					label_span.className = 'cell-label';
+					label_span.innerHTML = label;
+					td_label.appendChild(label_span);
+
+					tr.appendChild(td_icon);
+					if (label) tr.appendChild(td_label);
 				}
-				if (icon_sub)
+				else
 				{
-					const sub = document.createElement('sub');
-					sub.innerHTML = icon_sub;
-					td.appendChild(sub);
+					const td = document.createElement('td');
+					td.colSpan = colspan;
+					if (label_align) td.style.textAlign = label_align;
+
+					const label_span = document.createElement('span');
+					label_span.className = 'cell-label';
+					label_span.innerHTML = label;
+					td.appendChild(label_span);
+
+					if (label) tr.appendChild(td);
 				}
-
-				const label_span = document.createElement('span');
-				label_span.className = 'cell-label';
-				label_span.innerHTML = label;
-				td.appendChild(label_span);
-
-				td.colSpan = colspan;
-				if (label_align) td.style.textAlign = label_align;
-
-				tr.appendChild(td);
 			});
 
 			table.appendChild(tr);
@@ -561,7 +584,8 @@ async function build_site()
 					{ icon: 'sunny', icon_color: 'yellow', icon_sub: '&uarr;', label: `${data.values.sunrise}` },
 					{ icon: 'sunny', icon_color: 'yellow', icon_sub: '&darr;', label: `${data.values.sunset}` }
 				]
-			]
+			],
+			clickevent: () => alert('pogoda modal')
 		},
 
 		lazienka:
@@ -630,20 +654,18 @@ async function build_site()
 					{ label: `Status pieca: ${data.values.status_pieca}`, colspan: 4, label_align: 'center' }
 				],
 				[
-					{ icon: 'swap_driving_apps_wheel', label: `${parseFloat(data.values.cisnienie_wody).toFixed(2)} &nbsp;bar` },
-					{ icon: 'valve', icon_sub: 'CWU', icon_color: 'red', label: `${data.values.temp_cwu}&deg;C ${create_active_dot(data.bool.pompa_cwu)}` }
+					{ icon: 'swap_driving_apps_wheel', label: `${parseFloat(data.values.cisnienie_wody).toFixed(2)}&nbsp;bar`, label_align: 'left' },
+					{ icon: 'valve', icon_sub: 'CWU', icon_color: 'red', icon_align: 'right' },
+					{ label: `${data.values.temp_cwu}&deg;C ${create_active_dot(data.bool.pompa_cwu)}` },
+					// { icon: 'valve', icon_sub: 'CWU', icon_color: 'red', label: `${data.values.temp_cwu}&deg;C ${create_active_dot(data.bool.pompa_cwu)}`, colspan: 3, icon_align: 'right' },
 				],
 				[
-					{ label: 'Podłoga:' },
-					{ label: `SP:${data.values.t_set_podloga}&deg;C` },
-					{ label: `PV:${data.values.t_zas_podloga}&deg;C` },
-					{ label: create_active_dot(data.bool.pompa_podloga) }
+					{ label: `Podłoga: SP:${data.values.t_set_podloga}&deg;C`, colspan: 2 },
+					{ label: `PV:${data.values.t_zas_podloga}&deg;C ${create_active_dot(data.bool.pompa_podloga)}`, colspan: 2, label_align: 'right' }
 				],
 				[
-					{ label: 'Grzejniki:' },
-					{ label: `SP:${data.values.t_set_grzejniki}&deg;C` },
-					{ label: `PV:${data.values.t_zas_grzejniki}&deg;C` },
-					{ label: create_active_dot(data.bool.pompa_grzej) }
+					{ label: `Grzejniki: SP:${data.values.t_set_grzejniki}&deg;C`, colspan: 2 },
+					{ label: `PV:${data.values.t_zas_grzejniki}&deg;C ${create_active_dot(data.bool.pompa_grzej)}`, colspan: 2 }
 				],
 				[
 					{ label: `Grzał. akt.: ${create_active_dot(data.bool.grzalka_aktywna)}`, colspan: 2 },
@@ -691,7 +713,7 @@ async function build_site()
 					{ icon: 'bolt', icon_color: 'red', label: `${data.values.enea_import} kWh` }
 				]
 			],
-			clickevent: 'alert("media")'
+			clickevent: () => alert('media modal')
 		},
 
 		temperatury:

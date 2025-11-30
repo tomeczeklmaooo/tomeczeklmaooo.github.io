@@ -386,14 +386,38 @@ sub, sup
 	font-size: 50%;
 }
 
+sub
+{
+	align-self: flex-end;
+}
+
+sup
+{
+	align-self: flex-start;
+}
+
 table
 {
 	border-collapse: collapse;
+	min-width: fit-content;
+}
+
+table.vaillant
+{
+	width: 90%;
 }
 
 td
 {
 	padding: 0 5px;
+	box-sizing: border-box;
+	flex: 1;
+}
+
+.inline
+{
+	display: flex;
+	padding: 0;
 }
 
 td:nth-child(1)
