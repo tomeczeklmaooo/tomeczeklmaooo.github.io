@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dashboard</title>
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
+	<link id="page_style" rel="stylesheet" href="style.css">
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div id="header">
+			<div class="header">
+				<span class="btn-c">
+					<button onclick="window.location.href='remote.html'">Remote</button>
+					<button onclick="window.location.href='ts-multi.html'">Multi</button>
+					<button onclick="window.location.href='ts-single.html'">Single</button>
+				</span>
+				<span>
+					DASHBOARD
+				</span>
+				<span id="lastupdated">
+					&nbsp;
+				</span>
+			</div>
+			<!-- <div class="alarm" id="alarm">
+				ALARM
+			</div> -->
+		</div>
+		<div class="main" id="main">
+			<div class="card card-2x1">
+				<div class="card-header">
+					<span><span class="material-symbols-rounded">settings_remote</span> Remote</span>
+				</div>
+				<div class="card-content-wrapper">
+					<div class="card-content">
+						<table>
+							<tr>
+								<td><button onclick="load_xml_doc(1001)">CWU ON</button></td>
+								<td><button onclick="load_xml_doc(1002)">CWU OFF</button></td>
+							</tr>
+							<tr>
+								<td><button onclick="load_xml_doc(1003)">NAWO ON</button></td>
+								<td><button onclick="load_xml_doc(1004)">NAWO OFF</button></td>
+							</tr>
+							<tr>
+								<td><button onclick="load_xml_doc(1005)">GRZEJNIK ON</button></td>
+								<td><button onclick="load_xml_doc(1006)">GRZEJNIK OFF</button></td>
+							</tr>
+						</table>
+						<button onclick="window.location.href='index.html'">Powrót</button>
+						<div id="result"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function loadXMLDoc(_cmdstr)
+		{
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function()
+			{
+				if (this.readyState == 4 && this.status == 200)
+				{
+					fetch('https://api.thingspeak.com/talkbacks/32600/commands.json?api_key=XBAUGXOD6LHDGDE0').then((res) => res.text()).then((command_list) => {
+						command_list = JSON.parse(command_list);
+						let command_table = `<table><tr><th>Pozycja</th><th>ID</th><th>Command string</th></tr>`;
+						for (let i = 0; i < command_list.length; i++)
+						{
+							command_table += `<tr><td>${command_list[i]['position']}</td>`;
+							command_table += `<td>${command_list[i]['id']}</td>`;
+							command_table += `<td>${command_list[i]['command_string']}</td></tr>`;
+						}
+						command_table += "</table>"
+						document.getElementById("result").innerHTML = command_table;
+					}).catch((e) => console.error(e));
+				}
+			};
+			xhttp.open('POST', `https://api.thingspeak.com/talkbacks/32600/commands?api_key=XBAUGXOD6LHDGDE0&command_string=${_cmdstr}`, true);
+			xhttp.send();
+		}
+	</script>
+</body>
+</html>

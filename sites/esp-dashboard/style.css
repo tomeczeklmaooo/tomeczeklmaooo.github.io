@@ -258,29 +258,39 @@ body
 	display: flex;
 	font-size: 160%;
 	font-family: 'Geist', sans-serif;
-	justify-content: space-around;
+	justify-content: center;
 	flex-direction: column;
 	align-items: center;
 	transition: 0.3s ease all;
 }
 
-.data-row
+.cell-label
 {
-	/* width: 300px; */
-	width: 100%;
 	display: flex;
-	justify-content: flex-start;
-	gap: 8px;
-}
-
-.data-row sub
-{
-	align-self: flex-end;
 }
 
 .invisible
 {
 	visibility: hidden;
+}
+
+.dot
+{
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	align-self: center;
+	margin-left: 10px;
+}
+
+.inactive-dot
+{
+	background-color: #7d8da1;
+}
+
+.active-dot
+{
+	background-color: #2196F3;
 }
 
 .switch

@@ -374,19 +374,11 @@ function check_viewport()
 	height = window.innerHeight;
 }
 
-function generate_card({
-	title,
-	data,
-	size = '1x1',
-	icon = 'default',
-	cols = 1,
-	rows = 1,
-	onclickevent = 'return false'
-})
+function generate_card({ title, data, size = '1x1', icon = 'default', clickevent = 'return false' })
 {
 	const card = document.createElement('div');
 	card.className = `card card-${size}`;
-	card.onclick = onclickevent;
+	card.onclick = clickevent;
 
 	const card_header = document.createElement('div');
 	card_header.className = 'card-header';
@@ -396,42 +388,98 @@ function generate_card({
 	const card_content_wrapper = document.createElement('div');
 	card_content_wrapper.className = 'card-content-wrapper';
 
-	for (let i = 0; i < cols; i++)
+	const card_content = document.createElement('div');
+	card_content.className = 'card-content';
+	const table = document.createElement('table');
+
+	data.forEach(item =>
 	{
-		const card_content = document.createElement('div');
-		card_content.className = 'card-content';
+		const tr = document.createElement('tr');
 
-		const base = i * rows;
-
-		for (let j = 0; j < rows; j++)
+		if (item.row)
 		{
-			const idx = base + j;
-			if (idx >= data.length) break;
-			const item = data[idx];
+			item.row.forEach(cell_item => {
+				const icon       = cell_item.icon ?? null;
+				const icon_sub   = cell_item.icon_sub ?? null;
+				const icon_color = cell_item.icon_color ?? null;
+				const colspan    = cell_item.colspan ?? 1;
+				const align      = cell_item.align ?? null;
+				const label      = cell_item.label;
 
-			const data_row = document.createElement('div');
-			data_row.className = 'data-row';
+				const td_icon = document.createElement('td');
 
-			const data_row_icon = document.createElement('span');
-			data_row_icon.className = `material-symbols-rounded ${item.icon_color}`;
-			data_row_icon.textContent = item.icon;
+				if (icon)
+				{
+					const icon_span = document.createElement('span');
+					icon_span.className = `material-symbols-rounded ${icon_color}`;
+					icon_span.textContent = icon;
+					td_icon.appendChild(icon_span);
+				}
 
-			const data_row_icon_subtext = document.createElement('sub');
-			data_row_icon_subtext.innerHTML = item.icon_sub;
+				if (icon_sub)
+				{
+					const sub = document.createElement('sub');
+					sub.innerHTML = icon_sub;
+					td_icon.appendChild(sub);
+				}
 
-			const data_row_label = document.createElement('span');
-			data_row_label.innerHTML = item.label;
+				const td_label = document.createElement('td');
+				td_label.colSpan = colspan;
+				if (align) td_label.style.textAlign = align;
 
-			if (item.icon != null) data_row.appendChild(data_row_icon);
-			if (item.icon_sub != null) data_row.appendChild(data_row_icon_subtext);
-			data_row.appendChild(data_row_label);
+				const label_span = document.createElement('span');
+				label_span.className = 'cell-label';
+				label_span.innerHTML = label;
+				td_label.appendChild(label_span);
 
-			card_content.appendChild(data_row);
+				if (icon) tr.appendChild(td_icon);
+				tr.appendChild(td_label);
+			});
+		}
+		else
+		{
+			const icon       = item.icon ?? null;
+			const icon_sub   = item.icon_sub ?? null;
+			const icon_color = item.icon_color ?? null;
+			const colspan    = item.colspan ?? 1;
+			const align      = item.align ?? null;
+			const label      = item.label;
+
+			const td_icon = document.createElement('td');
+
+			if (icon)
+			{
+				const icon_span = document.createElement('span');
+				icon_span.className = `material-symbols-rounded ${icon_color}`;
+				icon_span.textContent = icon;
+				td_icon.appendChild(icon_span);
+			}
+
+			if (icon_sub)
+			{
+				const sub = document.createElement('sub');
+				sub.innerHTML = icon_sub;
+				td_icon.appendChild(sub);
+			}
+
+			const td_label = document.createElement('td');
+			td_label.colSpan = colspan;
+			if (align) td_label.style.textAlign = align;
+
+			const label_span = document.createElement('span');
+			label_span.className = 'cell-label';
+			label_span.innerHTML = label;
+			td_label.appendChild(label_span);
+
+			if (icon) tr.appendChild(td_icon);
+			tr.appendChild(td_label);
 		}
 
-		card_content_wrapper.appendChild(card_content);
-	}
+		table.appendChild(tr);
+	});
 
+	card_content.appendChild(table);
+	card_content_wrapper.appendChild(card_content);
 	card.appendChild(card_content_wrapper);
 
 	return card;
@@ -471,6 +519,11 @@ function create_inner_column(cards)
 	return column;
 }
 
+function create_active_dot(bool)
+{
+	return `<div class="dot ${bool ? `` : `in`}active-dot"></div>`;
+}
+
 async function build_site()
 {
 	await assign_fields();
@@ -478,31 +531,24 @@ async function build_site()
 	const cards = {
 		pogoda:
 		{
-			title: 'Pogoda', icon: 'partly_cloudy_day',
-			size: '2x1', cols: 2, rows: 3,
+			title: 'Pogoda', icon: 'partly_cloudy_day', size: '2x1',
 			data:
 			[
 				{
 					icon: 'device_thermostat',
-					icon_sub: null,
-					icon_color: null,
 					label: `${data.values.temp_zew_vaillant}&deg;C`
 				},
 				{
 					icon: 'humidity_high',
-					icon_sub: null,
 					icon_color: 'blue',
 					label: `${data.values.wilg_zew}%`
 				},
 				{
 					icon: 'swap_driving_apps_wheel',
-					icon_sub: null,
-					icon_color: null,
 					label: `${data.values.cisnienie} hPa`
 				},
 				{
 					icon: 'rainy',
-					icon_sub: null,
 					icon_color: 'blue',
 					label: `${data.values.opady_dzis} l/m<sup>2</sup>`
 				},
@@ -519,262 +565,235 @@ async function build_site()
 					label: `${data.values.sunset}`
 				}
 			],
-			onclickevent: 'return false'
+			clickevent: 'alert(\'pogoda\')'
 		},
 		lazienka:
 		{
-			title: 'Łazienka', icon: 'shower',
-			size: '1x1', cols: 1, rows: 4,
+			title: 'Łazienka', icon: 'shower', size: '1x1',
 			data:
 			[
 				{
 					icon: 'device_thermostat',
-					icon_sub: null,
-					icon_color: null,
 					label: `${data.values.temp_lazienka}&deg;C`
 				},
 				{
 					icon: 'lightbulb',
-					icon_sub: null,
 					icon_color: data.bool.swiatlo_lazienka ? 'yellow' : null,
-					label: `${data.bool.swiatlo_lazienka}`
+					label: `${create_active_dot(data.bool.swiatlo_lazienka)}`
 				},
 				{
 					icon: 'laundry',
 					icon_sub: 'pralka',
-					icon_color: null,
-					label: `${data.bool.pralka}`
+					label: `${create_active_dot(data.bool.pralka)}`
 				},
 				{
 					icon: 'power',
 					icon_sub: 'grzejnik',
-					icon_color: null,
-					label: `${data.bool.smart_plug}`
+					label: `${create_active_dot(data.bool.smart_plug)}`
 				}
-			],
-			onclickevent: 'return false'
+			]
 		},
 		salon:
 		{
-			title: 'Salon', icon: 'chair',
-			size: '1x1', cols: 1, rows: 3,
+			title: 'Salon', icon: 'chair', size: '1x1',
 			data:
 			[
 				{
 					icon: 'device_thermostat',
-					icon_sub: null,
-					icon_color: null,
 					label: `${data.values.temp_salon_vaillant}&deg;C`
 				},
 				{
 					icon: 'humidity_high',
-					icon_sub: null,
 					icon_color: 'blue',
 					label: `${data.values.wilg_wew}%`
 				},
 				{
 					icon: 'window',
-					icon_sub: null,
-					icon_color: null,
-					label: `${data.bool.okno_salon}`
+					label: `${create_active_dot(data.bool.okno_salon)}`
 				}
-			],
-			onclickevent: 'return false'
+			]
 		},
 		fotowoltaika:
 		{
-			title: 'Fotowoltaika', icon: 'solar_power',
-			size: '1x2', cols: 1, rows: 8,
+			title: 'Fotowoltaika', icon: 'solar_power', size: '1x2',
 			data:
 			[
 				{
 					icon: 'bolt',
 					icon_sub: 'DC',
-					icon_color: null,
 					label: `${data.values.pv_power} kW`
 				},
 				{
 					icon: 'bolt',
 					icon_sub: 'prod.',
-					icon_color: null,
 					label: `${data.values.pv_produkcja} kWh`
 				},
 				{
 					icon: 'bolt',
 					icon_sub: 'zużycie',
-					icon_color: null,
 					label: `${data.values.pv_konsumpcja} kWh`
 				},
 				{
 					icon: 'bolt',
 					icon_sub: 'auto.',
-					icon_color: null,
 					label: `${data.values.pv_autokonsumpcja} kWh`
 				},
 				{
 					icon: 'bolt',
 					icon_sub: 'obciąż.',
-					icon_color: null,
 					label: `${data.values.pv_obciazenie} W`
 				},
 				{
 					icon: 'bolt',
 					icon_sub: 'napięcie',
-					icon_color: null,
 					label: `${data.values.pv_napiecie} V`
 				},
 				{
 					icon: 'money_bag',
-					icon_sub: null,
 					icon_color: 'green',
 					label: `${data.values.pv_cena_sprzedaz} PLN`
 				},
 				{
 					icon: 'money_bag',
-					icon_sub: null,
 					icon_color: 'red',
 					label: `${data.values.pv_cena_zakup} PLN`
 				}
-			],
-			onclickevent: 'return false'
+			]
 		},
 		nawo:
 		{
-			title: 'Nawodnienie', icon: 'potted_plant',
-			size: '1x2', cols: 1, rows: 2,
+			title: 'Nawodnienie', icon: 'potted_plant', size: '1x2',
 			data:
 			[
 				{
 					icon: 'rainy',
-					icon_sub: null,
-					icon_color: null,
-					label: `${data.bool.nawodnienie_aktywne}`
+					label: `${create_active_dot(data.bool.nawodnienie_aktywne)}`
 				},
 				{
-					icon: null,
-					icon_sub: null,
-					icon_color: null,
 					label: `tutaj będzie canvas`
 				}
-			],
-			onclickevent: 'return false'
+			]
 		},
 		vaillant:
 		{
-			title: 'Vaillant', icon: 'water_heater',
-			size: '2x1', cols: 1, rows: 6,
+			title: 'Vaillant', icon: 'water_heater', size: '2x1',
 			data:
 			[
 				{
-					icon: null,
-					icon_sub: null,
-					icon_color: null,
-					label: `Status pieca: ${data.values.status_pieca}`
+					row:
+					[
+						{
+							label: `Status pieca: ${data.values.status_pieca}`,
+							colspan: 4,
+							align: 'center'
+						}
+					]
 				},
 				{
-					icon: 'swap_driving_apps_wheel',
-					icon_sub: null,
-					icon_color: null,
-					label: `${parseFloat(data.values.cisnienie_wody).toFixed(2)} &nbsp;bar`
+					row:
+					[
+						{
+							icon: 'swap_driving_apps_wheel',
+							label: `${parseFloat(data.values.cisnienie_wody).toFixed(2)} &nbsp;bar`
+						},
+						{
+							icon: 'valve',
+							icon_sub: 'CWU',
+							icon_color: 'red',
+							label: `${data.values.temp_cwu}&deg;C ${create_active_dot(data.bool.pompa_cwu)}`,
+							align: 'right'
+						}
+					]
 				},
 				{
-					icon: 'valve',
-					icon_sub: 'CWU',
-					icon_color: 'red',
-					label: `${data.values.temp_cwu}&deg;C ${data.bool.pompa_cwu}`
+					row:
+					[
+						{ label: 'Podłoga:' },
+						{ label: `SP:${data.values.t_set_podloga}&deg;C` },
+						{ label: `PV:${data.values.t_zas_podloga}&deg;C` },
+						{ label: create_active_dot(data.bool.pompa_podloga) }
+					]
 				},
 				{
-					icon: null,
-					icon_sub: null,
-					icon_color: null,
-					label: `Podłoga: SP:${data.values.t_set_podloga}&deg;C PV:${data.values.t_zas_podloga}&deg;C ${data.bool.pompa_podloga}`
+					row:
+					[
+						{ label: 'Grzejniki:' },
+						{ label: `SP:${data.values.t_set_grzejniki}&deg;C` },
+						{ label: `PV:${data.values.t_zas_grzejniki}&deg;C` },
+						{ label: create_active_dot(data.bool.pompa_grzej) }
+					]
 				},
 				{
-					icon: null,
-					icon_sub: null,
-					icon_color: null,
-					label: `Grzejniki: SP:${data.values.t_set_grzejniki}&deg;C PV:${data.values.t_zas_grzejniki}&deg;C ${data.bool.pompa_grzej}`
-				},
-				{
-					icon: null,
-					icon_sub: null,
-					icon_color: null,
-					label: `Grzał. akt.: ${data.bool.grzalka_aktywna} Załączona: ${data.bool.grzalka_cwu}`
+					row:
+					[
+						{
+							label: `Grzał. akt.: ${create_active_dot(data.bool.grzalka_aktywna)}`,
+							colspan: 2
+						},
+						{
+							label: `Załączona: ${create_active_dot(data.bool.grzalka_cwu)}`,
+							colspan: 2
+						}
+					]
 				}
-			],
-			onclickevent: 'return false'
+			]
 		},
 		garaz:
 		{
-			title: 'Garaż', icon: 'directions_car',
-			size: '1x1', cols: 1, rows: 4,
+			title: 'Garaż', icon: 'directions_car', size: '1x1',
 			data:
 			[
 				{
 					icon: 'device_thermostat',
-					icon_sub: null,
-					icon_color: null,
 					label: `${data.values.temp_garaz}&deg;C`
 				},
 				{
 					icon: 'lightbulb',
-					icon_sub: null,
 					icon_color: data.bool.swiatlo_garaz ? 'yellow' : null,
-					label: `${data.bool.swiatlo_garaz}`
+					label: `${create_active_dot(data.bool.swiatlo_garaz)}`
 				},
 				{
 					icon: 'water',
 					icon_sub: 'zmięk.',
-					icon_color: null,
-					label: `${data.bool.zmiekczacz}`
+					label: `${create_active_dot(data.bool.zmiekczacz)}`
 				},
 				{
 					icon: 'garage_home',
-					icon_sub: null,
-					icon_color: null,
-					label: `${data.bool.brama_garaz}`
+					label: `${create_active_dot(data.bool.brama_garaz)}`
 				}
-			],
-			onclickevent: 'return false'
+			]
 		},
 		drzwi:
 		{
-			title: 'Drzwi', icon: 'door_front',
-			size: '1x1', cols: 1, rows: 3,
+			title: 'Drzwi', icon: 'door_front', size: '1x1',
 			data:
 			[
 				{
 					icon: data.bool.drzwi_wej ? 'door_open' : 'door_front',
 					icon_sub: 'wej.',
-					icon_color: null,
-					label: `${data.bool.drzwi_wej}`
+					label: `${create_active_dot(data.bool.drzwi_wej)}`
 				},
 				{
 					icon: data.bool.drzwi_gosp ? 'door_open' : 'door_front',
 					icon_sub: 'gosp.',
-					icon_color: null,
-					label: `${data.bool.drzwi_gosp}`
+					label: `${create_active_dot(data.bool.drzwi_gosp)}`
 				},
 				{
 					icon: 'gate',
 					icon_sub: 'wjazd',
-					icon_color: null,
-					label: `${data.bool.brama_wjazd}`
+					label: `${create_active_dot(data.bool.brama_wjazd)}`
 				}
-			],
-			onclickevent: 'return false'
+			]
 		},
 		media:
 		{
-			title: 'Media', icon: 'plumbing',
-			size: '1x1', cols: 1, rows: 4,
+			title: 'Media', icon: 'plumbing', size: '1x1',
 			data:
 			[
 				{
 					icon: 'valve',
-					icon_sub: null,
 					icon_color: 'blue',
-					label: `${data.values.woda_dom} l ${data.bool.zawor_wody}`
+					label: `${data.values.woda_dom} l ${create_active_dot(data.bool.zawor_wody)}`
 				},
 				{
 					icon: 'local_fire_department',
@@ -790,79 +809,67 @@ async function build_site()
 				},
 				{
 					icon: 'bolt',
-					icon_sub: null,
 					icon_color: 'red',
 					label: `${data.values.enea_import} kWh`
 				},
 			],
-			onclickevent: 'return false'
+			clickevent: 'alert(\'media\')'
 		},
 		temperatury:
 		{
-			title: 'Temperatury', icon: 'device_thermostat',
-			size: '1x1', cols: 1, rows: 3,
+			title: 'Temperatury', icon: 'device_thermostat', size: '1x1',
 			data:
 			[
 				{
 					icon: 'device_thermostat',
 					icon_sub: 'piętro',
-					icon_color: null,
 					label: `${data.values.temp_pietro}&deg;C`
 				},
 				{
 					icon: 'device_thermostat',
 					icon_sub: 'strych',
-					icon_color: null,
 					label: `${data.values.temp_strych}&deg;C`
 				},
 				{
 					icon: 'device_thermostat',
 					icon_sub: 'strych gar.',
-					icon_color: null,
 					label: `${data.values.temp_strych_garaz}&deg;C`
 				}
-			],
-			onclickevent: 'return false'
+			]
 		},
 		inne:
 		{
-			title: 'Inne', icon: 'category',
-			size: '1x1', cols: 1, rows: 4,
+			title: 'Inne', icon: 'category', size: '1x1',
 			data:
 			[
 				{
 					icon: 'water',
 					icon_sub: 'ścieki',
-					icon_color: null,
-					label: `${data.bool.pompa_scieki}`
+					label: `${create_active_dot(data.bool.pompa_scieki)}`
 				},
 				{
 					icon: 'dishwasher',
 					icon_sub: 'zmyw.',
-					icon_color: null,
-					label: `${data.bool.zmywarka}`
+					label: `${create_active_dot(data.bool.zmywarka)}`
 				},
 				{
 					icon: 'lightbulb',
 					icon_sub: 'pom. gosp.',
 					icon_color: data.bool.swiatlo_gosp ? 'yellow' : null,
-					label: `${data.bool.swiatlo_gosp}`
+					label: `${create_active_dot(data.bool.swiatlo_gosp)}`
 				},
 				{
 					icon: 'lightbulb',
 					icon_sub: 'strych',
 					icon_color: data.bool.swiatlo_strych ? 'yellow' : null,
-					label: `${data.bool.swiatlo_strych}`
+					label: `${create_active_dot(data.bool.swiatlo_strych)}`
 				}
-			],
-			onclickevent: 'return false'
+			]
 		},
 		invisible:
 		{
-			title: null, icon: null,
-			size: '1x1 invisible', cols: 0, rows: 0,
-			data: [],
-			onclickevent: 'return false'
+			title: null, icon: null, size: '1x1 invisible',
+			data: []
 		}
 	};
 
